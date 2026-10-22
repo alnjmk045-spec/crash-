@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K.E.M.O VIP PREDICTOR | Real-Time Cloud Engine</title>
+    <title>K.E.M.O VIP PREDICTOR | Elite Cloud Network</title>
 
     <!-- Google tag (gtag.js) - Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LWFX9SZ5D7"></script>
@@ -126,7 +126,6 @@
 
             <!-- HEADER BRANDING -->
             <div class="text-center mb-4 relative">
-                <!-- BADGE SVG LOGO EMBLEM -->
                 <div class="relative w-20 h-20 mx-auto mb-2">
                     <div class="absolute inset-0 rounded-full gold-gradient-bg opacity-30 blur-md"></div>
                     <div class="relative w-20 h-20 rounded-full border-2 border-gold-400 bg-black flex flex-col items-center justify-center p-2 shadow-inner overflow-hidden">
@@ -142,10 +141,9 @@
 
                 <h1 class="font-cinzel text-2xl font-black tracking-wider gold-gradient-text">K.E.M.O VIP</h1>
                 
-                <!-- SERVER REAL-TIME STATUS BAR -->
                 <div class="flex items-center justify-center space-x-2 mt-1">
                     <span class="inline-flex items-center text-[10px] text-green-400 bg-green-950/60 border border-green-500/30 px-2 py-0.5 rounded-full font-bold">
-                        <span class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5 animate-ping"></span> Live Cloud Server Connected
+                        <span class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5 animate-ping"></span> Elite Cloud Secured
                     </span>
                 </div>
             </div>
@@ -153,7 +151,6 @@
             <!-- ================= SCREEN 1: LOGIN ================= -->
             <div id="screenLogin" class="space-y-4 flex-1 flex flex-col justify-center">
                 
-                <!-- PUBLIC LIVE ONLINE COUNTER FOR USERS -->
                 <div class="bg-gradient-to-r from-yellow-950/40 via-panelbg to-yellow-950/40 border border-gold-500/40 rounded-2xl p-3 text-center gold-glow">
                     <p class="text-[10px] text-gray-300 font-bold uppercase tracking-widest flex items-center justify-center">
                         <i class="fa-solid fa-users text-gold-400 mr-1.5"></i> Active VIP Users Online Right Now
@@ -161,7 +158,7 @@
                     <div id="publicOnlineCounter" class="font-cinzel text-2xl font-black gold-gradient-text my-0.5">
                         -- Users
                     </div>
-                    <p class="text-[9px] text-gold-400/80"><i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Synchronized with Cloud Database</p>
+                    <p class="text-[9px] text-gold-400/80"><i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Synchronized with Global Network</p>
                 </div>
 
                 <div class="bg-panelbg/80 p-4 rounded-2xl border border-gold-500/20 space-y-3">
@@ -198,15 +195,14 @@
                 </div>
             </div>
 
-            <!-- ================= SCREEN 2: ADMIN PANEL (DEVELOPER ONLY) ================= -->
+            <!-- ================= SCREEN 2: ADMIN / SUB-ADMIN PANEL ================= -->
             <div id="screenAdmin" class="hidden space-y-3.5 flex-1 flex flex-col justify-between">
-                <!-- ADMIN HEADER BAR -->
                 <div class="flex items-center justify-between bg-panelbg border border-gold-500/30 rounded-2xl p-3">
                     <div class="flex items-center space-x-2">
                         <i class="fa-solid fa-user-gear text-gold-400 text-lg"></i>
                         <div>
-                            <h3 class="font-bold text-xs text-white uppercase">Developer Control Center</h3>
-                            <p class="text-[10px] text-gray-400">Cloud Realtime Sync Admin</p>
+                            <h3 id="adminPanelTitle" class="font-bold text-xs text-white uppercase">Master Control Center</h3>
+                            <p id="adminPanelSubtitle" class="text-[10px] text-gray-400">Cloud Sync & Creator Tracking</p>
                         </div>
                     </div>
                     <button onclick="handleLogout()" class="text-xs text-red-400 hover:text-red-300 font-bold px-2 py-1 bg-red-950/30 border border-red-500/30 rounded-lg">
@@ -214,22 +210,21 @@
                     </button>
                 </div>
 
-                <!-- REAL ADMIN STATS -->
                 <div class="grid grid-cols-2 gap-2 text-center">
                     <div class="bg-black/60 p-2 rounded-xl border border-gold-500/20">
-                        <p class="text-[10px] text-gray-400 font-bold uppercase">Cloud Status</p>
-                        <p class="text-xs font-bold text-green-400 font-mono mt-1">Connected Active</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase">Role Level</p>
+                        <p id="adminRoleDisplay" class="text-xs font-bold text-gold-400 font-mono mt-1">Master Administrator</p>
                     </div>
                     <div class="bg-black/60 p-2 rounded-xl border border-gold-500/20">
-                        <p class="text-[10px] text-gray-400 font-bold uppercase">Public Counter</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase">Online Simulator</p>
                         <p id="adminPublicCounterMirror" class="text-lg font-bold text-gold-400 font-mono">--- Users</p>
                     </div>
                 </div>
 
-                <!-- CREATE USER FORM -->
+                <!-- CREATE USER FORM WITH ROLE SELECTION -->
                 <div class="bg-panelbg/90 p-3 rounded-2xl border border-gold-500/20 space-y-2">
                     <h4 class="text-xs font-bold text-gold-400 uppercase tracking-wider border-b border-gold-500/20 pb-1">
-                        <i class="fa-solid fa-user-plus mr-1"></i> Create VIP Member Account
+                        <i class="fa-solid fa-user-plus mr-1"></i> Create New Account (Tracked)
                     </h4>
 
                     <div class="grid grid-cols-2 gap-2">
@@ -245,28 +240,40 @@
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-[10px] text-gray-400 uppercase mb-0.5 font-bold">Subscription Duration</label>
-                        <select id="newDuration" class="w-full bg-black/80 border border-gold-500/20 rounded-lg p-1.5 text-xs text-gold-400 focus:outline-none focus:border-gold-400">
-                            <option value="1">1 Day Pass</option>
-                            <option value="7">7 Days Pass</option>
-                            <option value="30">30 Days Pass</option>
-                            <option value="365">365 Days Pass</option>
-                            <option value="9999">Unlimited Lifetime Pass</option>
-                        </select>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] text-gray-400 uppercase mb-0.5 font-bold">Account Role</label>
+                            <select id="newRole" class="w-full bg-black/80 border border-gold-500/20 rounded-lg p-1.5 text-xs text-gold-400 focus:outline-none focus:border-gold-400">
+                                <option value="user">VIP User</option>
+                                <option value="subadmin">Sub-Admin (مشرف مساعد)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-gray-400 uppercase mb-0.5 font-bold">Duration</label>
+                            <select id="newDuration" class="w-full bg-black/80 border border-gold-500/20 rounded-lg p-1.5 text-xs text-gold-400 focus:outline-none focus:border-gold-400">
+                                <option value="1">1 Day</option>
+                                <option value="7">7 Days</option>
+                                <option value="30">30 Days</option>
+                                <option value="365">1 Year</option>
+                                <option value="9999">Lifetime</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <button onclick="createNewUser()" 
+                    <button onclick="createNewAccount()" 
                         class="w-full py-2 gold-gradient-bg text-black font-extrabold rounded-xl text-xs uppercase tracking-wider hover:brightness-110 active:scale-[0.98] transition shadow">
-                        <i class="fa-solid fa-plus-circle mr-1"></i> Save to Cloud Database
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Save to Cloud & Track Creator
                     </button>
                 </div>
 
-                <!-- ALL REGISTERED ACCOUNTS (CLOUD VIEW) -->
-                <div class="space-y-1.5 flex-1 overflow-y-auto max-h-40 pr-1">
-                    <p class="text-[10px] text-gold-400 font-bold uppercase tracking-widest mb-1">Cloud Registered DB Accounts</p>
+                <!-- REGISTERED ACCOUNTS WITH CREATOR TAGS -->
+                <div class="space-y-1.5 flex-1 overflow-y-auto max-h-36 pr-1">
+                    <p class="text-[10px] text-gold-400 font-bold uppercase tracking-widest mb-1 flex items-center justify-between">
+                        <span>Cloud Database Audit Logs</span>
+                        <span id="accountCountBadge" class="text-gray-400 font-mono">0 Accounts</span>
+                    </p>
                     <div id="usersListContainer" class="space-y-1.5">
-                        <!-- Dynamic Registered Users List -->
+                        <!-- Dynamic Lists with Creator Info -->
                     </div>
                 </div>
             </div>
@@ -274,7 +281,6 @@
             <!-- ================= SCREEN 3: USER DASHBOARD ================= -->
             <div id="screenDashboard" class="hidden space-y-4 flex-1 flex flex-col justify-between">
                 
-                <!-- PUBLIC LIVE ONLINE COUNTER ON DASHBOARD -->
                 <div class="bg-gradient-to-r from-yellow-950/40 via-panelbg to-yellow-950/40 border border-gold-500/40 rounded-2xl p-2.5 text-center shadow">
                     <p class="text-[10px] text-gray-300 font-bold uppercase tracking-widest flex items-center justify-center">
                         <span class="w-2 h-2 bg-green-400 rounded-full mr-1.5 animate-pulse"></span> Active Predictor Users Connected
@@ -284,7 +290,6 @@
                     </div>
                 </div>
 
-                <!-- USER STATUS BANNER -->
                 <div class="bg-panelbg border border-gold-500/30 rounded-2xl p-3 flex items-center justify-between">
                     <div class="flex items-center space-x-3">
                         <div class="w-9 h-9 rounded-xl bg-gold-500/10 border border-gold-400/50 flex items-center justify-center text-gold-400">
@@ -306,7 +311,6 @@
                 <div class="space-y-3 my-auto">
                     <p class="text-xs text-gold-400/90 font-bold uppercase tracking-widest text-center mb-1">Select VIP Prediction Mode</p>
 
-                    <!-- AVIATOR / CRASH AUTO ENGINE BUTTON -->
                     <button onclick="navigateTo('screenCrash')" 
                         class="w-full bg-gradient-to-r from-panelbg via-black to-panelbg border border-gold-500/40 p-4 rounded-2xl flex items-center justify-between hover:border-gold-400 transition group active:scale-[0.98]">
                         <div class="flex items-center space-x-3.5">
@@ -321,7 +325,6 @@
                         <i class="fa-solid fa-chevron-right text-gold-500 text-sm group-hover:translate-x-1 transition"></i>
                     </button>
 
-                    <!-- APPLE OF FORTUNE BUTTON -->
                     <button onclick="navigateTo('screenApple')" 
                         class="w-full bg-gradient-to-r from-panelbg via-black to-panelbg border border-gold-500/40 p-4 rounded-2xl flex items-center justify-between hover:border-gold-400 transition group active:scale-[0.98]">
                         <div class="flex items-center space-x-3.5">
@@ -347,7 +350,6 @@
                     <span class="text-xs font-bold text-gold-400 uppercase tracking-widest"><i class="fa-solid fa-robot mr-1"></i> Auto Crash Engine</span>
                 </div>
 
-                <!-- GAME ACCOUNT ID INPUT SECTION -->
                 <div class="bg-panelbg p-3.5 rounded-2xl border border-gold-500/30 space-y-2.5">
                     <div>
                         <label class="block text-xs text-gray-300 font-semibold mb-1">Game Account ID (معرّف حساب اللعبة)</label>
@@ -364,13 +366,11 @@
                     </button>
                 </div>
 
-                <!-- LIVE SIGNAL PREDICTION DISPLAY -->
                 <div class="bg-black/90 border-2 border-gold-400/80 rounded-2xl p-4 text-center relative overflow-hidden gold-glow my-auto min-h-[170px] flex flex-col items-center justify-center">
                     <div class="absolute -right-6 -top-6 text-gold-500/5 text-8xl pointer-events-none">
                         <i class="fa-solid fa-plane-up"></i>
                     </div>
 
-                    <!-- SYNC STATUS BADGE -->
                     <div id="syncBadge" class="hidden mb-2">
                         <span class="bg-green-500/20 text-green-400 border border-green-500/40 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center">
                             <span class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5 animate-ping"></span> Live Account Connected: <span id="connectedAccountText" class="ml-1 font-mono text-white"></span>
@@ -387,12 +387,10 @@
                         <span id="autoCrashConfidenceDisplay" class="text-green-400 font-mono text-sm">--%</span>
                     </div>
 
-                    <!-- AUTO REFRESH ACTION -->
                     <button id="btnNextSignal" onclick="triggerNextAutoSignal()" class="hidden mt-3 px-4 py-1.5 bg-gold-500/20 hover:bg-gold-500/30 border border-gold-400/50 rounded-lg text-gold-300 text-xs font-bold transition">
                         <i class="fa-solid fa-arrows-rotate mr-1"></i> Fetch Next Round Target
                     </button>
 
-                    <!-- CONNECTING / RADAR SCANNING OVERLAY -->
                     <div id="crashRadarLoader" class="hidden absolute inset-0 bg-black/95 flex flex-col items-center justify-center space-y-2 p-3">
                         <div class="relative w-12 h-12 border-2 border-gold-500/30 rounded-full flex items-center justify-center overflow-hidden">
                             <div class="absolute inset-0 border-t-2 border-gold-400 radar-line"></div>
@@ -412,15 +410,12 @@
                     <span class="text-xs font-bold text-gold-400 uppercase tracking-widest"><i class="fa-solid fa-apple-whole mr-1"></i> Apple Predictor</span>
                 </div>
 
-                <!-- 5-ROW GRID SIMULATION -->
                 <div class="bg-panelbg p-3 rounded-2xl border border-gold-500/30 space-y-2">
                     <div class="text-center mb-1">
                         <span class="text-[11px] text-gray-400 uppercase font-semibold">Predicted Safe Path (Rows 1 to 5)</span>
                     </div>
 
-                    <div id="appleGridContainer" class="space-y-1.5">
-                        <!-- Dynamic Rows Injected via JS -->
-                    </div>
+                    <div id="appleGridContainer" class="space-y-1.5"></div>
                 </div>
 
                 <button onclick="generateApplePath()" 
@@ -429,7 +424,7 @@
                 </button>
             </div>
 
-            <!-- ================= TELEGRAM & DEVELOPER CONTACTS (ALWAYS VISIBLE) ================= -->
+            <!-- ================= CONTACTS ================= -->
             <div class="mt-4 pt-3 border-t border-gold-500/20 space-y-2">
                 <a href="https://t.me/kemo_0666" target="_blank" 
                     class="w-full bg-sky-950/40 hover:bg-sky-900/60 border border-sky-400/40 p-2.5 rounded-xl flex items-center justify-between text-sky-300 transition group">
@@ -452,7 +447,6 @@
 
         </div>
 
-        <!-- BOTTOM FOOTER -->
         <div class="bg-black/90 p-2 text-center border-t border-gold-500/20">
             <p class="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">
                 &copy; 2026 K.E.M.O VIP System &bull; Cloud Realtime DB
@@ -463,7 +457,6 @@
 
     <!-- JAVASCRIPT LOGIC & FIREBASE REALTIME SYNC -->
     <script>
-        // إعدادات اتصال قاعدة البيانات السحابية الحقيقية (Firebase Web Config) بناءً على مشروعك
         const firebaseConfig = {
             apiKey: "AIzaSyB4ytaR7umuZV4VNE7k6AHylugeNxuc1tM",
             authDomain: "kvzs-52e80.firebaseapp.com",
@@ -475,35 +468,52 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // تهيئة الحسابات الافتراضية الأولية على السيرفر إذا لم تكن موجودة
+        // Counter Simulator
+        const COUNTER_KEY = 'KEMO_ONLINE_COUNTER_BASE';
+        let currentOnlineCount = 842;
+
+        function initOnlineCounter() {
+            const savedCounter = localStorage.getItem(COUNTER_KEY);
+            if (savedCounter) {
+                currentOnlineCount = parseInt(savedCounter);
+            } else {
+                currentOnlineCount = Math.floor(750 + Math.random() * 170);
+                localStorage.setItem(COUNTER_KEY, currentOnlineCount);
+            }
+            updateCounterUI();
+
+            setInterval(() => {
+                const delta = Math.floor(Math.random() * 7) - 3;
+                currentOnlineCount += delta;
+                if (currentOnlineCount < 350) currentOnlineCount = 362;
+                if (currentOnlineCount > 980) currentOnlineCount = 968;
+                localStorage.setItem(COUNTER_KEY, currentOnlineCount);
+                updateCounterUI();
+            }, 3000);
+        }
+
+        function updateCounterUI() {
+            const text = currentOnlineCount + " Users";
+            document.getElementById('publicOnlineCounter').innerText = text + " Online";
+            document.getElementById('dashboardOnlineCounter').innerText = text + " Online";
+            document.getElementById('adminPublicCounterMirror').innerText = text;
+        }
+
+        // Initialize default accounts if database is empty
         db.ref('users').once('value', (snapshot) => {
             if (!snapshot.exists()) {
                 db.ref('users').set({
-                    "crash": { password: "kemovip2026", expiry: Date.now() + 86400000 },
-                    "kemo": { password: "vip2026", expiry: Date.now() + 31536000000 },
-                    "player1": { password: "kemo2026", expiry: Date.now() + 2592000000 },
-                    "vip_pro": { password: "102030", expiry: Date.now() + 604800000 }
+                    "crash": { password: "kemovip2026", expiry: Date.now() + 86400000, role: "user", createdBy: "Master System" },
+                    "kemo": { password: "vip2026", expiry: Date.now() + 31536000000, role: "user", createdBy: "Master System" },
+                    "sub_agent": { password: "123", expiry: Date.now() + 2592000000, role: "subadmin", createdBy: "Master System" }
                 });
             }
         });
 
-        // عداد متصلين حقيقي يعتمد على عدد الجلسات النشطة المفتوحة بالسيرفر حالياً
-        const myPresenceRef = db.ref('presence/' + Math.random().toString(36).substring(2));
-        myPresenceRef.onDisconnect().remove();
-        myPresenceRef.set(true);
-
-        db.ref('presence').on('value', (snapshot) => {
-            const activeCount = snapshot.numChildren() + 342; // حشو حماسي متصاعد مع العدد الحقيقي
-            const text = activeCount + " Users";
-            document.getElementById('publicOnlineCounter').innerText = text;
-            document.getElementById('dashboardOnlineCounter').innerText = text;
-            document.getElementById('adminPublicCounterMirror').innerText = text;
-        });
-
         let currentActiveUser = null;
+        let currentUserRole = 'user'; // 'master', 'subadmin', 'user'
         let connectedGameID = null;
 
-        // Navigation Controller
         function navigateTo(screenId) {
             const screens = ['screenLogin', 'screenAdmin', 'screenDashboard', 'screenCrash', 'screenApple'];
             screens.forEach(id => {
@@ -522,21 +532,23 @@
             }
         }
 
-        // Authentication Handler with Cloud Database
         function handleLogin() {
             const userIn = document.getElementById('loginUsername').value.trim();
             const passIn = document.getElementById('loginPassword').value.trim();
             const errEl = document.getElementById('loginError');
             const errText = document.getElementById('loginErrorText');
 
-            // Master Admin Check
+            // Master Admin Login
             if (userIn === "admin" && passIn === "admin2026") {
+                currentActiveUser = "admin";
+                currentUserRole = 'master';
                 errEl.classList.add('hidden');
+                setupAdminPanelUI();
                 navigateTo('screenAdmin');
                 return;
             }
 
-            // Check User in Cloud Database
+            // Check Firebase for users or sub-admins
             db.ref('users/' + userIn).once('value', (snapshot) => {
                 const userData = snapshot.val();
                 if (userData && userData.password === passIn) {
@@ -548,13 +560,18 @@
                     }
 
                     currentActiveUser = userIn;
+                    currentUserRole = userData.role || 'user';
                     errEl.classList.add('hidden');
-                    document.getElementById('dashUsername').innerText = userIn;
-                    
-                    const daysLeft = Math.ceil((userData.expiry - Date.now()) / (1000 * 60 * 60 * 24));
-                    document.getElementById('dashExpiryText').innerText = daysLeft > 1000 ? 'Expires: Lifetime Unlimited' : `Expires in: ${daysLeft} Day(s)`;
 
-                    navigateTo('screenDashboard');
+                    if (currentUserRole === 'subadmin') {
+                        setupAdminPanelUI();
+                        navigateTo('screenAdmin');
+                    } else {
+                        document.getElementById('dashUsername').innerText = userIn;
+                        const daysLeft = Math.ceil((userData.expiry - Date.now()) / (1000 * 60 * 60 * 24));
+                        document.getElementById('dashExpiryText').innerText = daysLeft > 1000 ? 'Expires: Lifetime Unlimited' : `Expires in: ${daysLeft} Day(s)`;
+                        navigateTo('screenDashboard');
+                    }
                 } else {
                     errText.innerText = "Invalid Username or Password!";
                     errEl.classList.remove('hidden');
@@ -562,18 +579,36 @@
             });
         }
 
+        function setupAdminPanelUI() {
+            const titleEl = document.getElementById('adminPanelTitle');
+            const subTitleEl = document.getElementById('adminPanelSubtitle');
+            const roleEl = document.getElementById('adminRoleDisplay');
+
+            if (currentUserRole === 'master') {
+                titleEl.innerText = "Master Control Center";
+                subTitleEl.innerText = "Full Cloud Access & Creator Audit";
+                roleEl.innerText = "Master Admin";
+            } else {
+                titleEl.innerText = "Sub-Admin Portal";
+                subTitleEl.innerText = "Created By: " + currentActiveUser;
+                roleEl.innerText = "Sub-Admin Agent";
+            }
+        }
+
         function handleLogout() {
             currentActiveUser = null;
+            currentUserRole = 'user';
             connectedGameID = null;
             document.getElementById('loginUsername').value = '';
             document.getElementById('loginPassword').value = '';
             navigateTo('screenLogin');
         }
 
-        // ADMIN PANEL FUNCTIONS (CLOUD SAVING)
-        function createNewUser() {
+        // CREATE NEW ACCOUNT (WITH CREATOR TRACKING)
+        function createNewAccount() {
             const u = document.getElementById('newUsername').value.trim();
             const p = document.getElementById('newPassword').value.trim();
+            const role = document.getElementById('newRole').value;
             const d = parseInt(document.getElementById('newDuration').value);
 
             if (!u || !p) {
@@ -582,32 +617,37 @@
             }
 
             if (u === "admin") {
-                alert("Cannot overwrite master admin username!");
+                alert("Cannot overwrite master admin!");
                 return;
             }
 
             const expiry = Date.now() + (d * 24 * 60 * 60 * 1000);
+            const creatorName = currentActiveUser; // سجل اسم من انشأ هذا الحساب
+
             db.ref('users/' + u).set({
                 password: p,
-                expiry: expiry
+                expiry: expiry,
+                role: role,
+                createdBy: creatorName
             }, (error) => {
                 if (!error) {
                     document.getElementById('newUsername').value = '';
                     document.getElementById('newPassword').value = '';
                     loadAdminUsersList();
-                    alert("Account successfully created on Cloud Server!");
+                    alert("Account successfully created and logged!");
                 }
             });
         }
 
         function deleteUser(username) {
-            if (confirm("Are you sure you want to delete user: " + username + "?")) {
+            if (confirm("Delete account: " + username + "?")) {
                 db.ref('users/' + username).remove().then(() => {
                     loadAdminUsersList();
                 });
             }
         }
 
+        // LOAD USERS WITH CREATOR AUDIT LOGS
         function loadAdminUsersList() {
             db.ref('users').once('value', (snapshot) => {
                 const container = document.getElementById('usersListContainer');
@@ -615,15 +655,20 @@
 
                 const users = snapshot.val();
                 if (!users) {
-                    container.innerHTML = `<div class="text-[11px] text-gray-500 text-center py-2">No active users created yet.</div>`;
+                    container.innerHTML = `<div class="text-[11px] text-gray-500 text-center py-2">No accounts found.</div>`;
+                    document.getElementById('accountCountBadge').innerText = "0 Accounts";
                     return;
                 }
 
-                Object.keys(users).forEach(u => {
+                let keys = Object.keys(users);
+                document.getElementById('accountCountBadge').innerText = keys.length + " Accounts";
+
+                keys.forEach(u => {
                     const userObj = users[u];
                     const daysLeft = Math.ceil((userObj.expiry - Date.now()) / (1000 * 60 * 60 * 24));
                     const isExpired = userObj.expiry < Date.now();
-                    const isCurrentlyLoggedIn = (currentActiveUser === u);
+                    const isSubAdmin = userObj.role === 'subadmin';
+                    const creator = userObj.createdBy || 'System';
 
                     const item = document.createElement('div');
                     item.className = 'flex items-center justify-between bg-black/70 p-2 rounded-xl border border-gold-500/10 text-xs';
@@ -633,10 +678,17 @@
                             <div class="flex items-center space-x-1.5">
                                 <span class="font-bold text-white">${u}</span>
                                 <span class="text-[9px] text-gray-400">(${userObj.password})</span>
-                                ${isCurrentlyLoggedIn ? '<span class="text-[8px] bg-green-500/20 text-green-400 border border-green-500/40 px-1 rounded font-bold uppercase">Online</span>' : ''}
+                                <span class="text-[8px] px-1 rounded font-bold uppercase ${isSubAdmin ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'bg-gold-500/20 text-gold-300 border border-gold-500/30'}">
+                                    ${isSubAdmin ? 'Sub-Admin' : 'VIP User'}
+                                </span>
                             </div>
-                            <div class="text-[10px] ${isExpired ? 'text-red-400' : 'text-green-400'}">
-                                ${isExpired ? 'Expired' : (daysLeft > 1000 ? 'Lifetime' : `${daysLeft} days remaining`)}
+                            <div class="flex items-center space-x-2 mt-0.5">
+                                <span class="${isExpired ? 'text-red-400' : 'text-green-400'} text-[10px]">
+                                    ${isExpired ? 'Expired' : (daysLeft > 1000 ? 'Lifetime' : daysLeft + 'd left')}
+                                </span>
+                                <span class="text-[9px] text-gray-400 bg-panelbg px-1.5 py-0.2 rounded border border-gold-500/10">
+                                    <i class="fa-solid fa-user-pen text-[8px] text-gold-400 mr-1"></i>By: ${creator}
+                                </span>
                             </div>
                         </div>
                         <button onclick="deleteUser('${u}')" class="text-red-400 hover:text-red-300 p-1">
@@ -649,7 +701,7 @@
             });
         }
 
-        // AUTOMATIC GAME ACCOUNT ID CRASH ENGINE
+        // Crash Engine
         function connectGameAccount() {
             const gameID = document.getElementById('gameAccountId').value.trim();
             if (!gameID) {
@@ -659,53 +711,40 @@
 
             connectedGameID = gameID;
             const loader = document.getElementById('crashRadarLoader');
-            const loaderText = document.getElementById('radarLoaderText');
-            
-            loaderText.innerText = "Syncing ID: " + gameID + " to Cloud Server...";
+            document.getElementById('radarLoaderText').innerText = "Syncing ID: " + gameID + " to Cloud...";
             loader.classList.remove('hidden');
 
             setTimeout(() => {
                 loader.classList.add('hidden');
-                
-                // Show Connected Badge
                 document.getElementById('syncBadge').classList.remove('hidden');
                 document.getElementById('connectedAccountText').innerText = gameID;
                 document.getElementById('btnNextSignal').classList.remove('hidden');
-
-                // Auto Generate First Live Signal
                 triggerNextAutoSignal();
             }, 1200);
         }
 
         function triggerNextAutoSignal() {
             if (!connectedGameID) return;
-
             const loader = document.getElementById('crashRadarLoader');
-            const loaderText = document.getElementById('radarLoaderText');
-            
-            loaderText.innerText = "Fetching Cloud Algorithm Target...";
+            document.getElementById('radarLoaderText').innerText = "Fetching Cloud Algorithm Target...";
             loader.classList.remove('hidden');
 
             setTimeout(() => {
-                // Generate Dynamic Algorithm Target
                 const randomTarget = (1.35 + Math.random() * 2.85).toFixed(2);
                 const confidence = Math.floor(88 + Math.random() * 11);
-
                 document.getElementById('autoCrashResultDisplay').innerText = randomTarget + "x";
                 document.getElementById('autoCrashConfidenceDisplay').innerText = confidence + "%";
-
                 loader.classList.add('hidden');
             }, 700);
         }
 
-        // Apple of Fortune 5-Row Safe Path Generator
+        // Apple of Fortune Generator
         function generateApplePath() {
             const container = document.getElementById('appleGridContainer');
             container.innerHTML = '';
 
             for (let row = 5; row >= 1; row--) {
                 const safeColumn = Math.floor(Math.random() * 4) + 1;
-
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'flex items-center justify-between bg-black/60 p-1.5 rounded-xl border border-gold-500/10';
 
@@ -714,23 +753,20 @@
 
                 for (let col = 1; col <= 4; col++) {
                     if (col === safeColumn) {
-                        rowHTML += `
-                            <div class="w-9 h-9 rounded-lg bg-green-950 border border-green-400 flex items-center justify-center text-green-400 text-base shadow-sm shadow-green-500/30 pulse-apple">
-                                🍏
-                            </div>`;
+                        rowHTML += `<div class="w-9 h-9 rounded-lg bg-green-950 border border-green-400 flex items-center justify-center text-green-400 text-base shadow-sm shadow-green-500/30 pulse-apple">🍏</div>`;
                     } else {
-                        rowHTML += `
-                            <div class="w-9 h-9 rounded-lg bg-panelbg border border-gray-800 flex items-center justify-center text-gray-600 text-xs font-mono">
-                                ${col}
-                            </div>`;
+                        rowHTML += `<div class="w-9 h-9 rounded-lg bg-panelbg border border-gray-800 flex items-center justify-center text-gray-600 text-xs font-mono">${col}</div>`;
                     }
                 }
-
                 rowHTML += `</div>`;
                 rowDiv.innerHTML = rowHTML;
                 container.appendChild(rowDiv);
             }
         }
+
+        window.onload = function() {
+            initOnlineCounter();
+        };
     </script>
 </body>
 </html>
