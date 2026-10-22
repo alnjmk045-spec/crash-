@@ -210,14 +210,15 @@
                     </button>
                 </div>
 
+                <!-- Developer Stats: Real Connected Counter for Admin -->
                 <div class="grid grid-cols-2 gap-2 text-center">
                     <div class="bg-black/60 p-2 rounded-xl border border-gold-500/20">
                         <p class="text-[10px] text-gray-400 font-bold uppercase">Role Level</p>
                         <p id="adminRoleDisplay" class="text-xs font-bold text-gold-400 font-mono mt-1">Master Administrator</p>
                     </div>
                     <div class="bg-black/60 p-2 rounded-xl border border-gold-500/20">
-                        <p class="text-[10px] text-gray-400 font-bold uppercase">Online Simulator</p>
-                        <p id="adminPublicCounterMirror" class="text-lg font-bold text-gold-400 font-mono">--- Users</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase">Real Active Connections</p>
+                        <p id="adminRealOnlineCounter" class="text-lg font-bold text-green-400 font-mono">-- Users</p>
                     </div>
                 </div>
 
@@ -468,7 +469,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Counter Simulator
+        // 1. نظام العداد الوهمي للمستخدمين العاديين
         const COUNTER_KEY = 'KEMO_ONLINE_COUNTER_BASE';
         let currentOnlineCount = 842;
 
@@ -496,8 +497,21 @@
             const text = currentOnlineCount + " Users";
             document.getElementById('publicOnlineCounter').innerText = text + " Online";
             document.getElementById('dashboardOnlineCounter').innerText = text + " Online";
-            document.getElementById('adminPublicCounterMirror').innerText = text;
         }
+
+        // 2. نظام العداد الحقيقي الخاص بالمتصلين (يظهر للأدمن فقط في لوحة التحكم)
+        const myPresenceRef = db.ref('presence/' + Math.random().toString(36).substring(2));
+        myPresenceRef.onDisconnect().remove();
+        myPresenceRef.set(true);
+
+        db.ref('presence').on('value', (snapshot) => {
+            const realCount = snapshot.numChildren();
+            const realText = realCount + " Active (Real)";
+            const adminMirror = document.getElementById('adminRealOnlineCounter');
+            if (adminMirror) {
+                adminMirror.innerText = realText;
+            }
+        });
 
         // Initialize default accounts if database is empty
         db.ref('users').once('value', (snapshot) => {
@@ -511,7 +525,7 @@
         });
 
         let currentActiveUser = null;
-        let currentUserRole = 'user'; // 'master', 'subadmin', 'user'
+        let currentUserRole = 'user'; 
         let connectedGameID = null;
 
         function navigateTo(screenId) {
@@ -576,6 +590,8 @@
                     errText.innerText = "Invalid Username or Password!";
                     errEl.classList.remove('hidden');
                 }
+            }, (error) => {
+                alert("Database Connection Error: " + error.message);
             });
         }
 
@@ -604,7 +620,7 @@
             navigateTo('screenLogin');
         }
 
-        // CREATE NEW ACCOUNT (WITH CREATOR TRACKING)
+        // CREATE NEW ACCOUNT WITH ERROR CATCHING
         function createNewAccount() {
             const u = document.getElementById('newUsername').value.trim();
             const p = document.getElementById('newPassword').value.trim();
@@ -622,7 +638,7 @@
             }
 
             const expiry = Date.now() + (d * 24 * 60 * 60 * 1000);
-            const creatorName = currentActiveUser; // سجل اسم من انشأ هذا الحساب
+            const creatorName = currentActiveUser;
 
             db.ref('users/' + u).set({
                 password: p,
@@ -630,7 +646,9 @@
                 role: role,
                 createdBy: creatorName
             }, (error) => {
-                if (!error) {
+                if (error) {
+                    alert("Failed to save: " + error.message + "\n(Make sure Firebase Database Rules allow write access!)");
+                } else {
                     document.getElementById('newUsername').value = '';
                     document.getElementById('newPassword').value = '';
                     loadAdminUsersList();
@@ -643,6 +661,8 @@
             if (confirm("Delete account: " + username + "?")) {
                 db.ref('users/' + username).remove().then(() => {
                     loadAdminUsersList();
+                }).catch((err) => {
+                    alert("Delete failed: " + err.message);
                 });
             }
         }
@@ -698,6 +718,8 @@
 
                     container.appendChild(item);
                 });
+            }, (error) => {
+                alert("Error loading users: " + error.message);
             });
         }
 
@@ -727,7 +749,7 @@
             if (!connectedGameID) return;
             const loader = document.getElementById('crashRadarLoader');
             document.getElementById('radarLoaderText').innerText = "Fetching Cloud Algorithm Target...";
-            loader.classList.remove('hidden');
+            loader.classList.add('hidden');
 
             setTimeout(() => {
                 const randomTarget = (1.35 + Math.random() * 2.85).toFixed(2);
