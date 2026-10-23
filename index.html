@@ -464,6 +464,7 @@
         // --- REALTIME DATABASE CONFIG & STORAGE ---
         const DB_URL = "https://kvzs-52e80-default-rtdb.firebaseio.com";
         const firebaseConfig = {
+            databaseURL: "https://kvzs-52e80-default-rtdb.firebaseio.com",
             projectId: "kvzs-52e80",
             messagingSenderId: "743455714933",
             appId: "1:743455714933:android:001f02260badc4b669d23c"
@@ -472,7 +473,7 @@
         firebase.initializeApp(firebaseConfig);
         const messaging = firebase.messaging();
 
-        // --- BACKGROUND PUSH NOTIFICATION REGISTRATION (VAPID) ---
+        // --- BACKGROUND PUSH NOTIFICATION REGISTRATION (VAPID KEY INTEGRATED) ---
         function initPushNotifications() {
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/firebase-messaging-sw.js')
@@ -1212,7 +1213,7 @@
             };
 
             await fetch(`${DB_URL}/push_broadcast.json`, {
-                method: 'SET',
+                method: 'PUT',
                 body: JSON.stringify(pushObj)
             });
 
