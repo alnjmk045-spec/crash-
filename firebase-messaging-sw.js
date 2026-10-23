@@ -1,20 +1,25 @@
 importScripts('https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js');
 
 firebase.initializeApp({
-  projectId: "kvzs-52e80",
-  messagingSenderId: "743455714933",
-  appId: "1:743455714933:android:001f02260badc4b669d23c"
+    apiKey: "AIzaSyB4ytaR7umuZV4VNE7k6AHylugeNxuc1tM",
+    databaseURL: "https://kvzs-52e80-default-rtdb.firebaseio.com",
+    projectId: "kvzs-52e80",
+    storageBucket: "kvzs-52e80.firebasestorage.app",
+    messagingSenderId: "743455714933",
+    appId: "1:743455714933:android:001f02260badc4b669d23c"
 });
 
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  const notificationTitle = payload.notification?.title || '𓆩👑𓆪 K.E.M.O VIP';
-  const notificationOptions = {
-    body: payload.notification?.body || 'لديك إشارة جديدة من التطبيق!',
-    icon: payload.notification?.image || '',
-  };
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+        body: payload.notification.body,
+        icon: '/icon.png'
+    };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+    self.registration.showNotification(notificationTitle, notificationOptions);
 });
