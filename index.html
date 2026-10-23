@@ -4,13 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K.E.M.O VIP PREDICTOR | Luxury Edition</title>
-
-    <!-- PWA & Firebase SDKs -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIksuRS5NLk8gVklQIFByZWRpY3RvciIsCiAgInNob3J0X25hbWUiIjogIksuRS5NLk8gVklQIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGQwZDEyIiwKICAidGhlbWVfY29sb3IiOiAiI2ZmZDE3MCIKZX0=">
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -55,6 +48,7 @@
             user-select: none;
         }
 
+        /* Gold Metallic Gradient Text */
         .gold-gradient-text {
             background: linear-gradient(135deg, #FFF8DC 0%, #F0C24B 50%, #AA820A 100%);
             -webkit-background-clip: text;
@@ -77,6 +71,7 @@
             box-shadow: 0 0 35px rgba(212, 175, 55, 0.4);
         }
 
+        /* Glassmorphism Panel */
         .glass-panel {
             background: rgba(20, 20, 24, 0.75);
             backdrop-filter: blur(16px);
@@ -85,6 +80,7 @@
             border-radius: 1rem;
         }
 
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -96,6 +92,7 @@
             border-radius: 3px;
         }
 
+        /* Radar Scanner Animation */
         @keyframes scan {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -104,6 +101,7 @@
             animation: scan 3s linear infinite;
         }
 
+        /* Pulsing Dot */
         @keyframes pulse-gold {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.85); }
@@ -112,6 +110,7 @@
             animation: pulse-gold 2s infinite;
         }
 
+        /* High Odds Alert Pulse */
         @keyframes pulse-red {
             0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
             50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
@@ -132,7 +131,7 @@
                 </div>
             </div>
             <div>
-                <h1 class="font-orbitron font-extrabold text-base tracking-wider gold-gradient-text">𓆩👑𓆪 K.E.M.O VIP</h1>
+                <h1 class="font-orbitron font-extrabold text-base tracking-wider gold-gradient-text">K.E.M.O VIP</h1>
                 <p class="text-[10px] text-gray-400 flex items-center gap-1">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block pulse-gold"></span>
                     ONLINE: <span id="publicOnlineCounter" class="text-gold-300 font-bold">542</span>
@@ -140,6 +139,7 @@
             </div>
         </div>
 
+        <!-- User Controls / Info -->
         <div class="flex items-center gap-2">
             <span id="roleBadge" class="hidden px-2 py-0.5 text-[10px] uppercase font-bold rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30">
                 USER
@@ -153,14 +153,14 @@
         </div>
     </header>
 
-    <!-- Subscription Expiry Warning Banner -->
+    <!-- Subscription Expiry Warning Banner (Dynamic) -->
     <div id="subExpiryBanner" class="hidden bg-amber-950/80 border-b border-amber-500/40 px-4 py-2 text-center text-xs text-amber-200 font-semibold flex items-center justify-center gap-2">
         <i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm"></i>
         <span>VIP Subscription expiring soon! Remaining time: <strong id="subTimeLeft" class="text-gold-300">--</strong>. Contact Admin to renew.</span>
         <button onclick="toggleSupportChat()" class="underline text-gold-400 hover:text-white ml-2 text-[11px]">RENEW NOW</button>
     </div>
 
-    <!-- Main Container -->
+    <!-- Main Dynamic Application Container -->
     <main class="container mx-auto px-4 py-6 max-w-xl flex-grow">
 
         <!-- 1. AUTH / LOGIN SECTION -->
@@ -202,10 +202,11 @@
             </div>
         </section>
 
-        <!-- 2. MAIN PREDICTOR DASHBOARD -->
+
+        <!-- 2. MAIN PREDICTOR DASHBOARD (AUTHENTICATED) -->
         <section id="dashboardSection" class="hidden space-y-6">
 
-            <!-- Game Switcher -->
+            <!-- Game Selection Switcher -->
             <div class="grid grid-cols-2 gap-3 glass-panel p-1.5">
                 <button id="tabCrashBtn" onclick="switchGameTab('crash')" class="py-2.5 px-3 rounded-lg text-xs font-bold font-orbitron transition flex items-center justify-center gap-2 bg-gold-500 text-black shadow">
                     <i class="fa-solid fa-plane-up"></i> CRASH ENGINE
@@ -215,14 +216,14 @@
                 </button>
             </div>
 
-            <!-- Game ID Input -->
+            <!-- Game ID Input Box -->
             <div class="glass-panel p-4 flex flex-col gap-2">
                 <label class="text-xs font-bold text-gold-300 flex items-center justify-between">
                     <span><i class="fa-solid fa-gamepad text-gold-400 mr-1.5"></i> 1xBET ACCOUNT GAME ID</span>
                     <span id="connectionStatus" class="text-[10px] text-emerald-400 font-normal"><i class="fa-solid fa-circle text-[8px] mr-1"></i> READY</span>
                 </label>
                 <div class="flex gap-2">
-                    <input type="number" id="gameIdInput" placeholder="Enter your 1xBet ID..." 
+                    <input type="number" id="gameIdInput" placeholder="Enter your 1xBet / 1Win ID..." 
                         class="flex-grow px-3 py-2 bg-black/60 border border-gold-500/30 rounded-lg text-sm text-gold-100 placeholder-gray-600 focus:outline-none focus:border-gold-400 font-orbitron">
                     <button onclick="connectGameId()" class="px-4 py-2 bg-gold-500/20 hover:bg-gold-500 hover:text-black border border-gold-500/40 rounded-lg text-xs font-bold text-gold-300 transition">
                         CONNECT
@@ -230,21 +231,22 @@
                 </div>
             </div>
 
-            <!-- SIGNAL HISTORY BAR -->
+            <!-- RECENT SIGNAL HISTORY BAR -->
             <div class="glass-panel p-3">
                 <div class="text-[10px] font-bold text-gray-400 mb-2 flex items-center justify-between">
                     <span><i class="fa-solid fa-clock-rotate-left text-gold-400 mr-1"></i> LIVE ROUND HISTORY</span>
                     <span class="text-emerald-400">SYNCED</span>
                 </div>
                 <div id="signalHistoryBar" class="flex gap-2 overflow-x-auto pb-1 text-xs font-orbitron">
+                    <!-- Dynamic badges injected via JS -->
                 </div>
             </div>
 
-            <!-- CRASH SIMULATOR -->
+            <!-- GAME TAB 1: CRASH SIMULATOR -->
             <div id="crashGameContainer" class="space-y-4">
                 <div class="glass-panel p-4 relative overflow-hidden flex flex-col items-center">
                     
-                    <!-- PREDICTED TARGET MULTIPLIER DISPLAY -->
+                    <!-- PREDICTED TARGET CRASH MULTIPLIER BOX (HIGHLIGHTED TOP DISPLAY) -->
                     <div id="targetOddsContainer" class="w-full mb-3 p-3 bg-black/80 rounded-lg border-2 border-gold-400 text-center shadow-lg relative overflow-hidden">
                         <div class="text-[11px] font-bold font-orbitron text-gray-400 uppercase tracking-widest flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-bullseye text-gold-400"></i>
@@ -258,10 +260,11 @@
                         </div>
                     </div>
 
-                    <!-- Canvas Graphic for Jet Flight -->
+                    <!-- Canvas Graphic for Crash Jet -->
                     <div class="w-full h-64 bg-black/90 rounded-lg border border-gold-500/30 relative overflow-hidden flex items-center justify-center shadow-inner">
                         <canvas id="crashCanvas" class="w-full h-full block"></canvas>
                         
+                        <!-- Overlay Radar Scanner (when syncing) -->
                         <div id="crashRadarOverlay" class="hidden absolute inset-0 bg-black/85 flex flex-col items-center justify-center z-20">
                             <div class="w-20 h-20 rounded-full border-2 border-gold-500/40 relative flex items-center justify-center radar-sweep border-t-gold-400">
                                 <div class="w-2 h-2 rounded-full bg-gold-400"></div>
@@ -269,23 +272,26 @@
                             <p class="text-xs font-orbitron text-gold-300 mt-3 animate-pulse">CONNECTING TO 1xBET LIVE ALGORITHM...</p>
                         </div>
 
+                        <!-- Current Multiplier Display (Live Flight) -->
                         <div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-gold-500/30 text-xs font-orbitron text-gold-300 flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-gold"></span>
                             LIVE FLIGHT: <span id="crashDisplayValue" class="text-gold-400 font-bold text-sm">1.00x</span>
                         </div>
 
+                        <!-- Status Badge -->
                         <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-lg border border-gold-500/30 text-[10px] font-orbitron text-gray-400">
                             STATUS: <span id="crashStatusText" class="text-gold-300 font-bold">WAITING</span>
                         </div>
                     </div>
 
+                    <!-- Manual Prediction Override Button -->
                     <button onclick="triggerCrashManualPrediction()" id="getCrashBtn" class="w-full mt-4 py-3.5 rounded-lg gold-gradient-bg text-black font-extrabold font-orbitron text-sm shadow-xl hover:brightness-110 active:scale-95 transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-bolt"></i> FORCE PREDICT NEXT ROUND
                     </button>
                 </div>
             </div>
 
-            <!-- APPLE ENGINE GRID -->
+            <!-- GAME TAB 2: APPLE OF FORTUNE GRID -->
             <div id="appleGameContainer" class="hidden space-y-4">
                 <div class="glass-panel p-4">
                     <div class="text-center mb-3">
@@ -293,7 +299,9 @@
                         <p class="text-[11px] text-gray-400">5-Row Server Map Engine</p>
                     </div>
 
+                    <!-- 5 Rows x 5 Columns Grid -->
                     <div class="space-y-2 max-w-xs mx-auto" id="appleGrid">
+                        <!-- Generated via JS for 5 rows -->
                     </div>
 
                     <button onclick="getApplePrediction()" id="getAppleBtn" class="w-full mt-4 py-3.5 rounded-lg gold-gradient-bg text-black font-extrabold font-orbitron text-sm shadow-xl hover:brightness-110 active:scale-95 transition">
@@ -312,9 +320,10 @@
         <span id="chatBadge" class="hidden absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white rounded-full text-[9px] font-bold flex items-center justify-center border border-black">!</span>
     </button>
 
-    <!-- SUPPORT CHAT MODAL -->
+    <!-- ISOLATED SUPPORT CHAT MODAL -->
     <div id="supportChatModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-2 sm:p-4">
         <div class="w-full max-w-md h-[80vh] glass-panel flex flex-col overflow-hidden border border-gold-500/40">
+            <!-- Header -->
             <div class="p-3 bg-panelbg border-b border-gold-500/20 flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-headset text-gold-400"></i>
@@ -328,9 +337,12 @@
                 </button>
             </div>
 
+            <!-- Chat Messages Container -->
             <div id="chatMessagesBox" class="flex-grow p-4 overflow-y-auto space-y-3 text-xs">
+                <!-- Messages render here -->
             </div>
 
+            <!-- Input Bar -->
             <form onsubmit="sendSupportMessage(event)" class="p-3 bg-black/60 border-t border-gold-500/20 flex gap-2">
                 <input type="text" id="chatInputText" placeholder="Type your message..." required
                     class="flex-grow px-3 py-2 bg-darkbg border border-gold-500/30 rounded-lg text-xs text-white focus:outline-none focus:border-gold-400">
@@ -341,9 +353,10 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL MODAL -->
+    <!-- MASTER / SUB-ADMIN MANAGEMENT MODAL -->
     <div id="adminModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3">
         <div class="w-full max-w-2xl max-h-[90vh] glass-panel flex flex-col overflow-hidden border border-gold-500/40">
+            <!-- Modal Header -->
             <div class="p-4 bg-panelbg border-b border-gold-500/20 flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-user-gear text-gold-400"></i>
@@ -354,15 +367,19 @@
                 </button>
             </div>
 
+            <!-- Admin Sub-Navigation -->
             <div class="flex border-b border-gold-500/10 text-xs font-orbitron bg-black/40">
                 <button onclick="switchAdminTab('users')" id="admTabUsers" class="flex-1 py-2.5 text-center text-gold-400 border-b-2 border-gold-400 font-bold">USERS & ROLES</button>
                 <button onclick="switchAdminTab('inbox')" id="admTabInbox" class="flex-1 py-2.5 text-center text-gray-400 hover:text-gold-300">SUPPORT INBOX</button>
                 <button onclick="switchAdminTab('push')" id="admTabPush" class="flex-1 py-2.5 text-center text-gray-400 hover:text-gold-300">PUSH NOTIFIER</button>
             </div>
 
+            <!-- Admin Modal Body -->
             <div class="p-4 overflow-y-auto flex-grow space-y-4 text-xs">
 
+                <!-- 1. USER CREATION & AUDIT SECTION -->
                 <div id="admSectionUsers" class="space-y-4">
+                    <!-- Create User Form -->
                     <div class="p-3 bg-black/40 rounded-lg border border-gold-500/20 space-y-3">
                         <h4 class="font-bold text-gold-300 font-orbitron">CREATE NEW ACCOUNT</h4>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -380,16 +397,20 @@
                         </button>
                     </div>
 
+                    <!-- Existing Accounts List -->
                     <div>
                         <h4 class="font-bold text-gold-300 font-orbitron mb-2">MANAGED ACCOUNTS</h4>
                         <div id="usersListContainer" class="space-y-2 max-h-48 overflow-y-auto">
+                            <!-- Accounts rendered via JS -->
                         </div>
                     </div>
                 </div>
 
+                <!-- 2. SUPPORT INBOX SECTION -->
                 <div id="admSectionInbox" class="hidden space-y-3">
                     <h4 class="font-bold text-gold-300 font-orbitron">ISOLATED USER CONVERSATIONS</h4>
                     <div id="adminInboxList" class="space-y-2 max-h-64 overflow-y-auto">
+                        <!-- Dynamic support threads -->
                     </div>
                     <div id="adminActiveThread" class="hidden p-3 bg-black/60 rounded-lg border border-gold-500/30 space-y-2">
                         <div class="flex justify-between items-center text-gold-300 border-b border-gold-500/20 pb-1">
@@ -404,6 +425,7 @@
                     </div>
                 </div>
 
+                <!-- 3. PUSH NOTIFIER BROADCASTER -->
                 <div id="admSectionPush" class="hidden space-y-3">
                     <h4 class="font-bold text-gold-300 font-orbitron">BROADCAST PUSH NOTIFICATION</h4>
                     <p class="text-[10px] text-gray-400">Sends rich pop-up notification directly to active app sessions.</p>
@@ -422,7 +444,7 @@
         </div>
     </div>
 
-    <!-- IN-APP TOAST NOTIFICATION -->
+    <!-- IN-APP POPUP TOAST NOTIFICATION -->
     <div id="toastNotification" class="hidden fixed top-16 right-4 left-4 sm:left-auto sm:w-80 z-50 glass-panel p-3 border-l-4 border-gold-400 shadow-2xl flex items-start gap-3">
         <i class="fa-solid fa-bell text-gold-400 text-lg mt-0.5"></i>
         <div class="flex-grow">
@@ -433,8 +455,13 @@
         <button onclick="hideToast()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
+    <!-- FIREBASE SDKs & SCRIPT LOGIC -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
+
     <script>
-        // --- FIREBASE INITIALIZATION ---
+        // --- REALTIME DATABASE CONFIG & STORAGE ---
         const DB_URL = "https://kvzs-52e80-default-rtdb.firebaseio.com";
         const firebaseConfig = {
             projectId: "kvzs-52e80",
@@ -445,7 +472,7 @@
         firebase.initializeApp(firebaseConfig);
         const messaging = firebase.messaging();
 
-        // --- BACKGROUND PUSH NOTIFICATION REGISTRATION ---
+        // --- BACKGROUND PUSH NOTIFICATION REGISTRATION (VAPID) ---
         function initPushNotifications() {
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/firebase-messaging-sw.js')
@@ -468,7 +495,7 @@
         }
         
         // --- GLOBAL STATE ---
-        let currentUser = null;
+        let currentUser = null; // { username, role, createdBy, maxAlloc, currentAlloc, expiryTimestamp }
         let currentGameId = "";
         let deviceFingerprint = "";
         let selectedThreadUser = null;
@@ -476,6 +503,7 @@
         let isCrashLoopRunning = false;
         let currentTargetMultiplier = 1.00;
 
+        // --- ON INITIALIZATION ---
         window.onload = function() {
             initPushNotifications();
             initDeviceFingerprint();
@@ -487,6 +515,7 @@
             listenForPushNotifications();
         };
 
+        // --- DEVICE FINGERPRINT & AUTO-LOGIN LOCK ---
         function initDeviceFingerprint() {
             let fp = localStorage.getItem('kemo_device_fp');
             if (!fp) {
@@ -511,6 +540,7 @@
             }
         }
 
+        // --- AUTHENTICATION ---
         async function handleLogin(e) {
             e.preventDefault();
             const u = document.getElementById('loginUsername').value.trim().toLowerCase();
@@ -518,6 +548,7 @@
             const errDiv = document.getElementById('loginError');
             errDiv.classList.add('hidden');
 
+            // Default Master Admin Fallback
             if (u === 'admin' && p === 'admin2026') {
                 currentUser = { username: 'admin', role: 'master', createdBy: 'system', maxAlloc: 999, currentAlloc: 0, expiryTimestamp: Date.now() + (365*24*3600*1000) };
                 localStorage.setItem('kemo_session_user', 'admin');
@@ -534,16 +565,19 @@
                     return;
                 }
 
+                // Check Subscription Expiry
                 if (userData.expiryTimestamp && Date.now() > userData.expiryTimestamp) {
                     showError("VIP Subscription Expired! Contact Admin to renew.");
                     return;
                 }
 
+                // Device Lock Enforcement
                 if (userData.deviceLock && userData.deviceLock !== deviceFingerprint) {
                     showError("Account locked to another device! Contact Admin.");
                     return;
                 }
 
+                // Bind Device on First Login
                 if (!userData.deviceLock) {
                     userData.deviceLock = deviceFingerprint;
                     await fetch(`${DB_URL}/users/${u}.json`, {
@@ -579,7 +613,10 @@
                 document.getElementById('navAdminBtn').classList.remove('hidden');
             }
 
+            // Verify subscription remaining time & alert
             checkSubscriptionWarning();
+
+            // Sync user support chat
             listenUserSupportMessages();
         }
 
@@ -588,10 +625,12 @@
             const remainingMs = currentUser.expiryTimestamp - Date.now();
             const hoursLeft = Math.max(0, Math.floor(remainingMs / (1000 * 60 * 60)));
 
-            if (remainingMs <= (24 * 3600 * 1000)) {
+            if (remainingMs <= (24 * 3600 * 1000)) { // 24 hours or less
                 const banner = document.getElementById('subExpiryBanner');
                 document.getElementById('subTimeLeft').innerText = `${hoursLeft} Hours`;
                 banner.classList.remove('hidden');
+
+                // Automated In-App Push Warning
                 showToast("⚠️ VIP EXPIRY WARNING", `Your subscription expires in ${hoursLeft} hours. Please contact Admin to extend.`);
             }
         }
@@ -601,6 +640,7 @@
             location.reload();
         }
 
+        // --- GAME SWITCHER ---
         function switchGameTab(tab) {
             const crashContainer = document.getElementById('crashGameContainer');
             const appleContainer = document.getElementById('appleGameContainer');
@@ -623,16 +663,18 @@
         function connectGameId() {
             const val = document.getElementById('gameIdInput').value.trim();
             if (!val || val.length < 5) {
-                showToast("INVALID GAME ID", "Please enter a valid 1xBet Account ID.");
+                showToast("INVALID GAME ID", "Please enter a valid 1xBet / 1Win ID.");
                 return;
             }
             currentGameId = val;
             document.getElementById('connectionStatus').innerHTML = `<i class="fa-solid fa-check-circle text-emerald-400"></i> CONNECTED (${val})`;
             showToast("ACCOUNT CONNECTED", `Game ID ${val} successfully linked to prediction engine.`);
 
+            // Start continuous realistic 1xBet auto-flight loop
             startCrashAutoLoop();
         }
 
+        // --- REALISTIC 1xBET CRASH CANVAS & PLANE ENGINE ---
         function startCrashAutoLoop() {
             if (isCrashLoopRunning) return;
             isCrashLoopRunning = true;
@@ -656,9 +698,11 @@
         }
 
         function generateNextMultiplier() {
+            // Random distribution including huge odds (>10x, >20x, >100x)
             const rand = Math.random();
             let val;
             if (rand < 0.08) {
+                // High odds alert (100x max)
                 val = (Math.random() * (100.0 - 20.0) + 20.0).toFixed(2);
             } else if (rand < 0.25) {
                 val = (Math.random() * (20.0 - 10.0) + 10.0).toFixed(2);
@@ -677,12 +721,15 @@
             const targetDisplay = document.getElementById('predictedTargetDisplay');
             const highOddsTag = document.getElementById('highOddsTag');
 
+            // CLEARLY SHOW PREDICTED CRASH POINT BEFORE & DURING FLIGHT
             targetDisplay.innerText = `${currentTargetMultiplier.toFixed(2)}x`;
 
+            // Trigger High Odds Automated Notification
             if (currentTargetMultiplier >= 10.0) {
                 highOddsTag.innerText = `🔥 MASSIVE ODDS DETECTED (${currentTargetMultiplier.toFixed(2)}x)`;
                 highOddsTag.classList.remove('hidden');
 
+                // Automated Notification Broadcast
                 showToast(
                     "🚨 HIGH ODDS RADAR ALERT!",
                     `Massive predicted multiplier incoming: ${currentTargetMultiplier.toFixed(2)}x! Get ready!`
@@ -695,7 +742,7 @@
             statusText.className = "text-emerald-400 font-bold";
 
             let currentMulti = 1.00;
-            const increment = currentTargetMultiplier > 20 ? 0.08 : 0.012;
+            const increment = currentTargetMultiplier > 20 ? 0.08 : 0.012; // Calibrated speed pace
 
             if (crashLoopInterval) clearInterval(crashLoopInterval);
 
@@ -703,18 +750,22 @@
                 currentMulti += increment;
                 displayValue.innerText = currentMulti.toFixed(2) + 'x';
 
+                // Progress ratio (0.0 to 1.0)
                 const progress = Math.min((currentMulti - 1.0) / (currentTargetMultiplier - 1.0), 1.0);
                 drawCrashCanvas(currentMulti, false, progress);
 
                 if (currentMulti >= currentTargetMultiplier) {
                     clearInterval(crashLoopInterval);
 
+                    // Jet Flew Away / Crashed exactly at target
                     statusText.innerText = "CRASHED AT " + currentTargetMultiplier.toFixed(2) + "x";
                     statusText.className = "text-red-400 font-bold";
                     drawCrashCanvas(currentTargetMultiplier, true, 1.0);
 
+                    // Log signal to round history
                     addSignalToHistory(currentTargetMultiplier.toFixed(2) + 'x');
 
+                    // Reset and auto-start next round after pause
                     setTimeout(() => {
                         statusText.innerText = "NEXT ROUND IN 3s";
                         statusText.className = "text-gold-300 font-bold";
@@ -734,6 +785,7 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Draw Background Grid Lines
             ctx.strokeStyle = "rgba(212, 175, 55, 0.08)";
             ctx.lineWidth = 1;
             for (let x = 0; x < canvas.width; x += 35) {
@@ -751,6 +803,7 @@
             const currentX = startX + (maxWidth * Math.min(progress, 1.0));
             const currentY = startY - (maxHeight * Math.pow(Math.min(progress, 1.0), 0.85));
 
+            // Draw Curved Flight Path Line
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             const controlX = startX + (currentX - startX) * 0.5;
@@ -761,6 +814,7 @@
             ctx.lineWidth = 3.5;
             ctx.stroke();
 
+            // Fill area under flight line
             if (!isCrashed && progress > 0) {
                 ctx.lineTo(currentX, startY);
                 ctx.lineTo(startX, startY);
@@ -771,11 +825,14 @@
                 ctx.fill();
             }
 
+            // Calculate flight angle for smooth orientation
             const angle = Math.atan2((startY - currentY), (currentX - startX));
 
             if (!isCrashed) {
+                // Draw Vector Detailed Airplane Jet Icon
                 drawRealisticJet(ctx, currentX, currentY, angle);
             } else {
+                // Draw Crash Explosion Effect
                 ctx.fillStyle = "#EF4444";
                 ctx.beginPath();
                 ctx.arc(currentX, currentY, 12, 0, Math.PI * 2);
@@ -786,20 +843,23 @@
             }
         }
 
+        // --- DRAW DETAILED JET ICON (HTML5 CANVAS VECTOR) ---
         function drawRealisticJet(ctx, x, y, angle) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(-angle + (Math.PI / 6)); 
 
+            // Jet Fuselage
             ctx.fillStyle = "#FFF8DC";
             ctx.beginPath();
-            ctx.moveTo(14, 0);
-            ctx.lineTo(-12, -5);
-            ctx.lineTo(-16, 0);
-            ctx.lineTo(-12, 5);
+            ctx.moveTo(14, 0); // Nose tip
+            ctx.lineTo(-12, -5); // Left fuselage
+            ctx.lineTo(-16, 0);  // Tail end
+            ctx.lineTo(-12, 5);  // Right fuselage
             ctx.closePath();
             ctx.fill();
 
+            // Main Wings (Gold Accent)
             ctx.fillStyle = "#F0C24B";
             ctx.beginPath();
             ctx.moveTo(2, 0);
@@ -811,6 +871,7 @@
             ctx.closePath();
             ctx.fill();
 
+            // Tail Wings
             ctx.fillStyle = "#AA820A";
             ctx.beginPath();
             ctx.moveTo(-10, 0);
@@ -822,11 +883,13 @@
             ctx.closePath();
             ctx.fill();
 
+            // Cockpit Canopy (Dark Glass Effect)
             ctx.fillStyle = "#0A0A0C";
             ctx.beginPath();
             ctx.ellipse(4, 0, 4, 2, 0, 0, Math.PI * 2);
             ctx.fill();
 
+            // Thruster Glow
             ctx.fillStyle = "rgba(239, 68, 68, 0.8)";
             ctx.beginPath();
             ctx.arc(-17, 0, 3, 0, Math.PI * 2);
@@ -835,6 +898,7 @@
             ctx.restore();
         }
 
+        // --- 1xBET APPLE OF FORTUNE ENGINE ---
         function initAppleGrid() {
             const grid = document.getElementById('appleGrid');
             grid.innerHTML = '';
@@ -860,8 +924,9 @@
                 return;
             }
 
-            initAppleGrid();
+            initAppleGrid(); // Reset grid visual
 
+            // Highlight safe apples row by row
             for (let row = 1; row <= 5; row++) {
                 const safeIndex = Math.floor(Math.random() * 5);
                 setTimeout(() => {
@@ -874,6 +939,7 @@
             showToast("MATRIX DECRYPTED", "Safe apple paths highlighted for Row 1 to Row 5.");
         }
 
+        // --- SIGNAL HISTORY BAR ---
         function renderSignalHistory() {
             const history = ["1.85x", "14.20x", "1.12x", "25.60x", "2.10x", "4.20x"];
             const bar = document.getElementById('signalHistoryBar');
@@ -891,6 +957,7 @@
             bar.prepend(span);
         }
 
+        // --- LIVE ISOLATED SUPPORT CHAT ---
         function toggleSupportChat() {
             const modal = document.getElementById('supportChatModal');
             modal.classList.toggle('hidden');
@@ -942,6 +1009,7 @@
             }, 2000);
         }
 
+        // --- ADMIN CONTROL PANEL & SUB-ADMIN MANAGEMENT ---
         function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
             loadAdminUsers();
@@ -983,6 +1051,7 @@
 
             if (!u || !p) return alert("Username & Password required.");
 
+            // Check Sub-admin allocation limit
             if (currentUser.role === 'subadmin') {
                 if (currentUser.currentAlloc >= currentUser.maxAlloc) {
                     alert(`Account limit reached! Your limit is ${currentUser.maxAlloc} accounts.`);
@@ -1006,6 +1075,7 @@
                 body: JSON.stringify(newUserObj)
             });
 
+            // Update sub-admin creation count
             if (currentUser.role === 'subadmin') {
                 currentUser.currentAlloc += 1;
                 await fetch(`${DB_URL}/users/${currentUser.username}.json`, {
@@ -1053,6 +1123,7 @@
             }
         }
 
+        // --- ADMIN SUPPORT INBOX ---
         async function loadAdminInbox() {
             const res = await fetch(`${DB_URL}/support.json`);
             const supportData = await res.json();
@@ -1125,6 +1196,7 @@
             input.value = '';
         }
 
+        // --- PUSH NOTIFICATION BROADCASTER ---
         async function broadcastPushNotification() {
             const title = document.getElementById('pushTitle').value.trim();
             const body = document.getElementById('pushBody').value.trim();
@@ -1161,6 +1233,7 @@
             }, 3000);
         }
 
+        // --- TOAST NOTIFICATION HELPERS ---
         function showToast(title, body, imgUrl = "") {
             document.getElementById('toastTitle').innerText = title;
             document.getElementById('toastBody').innerText = body;
@@ -1180,6 +1253,7 @@
             document.getElementById('toastNotification').classList.add('hidden');
         }
 
+        // --- ONLINE COUNTER SIMULATION ---
         function startOnlineCounterSimulation() {
             setInterval(() => {
                 const count = Math.floor(Math.random() * (980 - 350 + 1)) + 350;
