@@ -1,1165 +1,234 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K.E.M.O VIP PREDICTOR | Luxury Edition</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Montserrat & Orbitron -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            100: '#FFF8DC',
-                            300: '#FFE680',
-                            400: '#F0C24B',
-                            500: '#D4AF37',
-                            600: '#AA820A',
-                            700: '#856404'
-                        },
-                        darkbg: '#0A0A0C',
-                        cardbg: '#141418',
-                        panelbg: '#1C1C22'
-                    },
-                    fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
-                        orbitron: ['Orbitron', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        body {
-            background-color: #0A0A0C;
-            color: #E2E8F0;
-            font-family: 'Montserrat', sans-serif;
-            background-image: radial-gradient(circle at 50% 10%, #1c180a 0%, #0a0a0c 70%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            user-select: none;
-        }
-
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #FFF8DC 0%, #F0C24B 50%, #AA820A 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .gold-gradient-bg {
-            background: linear-gradient(135deg, #F0C24B 0%, #D4AF37 50%, #AA820A 100%);
-        }
-
-        .gold-border {
-            border: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .gold-glow {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
-        }
-
-        .gold-glow-lg {
-            box-shadow: 0 0 35px rgba(212, 175, 55, 0.4);
-        }
-
-        .glass-panel {
-            background: rgba(20, 20, 24, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(212, 175, 55, 0.18);
-            border-radius: 1rem;
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0c;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d4af37;
-            border-radius: 3px;
-        }
-
-        @keyframes scan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .radar-sweep {
-            animation: scan 3s linear infinite;
-        }
-
-        @keyframes pulse-gold {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-        }
-        .pulse-gold {
-            animation: pulse-gold 2s infinite;
-        }
-
-        @keyframes pulse-red {
-            0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
-            50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
-        }
-        .pulse-high-odds {
-            animation: pulse-red 1.5s infinite;
-        }
-    </style>
-</head>
-<body class="flex flex-col min-h-screen justify-between relative pb-16">
-
-    <!-- Top Navigation Bar -->
-    <header class="w-full glass-panel sticky top-0 z-40 px-4 py-3 border-b border-gold-500/20 flex items-center justify-between rounded-none">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full gold-gradient-bg p-0.5 shadow-lg flex items-center justify-center">
-                <div class="w-full h-full bg-darkbg rounded-full flex items-center justify-center">
-                    <i class="fa-solid fa-crown text-gold-400 text-lg"></i>
-                </div>
-            </div>
-            <div>
-                <h1 class="font-orbitron font-extrabold text-base tracking-wider gold-gradient-text">K.E.M.O VIP</h1>
-                <p class="text-[10px] text-gray-400 flex items-center gap-1">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block pulse-gold"></span>
-                    ONLINE: <span id="publicOnlineCounter" class="text-gold-300 font-bold">542</span>
-                </p>
-            </div>
-        </div>
-
-        <div class="flex items-center gap-2">
-            <span id="roleBadge" class="hidden px-2 py-0.5 text-[10px] uppercase font-bold rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30">
-                USER
-            </span>
-            <button id="navAdminBtn" onclick="openAdminModal()" class="hidden px-3 py-1.5 text-xs font-bold rounded-lg bg-gold-500/20 text-gold-300 border border-gold-500/40 hover:bg-gold-500 hover:text-black transition-all">
-                <i class="fa-solid fa-user-shield mr-1"></i> ADMIN
-            </button>
-            <button id="logoutBtn" onclick="logoutUser()" class="hidden px-2.5 py-1.5 text-xs text-red-400 hover:text-red-300">
-                <i class="fa-solid fa-right-from-bracket"></i>
-            </button>
-        </div>
-    </header>
-
-    <!-- Subscription Expiry Warning Banner -->
-    <div id="subExpiryBanner" class="hidden bg-amber-950/80 border-b border-amber-500/40 px-4 py-2 text-center text-xs text-amber-200 font-semibold flex items-center justify-center gap-2">
-        <i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm"></i>
-        <span>VIP Subscription expiring soon! Remaining time: <strong id="subTimeLeft" class="text-gold-300">--</strong>. Contact Admin to renew.</span>
-        <button onclick="toggleSupportChat()" class="underline text-gold-400 hover:text-white ml-2 text-[11px]">RENEW NOW</button>
-    </div>
-
-    <!-- Main Dynamic Application Container -->
-    <main class="container mx-auto px-4 py-6 max-w-xl flex-grow">
-
-        <!-- 1. AUTH / LOGIN SECTION -->
-        <section id="authSection" class="glass-panel p-6 shadow-2xl relative overflow-hidden">
-            <div class="text-center mb-6">
-                <i class="fa-solid fa-shield-halved text-4xl text-gold-400 mb-2"></i>
-                <h2 class="text-xl font-extrabold font-orbitron gold-gradient-text">VIP ACCESS PORTAL</h2>
-                <p class="text-xs text-gray-400">Enter your credentials to connect to server engine</p>
-            </div>
-
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-gold-300 mb-1">USERNAME</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-user absolute left-3 top-3 text-gold-500/50 text-sm"></i>
-                        <input type="text" id="loginUsername" required placeholder="Enter VIP username..." 
-                            class="w-full pl-9 pr-4 py-2.5 bg-black/60 border border-gold-500/30 rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-400 transition">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gold-300 mb-1">PASSWORD</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-3 top-3 text-gold-500/50 text-sm"></i>
-                        <input type="password" id="loginPassword" required placeholder="••••••••" 
-                            class="w-full pl-9 pr-4 py-2.5 bg-black/60 border border-gold-500/30 rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-400 transition">
-                    </div>
-                </div>
-
-                <div id="loginError" class="hidden p-2.5 rounded bg-red-950/60 border border-red-500/40 text-red-300 text-xs text-center"></div>
-
-                <button type="submit" class="w-full py-3 rounded-lg gold-gradient-bg text-black font-bold font-orbitron tracking-wider text-sm shadow-lg hover:brightness-110 active:scale-95 transition">
-                    AUTHENTICATE VIP ACCESS
-                </button>
-            </form>
-
-            <div class="mt-6 pt-4 border-t border-gold-500/10 text-center">
-                <p class="text-[11px] text-gray-500">Device Lock Protection Enabled • Single Session ID</p>
-            </div>
-        </section>
-
-        <!-- 2. MAIN PREDICTOR DASHBOARD -->
-        <section id="dashboardSection" class="hidden space-y-6">
-
-            <div class="grid grid-cols-2 gap-3 glass-panel p-1.5">
-                <button id="tabCrashBtn" onclick="switchGameTab('crash')" class="py-2.5 px-3 rounded-lg text-xs font-bold font-orbitron transition flex items-center justify-center gap-2 bg-gold-500 text-black shadow">
-                    <i class="fa-solid fa-plane-up"></i> CRASH ENGINE
-                </button>
-                <button id="tabAppleBtn" onclick="switchGameTab('apple')" class="py-2.5 px-3 rounded-lg text-xs font-bold font-orbitron transition flex items-center justify-center gap-2 text-gray-400 hover:text-gold-300">
-                    <i class="fa-solid fa-apple-whole"></i> APPLE ENGINE
-                </button>
-            </div>
-
-            <div class="glass-panel p-4 flex flex-col gap-2">
-                <label class="text-xs font-bold text-gold-300 flex items-center justify-between">
-                    <span><i class="fa-solid fa-gamepad text-gold-400 mr-1.5"></i> 1xBET ACCOUNT GAME ID</span>
-                    <span id="connectionStatus" class="text-[10px] text-emerald-400 font-normal"><i class="fa-solid fa-circle text-[8px] mr-1"></i> READY</span>
-                </label>
-                <div class="flex gap-2">
-                    <input type="number" id="gameIdInput" placeholder="Enter your 1xBet / 1Win ID..." 
-                        class="flex-grow px-3 py-2 bg-black/60 border border-gold-500/30 rounded-lg text-sm text-gold-100 placeholder-gray-600 focus:outline-none focus:border-gold-400 font-orbitron">
-                    <button onclick="connectGameId()" class="px-4 py-2 bg-gold-500/20 hover:bg-gold-500 hover:text-black border border-gold-500/40 rounded-lg text-xs font-bold text-gold-300 transition">
-                        CONNECT
-                    </button>
-                </div>
-            </div>
-
-            <div class="glass-panel p-3">
-                <div class="text-[10px] font-bold text-gray-400 mb-2 flex items-center justify-between">
-                    <span><i class="fa-solid fa-clock-rotate-left text-gold-400 mr-1"></i> LIVE ROUND HISTORY</span>
-                    <span class="text-emerald-400">SYNCED</span>
-                </div>
-                <div id="signalHistoryBar" class="flex gap-2 overflow-x-auto pb-1 text-xs font-orbitron"></div>
-            </div>
-
-            <div id="crashGameContainer" class="space-y-4">
-                <div class="glass-panel p-4 relative overflow-hidden flex flex-col items-center">
-                    
-                    <div id="targetOddsContainer" class="w-full mb-3 p-3 bg-black/80 rounded-lg border-2 border-gold-400 text-center shadow-lg relative overflow-hidden">
-                        <div class="text-[11px] font-bold font-orbitron text-gray-400 uppercase tracking-widest flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-bullseye text-gold-400"></i>
-                            PREDICTED CRASH POINT / 目標倍率
-                        </div>
-                        <div id="predictedTargetDisplay" class="text-2xl sm:text-3xl font-extrabold font-orbitron gold-gradient-text mt-1">
-                            WAITING FOR GAME ID...
-                        </div>
-                        <div id="highOddsTag" class="hidden mt-1 inline-block px-2 py-0.5 rounded bg-red-600/90 text-white font-extrabold text-[10px] tracking-wider pulse-high-odds">
-                            🔥 MASSIVE ODDS DETECTED (>10x)
-                        </div>
-                    </div>
-
-                    <div class="w-full h-64 bg-black/90 rounded-lg border border-gold-500/30 relative overflow-hidden flex items-center justify-center shadow-inner">
-                        <canvas id="crashCanvas" class="w-full h-full block"></canvas>
-                        
-                        <div id="crashRadarOverlay" class="hidden absolute inset-0 bg-black/85 flex flex-col items-center justify-center z-20">
-                            <div class="w-20 h-20 rounded-full border-2 border-gold-500/40 relative flex items-center justify-center radar-sweep border-t-gold-400">
-                                <div class="w-2 h-2 rounded-full bg-gold-400"></div>
-                            </div>
-                            <p class="text-xs font-orbitron text-gold-300 mt-3 animate-pulse">CONNECTING TO 1xBET LIVE ALGORITHM...</p>
-                        </div>
-
-                        <div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-gold-500/30 text-xs font-orbitron text-gold-300 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-gold"></span>
-                            LIVE FLIGHT: <span id="crashDisplayValue" class="text-gold-400 font-bold text-sm">1.00x</span>
-                        </div>
-
-                        <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-lg border border-gold-500/30 text-[10px] font-orbitron text-gray-400">
-                            STATUS: <span id="crashStatusText" class="text-gold-300 font-bold">WAITING</span>
-                        </div>
-                    </div>
-
-                    <button onclick="triggerCrashManualPrediction()" id="getCrashBtn" class="w-full mt-4 py-3.5 rounded-lg gold-gradient-bg text-black font-extrabold font-orbitron text-sm shadow-xl hover:brightness-110 active:scale-95 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-bolt"></i> FORCE PREDICT NEXT ROUND
-                    </button>
-                </div>
-            </div>
-
-            <div id="appleGameContainer" class="hidden space-y-4">
-                <div class="glass-panel p-4">
-                    <div class="text-center mb-3">
-                        <h3 class="font-orbitron text-sm font-bold gold-gradient-text">APPLE OF FORTUNE MATRIX</h3>
-                        <p class="text-[11px] text-gray-400">5-Row Server Map Engine</p>
-                    </div>
-
-                    <div class="space-y-2 max-w-xs mx-auto" id="appleGrid"></div>
-
-                    <button onclick="getApplePrediction()" id="getAppleBtn" class="w-full mt-4 py-3.5 rounded-lg gold-gradient-bg text-black font-extrabold font-orbitron text-sm shadow-xl hover:brightness-110 active:scale-95 transition">
-                        GENERATE SAFE PATH
-                    </button>
-                </div>
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- FLOATING LIVE CHAT BUTTON -->
-    <button id="floatingChatBtn" onclick="toggleSupportChat()" class="fixed bottom-4 right-4 z-40 w-12 h-12 rounded-full gold-gradient-bg text-black shadow-2xl flex items-center justify-center border-2 border-gold-300 hover:scale-105 active:scale-95 transition">
-        <i class="fa-solid fa-headset text-xl"></i>
-        <span id="chatBadge" class="hidden absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white rounded-full text-[9px] font-bold flex items-center justify-center border border-black">!</span>
-    </button>
-
-    <!-- ISOLATED SUPPORT CHAT MODAL -->
-    <div id="supportChatModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-2 sm:p-4">
-        <div class="w-full max-w-md h-[80vh] glass-panel flex flex-col overflow-hidden border border-gold-500/40">
-            <div class="p-3 bg-panelbg border-b border-gold-500/20 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-headset text-gold-400"></i>
-                    <div>
-                        <h3 class="text-xs font-bold text-gold-300 font-orbitron">1-ON-1 VIP SUPPORT</h3>
-                        <p class="text-[9px] text-gray-400">Private Admin Direct Messaging</p>
-                    </div>
-                </div>
-                <button onclick="toggleSupportChat()" class="text-gray-400 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <div id="chatMessagesBox" class="flex-grow p-4 overflow-y-auto space-y-3 text-xs"></div>
-
-            <form onsubmit="sendSupportMessage(event)" class="p-3 bg-black/60 border-t border-gold-500/20 flex gap-2">
-                <input type="text" id="chatInputText" placeholder="Type your message..." required
-                    class="flex-grow px-3 py-2 bg-darkbg border border-gold-500/30 rounded-lg text-xs text-white focus:outline-none focus:border-gold-400">
-                <button type="submit" class="px-4 py-2 bg-gold-500 text-black font-bold rounded-lg text-xs hover:bg-gold-400">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ADMIN MODAL -->
-    <div id="adminModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3">
-        <div class="w-full max-w-2xl max-h-[90vh] glass-panel flex flex-col overflow-hidden border border-gold-500/40">
-            <div class="p-4 bg-panelbg border-b border-gold-500/20 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-user-gear text-gold-400"></i>
-                    <h3 class="text-sm font-bold text-gold-300 font-orbitron">ADMINISTRATION CONTROL PANEL</h3>
-                </div>
-                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-white">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
-            </div>
-
-            <div class="flex border-b border-gold-500/10 text-xs font-orbitron bg-black/40">
-                <button onclick="switchAdminTab('users')" id="admTabUsers" class="flex-1 py-2.5 text-center text-gold-400 border-b-2 border-gold-400 font-bold">USERS & ROLES</button>
-                <button onclick="switchAdminTab('inbox')" id="admTabInbox" class="flex-1 py-2.5 text-center text-gray-400 hover:text-gold-300">SUPPORT INBOX</button>
-                <button onclick="switchAdminTab('push')" id="admTabPush" class="flex-1 py-2.5 text-center text-gray-400 hover:text-gold-300">PUSH NOTIFIER</button>
-            </div>
-
-            <div class="p-4 overflow-y-auto flex-grow space-y-4 text-xs">
-                <div id="admSectionUsers" class="space-y-4">
-                    <div class="p-3 bg-black/40 rounded-lg border border-gold-500/20 space-y-3">
-                        <h4 class="font-bold text-gold-300 font-orbitron">CREATE NEW ACCOUNT</h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <input type="text" id="newUsername" placeholder="Username" class="p-2 bg-darkbg border border-gold-500/30 rounded text-white text-xs">
-                            <input type="text" id="newPassword" placeholder="Password" class="p-2 bg-darkbg border border-gold-500/30 rounded text-white text-xs">
-                            <select id="newRole" class="p-2 bg-darkbg border border-gold-500/30 rounded text-gold-300 text-xs">
-                                <option value="user">USER</option>
-                                <option value="subadmin">SUB-ADMIN</option>
-                            </select>
-                            <input type="number" id="newMaxAllocation" placeholder="Sub-Admin User Limit (Default: 5)" class="p-2 bg-darkbg border border-gold-500/30 rounded text-white text-xs">
-                            <input type="number" id="newSubDurationHours" placeholder="Subscription Duration (Hours, e.g. 24)" value="720" class="p-2 bg-darkbg border border-gold-500/30 rounded text-white text-xs sm:col-span-2">
-                        </div>
-                        <button onclick="createUserAccount()" class="w-full py-2 bg-gold-500 text-black font-bold rounded text-xs hover:bg-gold-400 font-orbitron">
-                            CREATE ACCOUNT
-                        </button>
-                    </div>
-
-                    <div>
-                        <h4 class="font-bold text-gold-300 font-orbitron mb-2">MANAGED ACCOUNTS</h4>
-                        <div id="usersListContainer" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                    </div>
-                </div>
-
-                <div id="admSectionInbox" class="hidden space-y-3">
-                    <h4 class="font-bold text-gold-300 font-orbitron">ISOLATED USER CONVERSATIONS</h4>
-                    <div id="adminInboxList" class="space-y-2 max-h-64 overflow-y-auto"></div>
-                    <div id="adminActiveThread" class="hidden p-3 bg-black/60 rounded-lg border border-gold-500/30 space-y-2">
-                        <div class="flex justify-between items-center text-gold-300 border-b border-gold-500/20 pb-1">
-                            <span>Chatting with: <strong id="activeThreadUser">--</strong></span>
-                            <button onclick="closeActiveThread()" class="text-xs text-red-400">Close</button>
-                        </div>
-                        <div id="activeThreadMessages" class="h-36 overflow-y-auto space-y-2 p-2 bg-darkbg rounded"></div>
-                        <div class="flex gap-2">
-                            <input type="text" id="adminReplyInput" placeholder="Reply to user..." class="flex-grow p-1.5 bg-black border border-gold-500/30 rounded text-white text-xs">
-                            <button onclick="sendAdminReply()" class="px-3 py-1.5 bg-gold-500 text-black font-bold rounded text-xs">SEND</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="admSectionPush" class="hidden space-y-3">
-                    <h4 class="font-bold text-gold-300 font-orbitron">BROADCAST PUSH NOTIFICATION</h4>
-                    <p class="text-[10px] text-gray-400">Sends rich pop-up notification directly to active app sessions.</p>
-                    <div class="space-y-2">
-                        <input type="text" id="pushTitle" placeholder="Notification Title (e.g. HIGH ACCURACY SIGNAL)" class="w-full p-2 bg-darkbg border border-gold-500/30 rounded text-white text-xs">
-                        <textarea id="pushBody" placeholder="Notification Message Body..." class="w-full p-2 bg-darkbg border border-gold-500/30 rounded text-white text-xs h-20"></textarea>
-                        <input type="url" id="pushImageUrl" placeholder="Image URL (Optional)" class="w-full p-2 bg-darkbg border border-gold-500/30 rounded text-white text-xs">
-                        <button onclick="broadcastPushNotification()" class="w-full py-2.5 bg-gold-500 text-black font-bold rounded font-orbitron text-xs hover:bg-gold-400">
-                            BROADCAST TO ALL USERS
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
-    <div id="toastNotification" class="hidden fixed top-16 right-4 left-4 sm:left-auto sm:w-80 z-50 glass-panel p-3 border-l-4 border-gold-400 shadow-2xl flex items-start gap-3">
-        <i class="fa-solid fa-bell text-gold-400 text-lg mt-0.5"></i>
-        <div class="flex-grow">
-            <h5 id="toastTitle" class="text-xs font-bold text-gold-300 font-orbitron">TITLE</h5>
-            <p id="toastBody" class="text-[11px] text-gray-300 mt-0.5">Message body goes here.</p>
-            <img id="toastImage" class="hidden w-full h-24 object-cover rounded mt-2 border border-gold-500/20" src="" alt="Notification">
-        </div>
-        <button onclick="hideToast()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-
-    <!-- FIREBASE SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
-
-    <script>
-        const DB_URL = "https://kvzs-52e80-default-rtdb.firebaseio.com";
-        const firebaseConfig = {
-            apiKey: "AIzaSyB4ytaR7umuZV4VNE7k6AHylugeNxuc1tM",
-            databaseURL: "https://kvzs-52e80-default-rtdb.firebaseio.com",
-            projectId: "kvzs-52e80",
-            storageBucket: "kvzs-52e80.firebasestorage.app",
-            messagingSenderId: "743455714933",
-            appId: "1:743455714933:android:001f02260badc4b669d23c"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const messaging = firebase.messaging();
-
-        // --- UPDATED PUSH NOTIFICATION REGISTRATION & TOKEN STORAGE ---
-        function initPushNotifications() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/firebase-messaging-sw.js')
-                    .then((registration) => {
-                        console.log('Service Worker Registered successfully:', registration);
-                        return messaging.getToken({
-                            serviceWorkerRegistration: registration,
-                            vapidKey: 'BORzGQvUNfdmrB14_c4RFiZGC6glZkqiRwzUakL2aiMqJJQ0FeQqKv-Y8I69KnGhvPPYtHYcsF0xNYB6Imap60M'
-                        });
-                    })
-                    .then(async (currentToken) => {
-                        if (currentToken && currentUser) {
-                            console.log('User FCM Push Token:', currentToken);
-                            await fetch(`${DB_URL}/users/${currentUser.username}/fcmToken.json`, {
-                                method: 'PUT',
-                                body: JSON.stringify(currentToken)
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        console.log('Notification registration error / permissions denied:', err);
-                    });
-            }
-        }
-        
-        let currentUser = null;
-        let currentGameId = "";
-        let deviceFingerprint = "";
-        let selectedThreadUser = null;
-        let crashLoopInterval = null;
-        let isCrashLoopRunning = false;
-        let currentTargetMultiplier = 1.00;
-
-        window.onload = function() {
-            initDeviceFingerprint();
-            initAppleGrid();
-            drawCrashCanvas(1.0, false, 0);
-            renderSignalHistory();
-            autoLoginCheck();
-            startOnlineCounterSimulation();
-            listenForPushNotifications();
-        };
-
-        function initDeviceFingerprint() {
-            let fp = localStorage.getItem('kemo_device_fp');
-            if (!fp) {
-                fp = 'DEV-' + Math.random().toString(36).substring(2, 9).toUpperCase() + '-' + Date.now();
-                localStorage.setItem('kemo_device_fp', fp);
-            }
-            deviceFingerprint = fp;
-        }
-
-        async function autoLoginCheck() {
-            const savedUser = localStorage.getItem('kemo_session_user');
-            if (savedUser) {
-                try {
-                    const res = await fetch(`${DB_URL}/users/${savedUser}.json`);
-                    const userData = await res.json();
-                    if (userData && userData.deviceLock === deviceFingerprint) {
-                        currentUser = userData;
-                        loginSuccess();
-                        return;
-                    }
-                } catch(e) { console.error("Auto login error", e); }
-            }
-        }
-
-        async function handleLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('loginUsername').value.trim().toLowerCase();
-            const p = document.getElementById('loginPassword').value.trim();
-            const errDiv = document.getElementById('loginError');
-            errDiv.classList.add('hidden');
-
-            if (u === 'admin' && p === 'admin2026') {
-                currentUser = { username: 'admin', role: 'master', createdBy: 'system', maxAlloc: 999, currentAlloc: 0, expiryTimestamp: Date.now() + (365*24*3600*1000) };
-                localStorage.setItem('kemo_session_user', 'admin');
-                loginSuccess();
-                return;
-            }
-
-            try {
-                const res = await fetch(`${DB_URL}/users/${u}.json`);
-                const userData = await res.json();
-
-                if (!userData || userData.password !== p) {
-                    showError("Invalid username or password.");
-                    return;
-                }
-
-                if (userData.expiryTimestamp && Date.now() > userData.expiryTimestamp) {
-                    showError("VIP Subscription Expired! Contact Admin to renew.");
-                    return;
-                }
-
-                if (userData.deviceLock && userData.deviceLock !== deviceFingerprint) {
-                    showError("Account locked to another device! Contact Admin.");
-                    return;
-                }
-
-                if (!userData.deviceLock) {
-                    userData.deviceLock = deviceFingerprint;
-                    await fetch(`${DB_URL}/users/${u}.json`, {
-                        method: 'PATCH',
-                        body: JSON.stringify({ deviceLock: deviceFingerprint })
-                    });
-                }
-
-                currentUser = userData;
-                localStorage.setItem('kemo_session_user', u);
-                loginSuccess();
-
-            } catch(err) {
-                showError("Database connection failed.");
-            }
-
-            function showError(msg) {
-                errDiv.innerText = msg;
-                errDiv.classList.remove('hidden');
-            }
-        }
-
-        function loginSuccess() {
-            document.getElementById('authSection').classList.add('hidden');
-            document.getElementById('dashboardSection').classList.remove('hidden');
-            document.getElementById('logoutBtn').classList.remove('hidden');
-            
-            const badge = document.getElementById('roleBadge');
-            badge.innerText = currentUser.role.toUpperCase();
-            badge.classList.remove('hidden');
-
-            if (currentUser.role === 'master' || currentUser.role === 'subadmin') {
-                document.getElementById('navAdminBtn').classList.remove('hidden');
-            }
-
-            checkSubscriptionWarning();
-            listenUserSupportMessages();
-            initPushNotifications(); // Trigger push registration upon login
-        }
-
-        function checkSubscriptionWarning() {
-            if (!currentUser || !currentUser.expiryTimestamp) return;
-            const remainingMs = currentUser.expiryTimestamp - Date.now();
-            const hoursLeft = Math.max(0, Math.floor(remainingMs / (1000 * 60 * 60)));
-
-            if (remainingMs <= (24 * 3600 * 1000)) {
-                const banner = document.getElementById('subExpiryBanner');
-                document.getElementById('subTimeLeft').innerText = `${hoursLeft} Hours`;
-                banner.classList.remove('hidden');
-                showToast("⚠️ VIP EXPIRY WARNING", `Your subscription expires in ${hoursLeft} hours. Please contact Admin to extend.`);
-            }
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('kemo_session_user');
-            location.reload();
-        }
-
-        function switchGameTab(tab) {
-            const crashContainer = document.getElementById('crashGameContainer');
-            const appleContainer = document.getElementById('appleGameContainer');
-            const btnCrash = document.getElementById('tabCrashBtn');
-            const btnApple = document.getElementById('tabAppleBtn');
-
-            if (tab === 'crash') {
-                crashContainer.classList.remove('hidden');
-                appleContainer.classList.add('hidden');
-                btnCrash.className = "py-2.5 px-3 rounded-lg text-xs font-bold font-orbitron transition flex items-center justify-center gap-2 bg-gold-500 text-black shadow";
-                btnApple.className = "py-2.5 px-3 rounded-lg text-xs font-bold font-orbitron transition flex items-center justify-center gap-2 text-gray-400 hover:text-gold-300";
-            } else {
-                crashContainer.classList.add('hidden');
-                appleContainer.classList.remove('hidden');
-                btnApple.className = "py-2.5 px-3 rounded-lg text-xs font-bold font-orbitron transition flex items-center justify-center gap-2 bg-gold-500 text-black shadow";
-                btnCrash.className = "py-2.5 px-3 rounded-lg text-xs font-bold font-orbitron transition flex items-center justify-center gap-2 text-gray-400 hover:text-gold-300";
-            }
-        }
-
-        function connectGameId() {
-            const val = document.getElementById('gameIdInput').value.trim();
-            if (!val || val.length < 5) {
-                showToast("INVALID GAME ID", "Please enter a valid 1xBet / 1Win ID.");
-                return;
-            }
-            currentGameId = val;
-            document.getElementById('connectionStatus').innerHTML = `<i class="fa-solid fa-check-circle text-emerald-400"></i> CONNECTED (${val})`;
-            showToast("ACCOUNT CONNECTED", `Game ID ${val} successfully linked to prediction engine.`);
-            startCrashAutoLoop();
-        }
-
-        function startCrashAutoLoop() {
-            if (isCrashLoopRunning) return;
-            isCrashLoopRunning = true;
-            const overlay = document.getElementById('crashRadarOverlay');
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                runSingleCrashRound();
-            }, 1800);
-        }
-
-        function triggerCrashManualPrediction() {
-            if (!currentGameId) {
-                showToast("GAME ID REQUIRED", "Connect your 1xBet Game ID before requesting prediction.");
-                return;
-            }
-            showToast("RE-CALIBRATING ALGORITHM", "Forcing high-precision multiplier calculation...");
-            runSingleCrashRound();
-        }
-
-        function generateNextMultiplier() {
-            const rand = Math.random();
-            let val;
-            if (rand < 0.08) {
-                val = (Math.random() * (100.0 - 20.0) + 20.0).toFixed(2);
-            } else if (rand < 0.25) {
-                val = (Math.random() * (20.0 - 10.0) + 10.0).toFixed(2);
-            } else if (rand < 0.65) {
-                val = (Math.random() * (9.9 - 2.0) + 2.0).toFixed(2);
-            } else {
-                val = (Math.random() * (1.95 - 1.15) + 1.15).toFixed(2);
-            }
-            return parseFloat(val);
-        }
-
-        function runSingleCrashRound() {
-            currentTargetMultiplier = generateNextMultiplier();
-            const statusText = document.getElementById('crashStatusText');
-            const displayValue = document.getElementById('crashDisplayValue');
-            const targetDisplay = document.getElementById('predictedTargetDisplay');
-            const highOddsTag = document.getElementById('highOddsTag');
-
-            targetDisplay.innerText = `${currentTargetMultiplier.toFixed(2)}x`;
-
-            if (currentTargetMultiplier >= 10.0) {
-                highOddsTag.innerText = `🔥 MASSIVE ODDS DETECTED (${currentTargetMultiplier.toFixed(2)}x)`;
-                highOddsTag.classList.remove('hidden');
-                showToast("🚨 HIGH ODDS RADAR ALERT!", `Massive predicted multiplier incoming: ${currentTargetMultiplier.toFixed(2)}x! Get ready!`);
-            } else {
-                highOddsTag.classList.add('hidden');
-            }
-
-            statusText.innerText = "TAKEOFF";
-            statusText.className = "text-emerald-400 font-bold";
-
-            let currentMulti = 1.00;
-            const increment = currentTargetMultiplier > 20 ? 0.08 : 0.012;
-
-            if (crashLoopInterval) clearInterval(crashLoopInterval);
-
-            crashLoopInterval = setInterval(() => {
-                currentMulti += increment;
-                displayValue.innerText = currentMulti.toFixed(2) + 'x';
-                const progress = Math.min((currentMulti - 1.0) / (currentTargetMultiplier - 1.0), 1.0);
-                drawCrashCanvas(currentMulti, false, progress);
-
-                if (currentMulti >= currentTargetMultiplier) {
-                    clearInterval(crashLoopInterval);
-                    statusText.innerText = "CRASHED AT " + currentTargetMultiplier.toFixed(2) + "x";
-                    statusText.className = "text-red-400 font-bold";
-                    drawCrashCanvas(currentTargetMultiplier, true, 1.0);
-                    addSignalToHistory(currentTargetMultiplier.toFixed(2) + 'x');
-
-                    setTimeout(() => {
-                        statusText.innerText = "NEXT ROUND IN 3s";
-                        statusText.className = "text-gold-300 font-bold";
-                        setTimeout(() => {
-                            if (currentGameId) runSingleCrashRound();
-                        }, 3000);
-                    }, 1500);
-                }
-            }, 40);
-        }
-
-        function drawCrashCanvas(multiplier, isCrashed, progress) {
-            const canvas = document.getElementById('crashCanvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.strokeStyle = "rgba(212, 175, 55, 0.08)";
-            ctx.lineWidth = 1;
-            for (let x = 0; x < canvas.width; x += 35) {
-                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-            }
-            for (let y = 0; y < canvas.height; y += 30) {
-                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-            }
-
-            const startX = 40;
-            const startY = canvas.height - 40;
-            const maxWidth = canvas.width - 70;
-            const maxHeight = canvas.height - 70;
-
-            const currentX = startX + (maxWidth * Math.min(progress, 1.0));
-            const currentY = startY - (maxHeight * Math.pow(Math.min(progress, 1.0), 0.85));
-
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            const controlX = startX + (currentX - startX) * 0.5;
-            const controlY = startY;
-            ctx.quadraticCurveTo(controlX, controlY, currentX, currentY);
-
-            ctx.strokeStyle = isCrashed ? "#EF4444" : "#F0C24B";
-            ctx.lineWidth = 3.5;
-            ctx.stroke();
-
-            if (!isCrashed && progress > 0) {
-                ctx.lineTo(currentX, startY);
-                ctx.lineTo(startX, startY);
-                const fillGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                fillGradient.addColorStop(0, "rgba(240, 194, 75, 0.2)");
-                fillGradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-                ctx.fillStyle = fillGradient;
-                ctx.fill();
-            }
-
-            const angle = Math.atan2((startY - currentY), (currentX - startX));
-
-            if (!isCrashed) {
-                drawRealisticJet(ctx, currentX, currentY, angle);
-            } else {
-                ctx.fillStyle = "#EF4444";
-                ctx.beginPath();
-                ctx.arc(currentX, currentY, 12, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = "#FFF";
-                ctx.font = "bold 10px Montserrat";
-                ctx.fillText("FLEW AWAY", currentX - 25, currentY - 15);
-            }
-        }
-
-        function drawRealisticJet(ctx, x, y, angle) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(-angle + (Math.PI / 6)); 
-
-            ctx.fillStyle = "#FFF8DC";
-            ctx.beginPath();
-            ctx.moveTo(14, 0);
-            ctx.lineTo(-12, -5);
-            ctx.lineTo(-16, 0);
-            ctx.lineTo(-12, 5);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.fillStyle = "#F0C24B";
-            ctx.beginPath();
-            ctx.moveTo(2, 0);
-            ctx.lineTo(-6, -18);
-            ctx.lineTo(-10, -18);
-            ctx.lineTo(-5, 0);
-            ctx.lineTo(-10, 18);
-            ctx.lineTo(-6, 18);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.fillStyle = "#AA820A";
-            ctx.beginPath();
-            ctx.moveTo(-10, 0);
-            ctx.lineTo(-15, -8);
-            ctx.lineTo(-17, -8);
-            ctx.lineTo(-14, 0);
-            ctx.lineTo(-17, 8);
-            ctx.lineTo(-15, 8);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.fillStyle = "#0A0A0C";
-            ctx.beginPath();
-            ctx.ellipse(4, 0, 4, 2, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = "rgba(239, 68, 68, 0.8)";
-            ctx.beginPath();
-            ctx.arc(-17, 0, 3, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.restore();
-        }
-
-        function initAppleGrid() {
-            const grid = document.getElementById('appleGrid');
-            grid.innerHTML = '';
-            for (let row = 5; row >= 1; row--) {
-                const rowDiv = document.createElement('div');
-                rowDiv.className = "flex justify-between items-center gap-2 p-1.5 bg-black/40 rounded border border-gold-500/10";
-                rowDiv.innerHTML = `<span class="text-[10px] font-bold text-gold-400 font-orbitron w-6">R${row}</span>`;
-                
-                for (let col = 0; col < 5; col++) {
-                    const colBtn = document.createElement('div');
-                    colBtn.id = `apple_${row}_${col}`;
-                    colBtn.className = "w-10 h-10 rounded bg-darkbg border border-gold-500/20 flex items-center justify-center text-gray-600 transition-all";
-                    colBtn.innerHTML = `<i class="fa-solid fa-apple-whole text-sm"></i>`;
-                    rowDiv.appendChild(colBtn);
-                }
-                grid.appendChild(rowDiv);
-            }
-        }
-
-        function getApplePrediction() {
-            if (!currentGameId) {
-                showToast("GAME ID REQUIRED", "Connect your 1xBet Game ID to reveal safe matrix.");
-                return;
-            }
-            initAppleGrid();
-            for (let row = 1; row <= 5; row++) {
-                const safeIndex = Math.floor(Math.random() * 5);
-                setTimeout(() => {
-                    const cell = document.getElementById(`apple_${row}_${safeIndex}`);
-                    cell.className = "w-10 h-10 rounded bg-gold-500/20 border-2 border-gold-400 flex items-center justify-center text-gold-300 shadow-lg scale-105";
-                    cell.innerHTML = `<i class="fa-solid fa-apple-whole text-gold-400 text-lg"></i>`;
-                }, row * 300);
-            }
-            showToast("MATRIX DECRYPTED", "Safe apple paths highlighted for Row 1 to Row 5.");
-        }
-
-        function renderSignalHistory() {
-            const history = ["1.85x", "14.20x", "1.12x", "25.60x", "2.10x", "4.20x"];
-            const bar = document.getElementById('signalHistoryBar');
-            bar.innerHTML = history.map(item => `
-                <span class="px-2.5 py-1 rounded ${parseFloat(item) > 10 ? 'bg-red-900/40 border-red-500 text-red-300 font-extrabold' : 'bg-gold-500/10 border-gold-500/20 text-gold-300'} border font-bold whitespace-nowrap">${item}</span>
-            `).join('');
-        }
-
-        function addSignalToHistory(val) {
-            const bar = document.getElementById('signalHistoryBar');
-            const span = document.createElement('span');
-            const isHigh = parseFloat(val) > 10;
-            span.className = `px-2.5 py-1 rounded ${isHigh ? 'bg-red-900/60 border-red-500 text-red-300 font-extrabold' : 'bg-gold-500/20 border-gold-400 text-gold-300'} border font-bold whitespace-nowrap animate-pulse`;
-            span.innerText = val;
-            bar.prepend(span);
-        }
-
-        function toggleSupportChat() {
-            const modal = document.getElementById('supportChatModal');
-            modal.classList.toggle('hidden');
-        }
-
-        async function sendSupportMessage(e) {
-            e.preventDefault();
-            const input = document.getElementById('chatInputText');
-            const text = input.value.trim();
-            if (!text || !currentUser) return;
-
-            const msgObj = {
-                sender: currentUser.username,
-                text: text,
-                timestamp: Date.now()
-            };
-
-            await fetch(`${DB_URL}/support/${currentUser.username}.json`, {
-                method: 'POST',
-                body: JSON.stringify(msgObj)
-            });
-
-            input.value = '';
-        }
-
-        function listenUserSupportMessages() {
-            if (!currentUser) return;
-            setInterval(async () => {
-                try {
-                    const res = await fetch(`${DB_URL}/support/${currentUser.username}.json`);
-                    const msgs = await res.json();
-                    const box = document.getElementById('chatMessagesBox');
-                    box.innerHTML = '';
-                    if (msgs) {
-                        Object.values(msgs).forEach(m => {
-                            const isMe = m.sender === currentUser.username;
-                            box.innerHTML += `
-                                <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
-                                    <div class="px-3 py-2 rounded-lg max-w-[80%] ${isMe ? 'bg-gold-500 text-black font-semibold' : 'bg-panelbg border border-gold-500/20 text-white'}">
-                                        ${m.text}
-                                    </div>
-                                    <span class="text-[9px] text-gray-500 mt-0.5">${new Date(m.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                                </div>
-                            `;
-                        });
-                        box.scrollTop = box.scrollHeight;
-                    }
-                } catch(e){}
-            }, 2000);
-        }
-
-        function openAdminModal() {
-            document.getElementById('adminModal').classList.remove('hidden');
-            loadAdminUsers();
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
-
-        function switchAdminTab(tab) {
-            document.getElementById('admSectionUsers').classList.add('hidden');
-            document.getElementById('admSectionInbox').classList.add('hidden');
-            document.getElementById('admSectionPush').classList.add('hidden');
-
-            document.getElementById('admTabUsers').className = "flex-1 py-2.5 text-center text-gray-400 hover:text-gold-300";
-            document.getElementById('admTabInbox').className = "flex-1 py-2.5 text-center text-gray-400 hover:text-gold-300";
-            document.getElementById('admTabPush').className = "flex-1 py-2.5 text-center text-gray-400 hover:text-gold-300";
-
-            if (tab === 'users') {
-                document.getElementById('admSectionUsers').classList.remove('hidden');
-                document.getElementById('admTabUsers').className = "flex-1 py-2.5 text-center text-gold-400 border-b-2 border-gold-400 font-bold";
-                loadAdminUsers();
-            } else if (tab === 'inbox') {
-                document.getElementById('admSectionInbox').classList.remove('hidden');
-                document.getElementById('admTabInbox').className = "flex-1 py-2.5 text-center text-gold-400 border-b-2 border-gold-400 font-bold";
-                loadAdminInbox();
-            } else if (tab === 'push') {
-                document.getElementById('admSectionPush').classList.remove('hidden');
-                document.getElementById('admTabPush').className = "flex-1 py-2.5 text-center text-gold-400 border-b-2 border-gold-400 font-bold";
-            }
-        }
-
-        async function createUserAccount() {
-            const u = document.getElementById('newUsername').value.trim().toLowerCase();
-            const p = document.getElementById('newPassword').value.trim();
-            const r = document.getElementById('newRole').value;
-            const limit = parseInt(document.getElementById('newMaxAllocation').value) || 5;
-            const hours = parseInt(document.getElementById('newSubDurationHours').value) || 720;
-
-            if (!u || !p) return alert("Username & Password required.");
-
-            if (currentUser.role === 'subadmin') {
-                if (currentUser.currentAlloc >= currentUser.maxAlloc) {
-                    alert(`Account limit reached! Your limit is ${currentUser.maxAlloc} accounts.`);
-                    return;
-                }
-            }
-
-            const newUserObj = {
-                username: u,
-                password: p,
-                role: r,
-                createdBy: currentUser.username,
-                maxAlloc: limit,
-                currentAlloc: 0,
-                expiryTimestamp: Date.now() + (hours * 3600 * 1000),
-                deviceLock: ""
-            };
-
-            await fetch(`${DB_URL}/users/${u}.json`, {
-                method: 'PUT',
-                body: JSON.stringify(newUserObj)
-            });
-
-            if (currentUser.role === 'subadmin') {
-                currentUser.currentAlloc += 1;
-                await fetch(`${DB_URL}/users/${currentUser.username}.json`, {
-                    method: 'PATCH',
-                    body: JSON.stringify({ currentAlloc: currentUser.currentAlloc })
-                });
-            }
-
-            alert(`User ${u} created successfully with ${hours}h duration!`);
-            loadAdminUsers();
-        }
-
-        async function loadAdminUsers() {
-            const res = await fetch(`${DB_URL}/users.json`);
-            const users = await res.json();
-            const container = document.getElementById('usersListContainer');
-            container.innerHTML = '';
-
-            if (users) {
-                Object.values(users).forEach(u => {
-                    if (currentUser.role === 'subadmin' && u.createdBy !== currentUser.username) return;
-                    const hoursRemaining = u.expiryTimestamp ? Math.max(0, Math.floor((u.expiryTimestamp - Date.now()) / (3600 * 1000))) : 'N/A';
-
-                    container.innerHTML += `
-                        <div class="p-2 bg-darkbg rounded border border-gold-500/20 flex justify-between items-center">
-                            <div>
-                                <span class="font-bold text-gold-300">${u.username}</span>
-                                <span class="text-[9px] text-gray-400 ml-2">(${u.role.toUpperCase()})</span>
-                                <p class="text-[9px] text-gray-500">By: ${u.createdBy} | Limit: ${u.currentAlloc}/${u.maxAlloc} | Exp: ${hoursRemaining}h</p>
-                            </div>
-                            <button onclick="deleteUser('${u.username}')" class="text-red-400 text-xs hover:text-red-300">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        async function deleteUser(uname) {
-            if (confirm(`Delete account ${uname}?`)) {
-                await fetch(`${DB_URL}/users/${uname}.json`, { method: 'DELETE' });
-                loadAdminUsers();
-            }
-        }
-
-        async function loadAdminInbox() {
-            const res = await fetch(`${DB_URL}/support.json`);
-            const supportData = await res.json();
-            const container = document.getElementById('adminInboxList');
-            container.innerHTML = '';
-
-            if (supportData) {
-                Object.keys(supportData).forEach(u => {
-                    container.innerHTML += `
-                        <div onclick="openActiveThread('${u}')" class="p-2 bg-darkbg rounded border border-gold-500/20 cursor-pointer hover:border-gold-400 flex justify-between items-center">
-                            <span class="font-bold text-gold-300">${u}</span>
-                            <span class="text-[10px] text-gray-400">View Chat <i class="fa-solid fa-chevron-right ml-1"></i></span>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        function openActiveThread(uname) {
-            selectedThreadUser = uname;
-            document.getElementById('adminActiveThread').classList.remove('hidden');
-            document.getElementById('activeThreadUser').innerText = uname;
-            listenThreadMessages(uname);
-        }
-
-        function closeActiveThread() {
-            document.getElementById('adminActiveThread').classList.add('hidden');
-            selectedThreadUser = null;
-        }
-
-        function listenThreadMessages(uname) {
-            setInterval(async () => {
-                if (selectedThreadUser !== uname) return;
-                const res = await fetch(`${DB_URL}/support/${uname}.json`);
-                const msgs = await res.json();
-                const box = document.getElementById('activeThreadMessages');
-                box.innerHTML = '';
-                if (msgs) {
-                    Object.values(msgs).forEach(m => {
-                        const isAdmin = m.sender !== uname;
-                        box.innerHTML += `
-                            <div class="flex flex-col ${isAdmin ? 'items-end' : 'items-start'}">
-                                <div class="px-2.5 py-1.5 rounded text-xs ${isAdmin ? 'bg-gold-500 text-black font-semibold' : 'bg-panelbg border border-gold-500/20 text-white'}">
-                                    ${m.text}
-                                </div>
-                            </div>
-                        `;
-                    });
-                    box.scrollTop = box.scrollHeight;
-                }
-            }, 2000);
-        }
-
-        async function sendAdminReply() {
-            const input = document.getElementById('adminReplyInput');
-            const text = input.value.trim();
-            if (!text || !selectedThreadUser) return;
-
-            const msgObj = {
-                sender: 'ADMIN',
-                text: text,
-                timestamp: Date.now()
-            };
-
-            await fetch(`${DB_URL}/support/${selectedThreadUser}.json`, {
-                method: 'POST',
-                body: JSON.stringify(msgObj)
-            });
-
-            input.value = '';
-        }
-
-        async function broadcastPushNotification() {
-            const title = document.getElementById('pushTitle').value.trim();
-            const body = document.getElementById('pushBody').value.trim();
-            const img = document.getElementById('pushImageUrl').value.trim();
-
-            if (!title || !body) return alert("Title and Body are required.");
-
-            const pushObj = {
-                title: title,
-                body: body,
-                image: img,
-                timestamp: Date.now()
-            };
-
-            await fetch(`${DB_URL}/push_broadcast.json`, {
-                method: 'PUT',
-                body: JSON.stringify(pushObj)
-            });
-
-            alert("Push notification broadcasted to all users!");
-        }
-
-        function listenForPushNotifications() {
-            let lastTimestamp = Date.now();
-            setInterval(async () => {
-                try {
-                    const res = await fetch(`${DB_URL}/push_broadcast.json`);
-                    const push = await res.json();
-                    if (push && push.timestamp > lastTimestamp) {
-                        lastTimestamp = push.timestamp;
-                        showToast(push.title, push.body, push.image);
-                    }
-                } catch(e){}
-            }, 3000);
-        }
-
-        function showToast(title, body, imgUrl = "") {
-            document.getElementById('toastTitle').innerText = title;
-            document.getElementById('toastBody').innerText = body;
-            const imgEl = document.getElementById('toastImage');
-            if (imgUrl) {
-                imgEl.src = imgUrl;
-                imgEl.classList.remove('hidden');
-            } else {
-                imgEl.classList.add('hidden');
-            }
-            const toast = document.getElementById('toastNotification');
-            toast.classList.remove('hidden');
-            setTimeout(() => { hideToast(); }, 5000);
-        }
-
-        function hideToast() {
-            document.getElementById('toastNotification').classList.add('hidden');
-        }
-
-        function startOnlineCounterSimulation() {
-            setInterval(() => {
-                const count = Math.floor(Math.random() * (980 - 350 + 1)) + 350;
-                document.getElementById('publicOnlineCounter').innerText = count;
-            }, 4000);
-        }
-    </script>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080d1c">
+<title>Rewards0 — منصة المكافآت</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script><script src="https://api.adsun.io/sdk.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#080d1c;--panel:rgba(19,28,52,.82);--panel2:#172440;--line:rgba(154,177,230,.14);--text:#f4f7ff;--muted:#94a4c4;--green:#32e6a1;--cyan:#62d7ff;--purple:#a78bfa;--red:#ff718b;--gold:#ffd889;--shadow:0 18px 55px #0006}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#182c56 0,transparent 38%),radial-gradient(ellipse at 90% 30%,#27164c 0,transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:0 0 calc(94px + env(safe-area-inset-bottom));overflow-x:hidden}
+#ambient{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}.orb{position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(65px);opacity:.18;animation:float 16s ease-in-out infinite alternate}.orb.one{background:#1c9dff;top:8%;right:-90px}.orb.two{background:#8b5cf6;top:46%;left:-130px;animation-delay:-6s}.orb.three{background:#00d99a;bottom:-140px;right:25%;animation-delay:-10s}@keyframes float{to{transform:translate3d(45px,-55px,0) scale(1.25)}}
+.withdraw-ticker{max-width:760px;margin:0 auto 8px;padding:8px 16px;overflow:hidden}.ticker-track{display:flex;gap:28px;white-space:nowrap;width:max-content;animation:ticker 28s linear infinite;color:#b9f8e5;font-size:11px}.ticker-wrap{overflow:hidden;border:1px solid #36d9b733;border-radius:14px;background:#0d2030aa;padding:9px 12px}.ticker-track span{display:inline-block}.chat-box{height:48vh;min-height:260px;max-height:480px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:10px;background:#0b1428;border:1px solid var(--line);border-radius:16px}.chat-msg{max-width:88%;padding:10px 12px;border-radius:15px;background:#1a2a48;font-size:12px;line-height:1.7;overflow-wrap:anywhere}.chat-msg.mine{align-self:flex-start;background:#16483f}.chat-msg small{display:block;color:#a9b9d4;font-size:9px;margin-top:4px}.chat-compose{display:flex;gap:8px;margin-top:9px}.chat-compose input{flex:1;min-width:0;background:#0b1428;color:white;border:1px solid #344666;border-radius:13px;padding:12px;font:inherit}.chat-compose button{width:auto;white-space:nowrap}.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#32e6a1;box-shadow:0 0 12px #32e6a1;animation:pulse 1.4s infinite}@keyframes pulse{50%{opacity:.35;transform:scale(.8)}}@keyframes ticker{to{transform:translateX(50%)}}
+header{padding:calc(18px + env(safe-area-inset-top)) 18px 12px;display:flex;align-items:center;justify-content:space-between;max-width:760px;margin:auto}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#35e6b0,#4ca8ff 55%,#9b7bff);display:grid;place-items:center;color:#061321;font-weight:1000;font-size:19px;box-shadow:0 8px 25px #36d9b755}.brand b{letter-spacing:.7px;font-size:15px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px}.avatar{border:1px solid var(--line);background:#172440;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;font-weight:800;color:var(--cyan)}
+main{max-width:760px;margin:auto;padding:8px 16px 26px}.screen{display:none;animation:enter .32s ease}.screen.active{display:block}@keyframes enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:1.4px}.hello{font-size:24px;margin:4px 0 14px}.muted{color:var(--muted)}.small{font-size:12px}.card{background:linear-gradient(145deg,rgba(25,39,69,.94),rgba(15,24,45,.88));border:1px solid var(--line);border-radius:23px;padding:17px;box-shadow:var(--shadow);backdrop-filter:blur(18px)}.balance-card{position:relative;overflow:hidden;padding:21px;margin:10px 0 14px;background:linear-gradient(120deg,#123d4a,#18325b 52%,#35265e);border-color:#62d7ff33}.balance-card:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff16;border-radius:50%;left:-45px;top:-85px;box-shadow:0 0 0 22px #ffffff08,0 0 0 48px #ffffff05}.balance-top{display:flex;justify-content:space-between;align-items:center;color:#c2d6ed;font-size:12px}.balance-value{font-size:34px;font-weight:900;letter-spacing:-1px;margin:12px 0 4px;direction:ltr;text-align:right}.balance-value span{font-size:14px;color:#b8d5e9;margin-right:5px}.balance-foot{display:flex;gap:9px;flex-wrap:wrap;color:#d1e4f1;font-size:11px}.pill{border:1px solid #ffffff20;background:#ffffff0d;padding:6px 9px;border-radius:30px}.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}.action{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#172644,#111b32);padding:15px 13px;color:var(--text);text-align:right;min-height:94px;cursor:pointer;transition:.2s}.action:active,.btn:active{transform:scale(.98)}.action .ico{font-size:22px;display:block;margin-bottom:9px}.action b{font-size:13px;display:block}.action small{color:var(--muted);font-size:10px}.section-head{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.section-head h3{font-size:15px;margin:0}.section-head button{color:var(--cyan);background:none;border:0;font:inherit;font-size:11px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.stat{padding:13px;border-radius:17px;background:#111d35;border:1px solid var(--line)}.stat small{display:block;color:var(--muted);font-size:10px}.stat strong{font-size:17px;display:block;margin-top:5px;direction:ltr;text-align:right}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.list{display:grid;gap:9px}.list-item{background:#111d35;border:1px solid var(--line);border-radius:15px;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:10px}.list-item b{font-size:12px}.list-item small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.amount{direction:ltr;white-space:nowrap;font-weight:800;font-size:12px}.btn{border:0;border-radius:14px;padding:13px 15px;font:inherit;font-weight:800;font-size:13px;color:#071323;background:linear-gradient(100deg,var(--green),#6ce7d4);cursor:pointer;width:100%;box-shadow:0 7px 20px #31e6a122}.btn.secondary{background:#1c2d4b;color:#eaf1ff;border:1px solid var(--line);box-shadow:none}.btn.danger{background:linear-gradient(100deg,#ff718b,#ff9a9a);color:#270914}.btn.purple{background:linear-gradient(100deg,#a78bfa,#78a9ff)}.btn.smallbtn{width:auto;padding:9px 11px;font-size:11px}.btn:disabled{opacity:.5;cursor:not-allowed}.field{display:grid;gap:7px;margin:12px 0}.field label{font-size:11px;color:#b5c4df}.field input,.field textarea,.field select{width:100%;background:#0b1428;color:white;border:1px solid #344666;border-radius:13px;padding:13px;font:inherit;font-size:13px;outline:none}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--cyan)}.note{font-size:11px;line-height:1.8;color:var(--muted)}.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed #344666;border-radius:16px;font-size:12px}.badge{font-size:10px;border-radius:20px;padding:5px 8px;background:#163b37;color:var(--green);white-space:nowrap}.badge.warn{background:#45351c;color:var(--gold)}.badge.red{background:#451f31;color:#ff9bb0}.page-title{font-size:22px;margin:7px 0 5px}.page-desc{font-size:12px;color:var(--muted);margin:0 0 17px}.tabs{display:flex;gap:7px;overflow:auto;padding:3px 0 12px}.tab{white-space:nowrap;border:1px solid var(--line);background:#111d35;color:var(--muted);border-radius:30px;padding:9px 13px;font-size:11px}.tab.active{background:#1b4d4a;color:var(--green);border-color:#2bd6a566}.bottom{position:fixed;bottom:0;left:0;right:0;z-index:20;padding:9px 9px calc(9px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#080d1c00,#080d1cf2 22%);backdrop-filter:blur(14px)}.nav{max-width:560px;margin:auto;display:grid;grid-template-columns:repeat(6,1fr);padding:7px;background:#111c32ed;border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 35px #0008}.nav button{border:0;background:none;color:#8494b2;font:inherit;font-size:9px;padding:5px 1px;display:grid;gap:4px;justify-items:center}.nav button span{font-size:18px}.nav button.active{color:var(--green)}.toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:16px;right:16px;max-width:500px;margin:auto;z-index:60;background:#1c2d4b;border:1px solid #5a759f;border-radius:14px;padding:13px;text-align:center;font-size:12px;box-shadow:var(--shadow);display:none}.toast.show{display:block;animation:enter .2s}.modal{position:fixed;inset:0;z-index:50;background:#020611c9;display:none;align-items:flex-end;justify-content:center;padding:15px}.modal.show{display:flex}.modal-box{width:100%;max-width:540px;max-height:85vh;overflow:auto;background:#101b32;border:1px solid var(--line);border-radius:24px;padding:19px;box-shadow:var(--shadow);animation:enter .25s}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{background:#223252;color:white;border:0;border-radius:10px;padding:7px 11px;font-size:17px}.admin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.admin-stat{background:#172440;border:1px solid var(--line);padding:13px;border-radius:15px}.admin-stat small{font-size:10px;color:var(--muted)}.admin-stat strong{display:block;font-size:19px;margin-top:5px}.ad-image{width:100%;max-height:170px;object-fit:cover;border-radius:14px;margin-bottom:10px}.glowline{height:1px;background:linear-gradient(90deg,transparent,#46dbbd88,transparent);margin:15px 0}
+.logo{animation:logoFloat 5s ease-in-out infinite;transform-style:preserve-3d}@keyframes logoFloat{0%,100%{transform:translateY(0) rotateY(0)}50%{transform:translateY(-3px) rotateY(12deg)}}.balance-card{animation:cardFloat 8s ease-in-out infinite}@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}.card,.action,.stat{transform-style:preserve-3d;transition:transform .28s ease,box-shadow .28s ease}.card:hover,.action:hover{transform:perspective(900px) translateY(-3px) rotateX(1.2deg);box-shadow:0 18px 48px #0008,0 0 24px #49e6c51c}.rank-avatar{width:42px;height:42px;border-radius:14px;object-fit:cover;background:#223452;border:1px solid #5ddfc755}.rank-no{font-weight:900;color:var(--gold);min-width:28px}.pager{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0}.pager button{width:auto}.admin-tools{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.admin-tools button{font-size:11px}.leader-row{display:flex;align-items:center;gap:10px}.leader-meta{flex:1;min-width:0}.leader-meta b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.leader-meta small{color:var(--muted);font-size:10px}
+@media(min-width:600px){.actions{grid-template-columns:repeat(4,1fr)}.stats{grid-template-columns:repeat(4,1fr)}.modal{align-items:center}}
+
+/* Rewards0 visual refresh */
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(#9ac5ff08 1px,transparent 1px),linear-gradient(90deg,#9ac5ff08 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000 0%,transparent 78%)}
+.orb{opacity:.24;filter:blur(78px);width:320px;height:320px}.card{border-color:#8bb9ff20;box-shadow:0 20px 60px #0005,inset 0 1px #ffffff08}.balance-card{background:linear-gradient(118deg,#0d4c52 0%,#173d70 52%,#492e78 100%);box-shadow:0 20px 65px #168f9a30,inset 0 1px #ffffff20}.logo{box-shadow:0 0 0 5px #35e6b018,0 12px 35px #36d9b766}.chat-admin-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.chat-admin-tools .btn{font-size:10px;padding:7px 9px}.chat-msg{position:relative;border:1px solid #ffffff0a;box-shadow:0 8px 20px #0002}.chat-msg.admin-target{max-width:100%;width:100%;border-color:#53d9bd44}.chat-msg .chat-admin-tools{border-top:1px solid #ffffff12;padding-top:8px}.chat-admin-panel{margin:12px 0;padding:13px;border:1px solid #5edfc344;border-radius:17px;background:linear-gradient(145deg,#143b43aa,#182748aa)}
+
+/* Premium 3D motion layer */
+#ambient:after{content:"";position:absolute;inset:-30%;background:conic-gradient(from 0deg,transparent,#36e6c51a,transparent,#8b5cf61c,transparent,#4ca8ff18,transparent);filter:blur(70px);animation:ambientSpin 38s linear infinite;transform-origin:50% 50%}
+@keyframes ambientSpin{to{transform:rotate(360deg)}}
+.orb.one{animation:float 13s ease-in-out infinite alternate,orbHue 18s linear infinite}.orb.two{animation:float 17s ease-in-out infinite alternate-reverse,orbHue 23s linear infinite reverse}.orb.three{animation:float 19s ease-in-out infinite alternate,orbHue 20s linear infinite}
+@keyframes orbHue{50%{filter:blur(82px) hue-rotate(65deg);opacity:.34}}
+.card,.action,.stat,.balance-card{transform-style:preserve-3d;backface-visibility:hidden}
+.card:hover,.action:hover{transform:perspective(1000px) translateY(-5px) rotateX(2deg) rotateY(-1deg);box-shadow:0 24px 58px #0009,0 0 28px #62d7ff22}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style></head>
+<body><div id="ambient"><i class="orb one"></i><i class="orb two"></i><i class="orb three"></i></div>
+<header><div class="brand"><div class="logo">R0</div><div><b>REWARDS0</b><small>SMART REWARDS PLATFORM</small></div></div><div class="avatar" id="avatar">R</div></header>
+<div class="withdraw-ticker"><div class="ticker-wrap"><div class="ticker-track" id="withdrawTicker"><span>🟢 جاري تحميل إشعارات السحب…</span></div></div></div><main>
+<section class="screen active" id="home"><div class="eyebrow">لوحة التحكم الشخصية</div><h1 class="hello">أهلاً <span id="firstName">بك</span> ✨</h1>
+<div class="card balance-card"><div class="balance-top"><span>إجمالي رصيدك المتاح</span><span>✦ LIVE WALLET</span></div><div class="balance-value" id="balance">0.0000 <span>USDT</span></div><div class="balance-foot"><span class="pill">⏳ قيد السحب: <b id="locked">0.0000</b></span><span class="pill">🧊 مجمد: <b id="frozen">0.0000</b></span></div></div>
+<div class="actions"><button class="action" data-go="ads"><span class="ico">🎯</span><b>مركز الإعلانات</b><small>مهام إعلانية ومكافآت</small></button><button class="action" data-go="video"><span class="ico">🎬</span><b>فيديو مكافأة</b><small>شاهد واكسب USDT</small></button><button class="action" data-go="tasks"><span class="ico">🧩</span><b>المهام</b><small>نفّذ وارسل الإثبات</small></button><button class="action" data-go="withdraw"><span class="ico">💸</span><b>طلب سحب</b><small>اسحب أرباحك</small></button></div>
+<div class="actions"><button class="action" data-go="leaderboard"><span class="ico">🏆</span><b>أفضل 100 مستخدم</b><small>ترتيب الأرباح</small></button><button class="action" data-go="chats"><span class="ico">💬</span><b>الشات المباشر</b><small>تواصل مع المجتمع والدعم</small></button></div><div class="section-head"><h3>ملخص الحساب</h3><span class="badge">حساب نشط</span></div><div class="stats"><div class="stat"><small>أرباح الإحالات</small><strong id="refEarn">0.0000</strong></div><div class="stat"><small>إجمالي المسحوبات</small><strong id="totalWithdrawn">0.0000</strong></div><div class="stat"><small>الإعلانات المكتملة</small><strong id="adsCount">0</strong></div><div class="stat"><small>أعضاء فريقك</small><strong id="teamCount">0</strong></div></div>
+<div class="section-head"><h3>آخر العمليات</h3><button data-go="history">عرض السجل ←</button></div><div class="list" id="recentHome"></div></section>
+<section class="screen" id="wallet"><h1 class="page-title">المحفظة 💎</h1><p class="page-desc">كل تفاصيل أموالك في مكان واحد.</p><div class="card"><div class="stats"><div class="stat"><small>الرصيد المتاح</small><strong id="wBalance">0</strong></div><div class="stat"><small>قيد السحب</small><strong id="wLocked">0</strong></div><div class="stat"><small>الرصيد المجمد</small><strong id="wFrozen">0</strong></div><div class="stat"><small>إجمالي المسحوبات</small><strong id="wPaid">0</strong></div></div><div class="glowline"></div><div class="row"><b style="font-size:13px">عنوان USDT TRC20</b><span class="badge" id="walletBadge">غير مربوط</span></div><div class="note" id="walletAddress" style="direction:ltr;text-align:left;word-break:break-all;margin:10px 0">لم يتم إضافة محفظة بعد</div><button class="btn secondary" id="editWallet">⚙️ إضافة / تعديل المحفظة</button><div style="height:9px"></div><button class="btn" data-go="withdraw">💸 طلب سحب الأرباح</button></div></section>
+<section class="screen" id="ads"><h1 class="page-title">مركز الإعلانات 🎯</h1><p class="page-desc">احصل على فرص إعلانية ومكافآت متاحة.</p><div class="card"><div style="font-size:36px">📡</div><h3>مركز الإعلانات</h3><p class="note">اضغط لجلب إعلان متاح. المكافأة تُعتمد فقط بعد تأكيد الخادم.</p><button class="btn" id="loadAd">🔎 البحث عن إعلان</button><div id="adResult" style="margin-top:14px"></div><div id="taskAdContainer" style="margin-top:14px"></div></div></section>
+<section class="screen" id="video"><h1 class="page-title">فيديوهات المكافآت 🎬</h1><p class="page-desc">شاهد الفيديو بالكامل وانتظر تأكيد المشاهدة.</p><div class="card" style="text-align:center;padding:26px 18px"><div style="font-size:54px">▶️</div><div class="eyebrow" style="margin-top:12px">REWARDED VIDEO</div><div style="font-size:30px;font-weight:900;color:var(--green);margin:10px" id="videoReward">+0.0010 USDT</div><p class="note">لا يتم إضافة أي رصيد من الواجهة. التأكيد والمكافأة يصدران من الخادم فقط.</p><button class="btn" id="watchVideo" disabled>▶ مشاهدة الفيديو</button><p class="note" id="videoStatus" style="margin-top:12px">جارٍ تجهيز الإعلان…</p></div></section>
+<section class="screen" id="tasks"><h1 class="page-title">المهام والمكافآت 🧩</h1><p class="page-desc">نفّذ المطلوب وأرسل إثباتك للمراجعة.</p><div class="list" id="taskList"></div></section>
+<section class="screen" id="withdraw"><h1 class="page-title">طلب سحب الأرباح 💸</h1><p class="page-desc">طلبات السحب تُراجع يدويًا من الإدارة.</p><div class="card"><div class="row"><span class="muted small">رصيدك المتاح</span><b id="withdrawBalance">0.0000 USDT</b></div><div class="row" style="margin-top:8px"><span class="muted small">الحد الأدنى</span><b id="minWithdraw">5 USDT</b></div><div class="field"><label>مبلغ السحب (USDT)</label><input id="withdrawAmount" type="number" min="0" step="0.0001" placeholder="مثال: 5"></div><button class="btn" id="submitWithdraw">إرسال طلب السحب</button><p class="note" id="withdrawWalletNote"></p></div></section>
+<section class="screen" id="referrals"><h1 class="page-title">فريق الإحالات 👥</h1><p class="page-desc">شارك رابطك واكسب من نشاط فريقك حتى 5 مستويات.</p><div class="card"><div class="eyebrow">YOUR INVITE LINK</div><div class="field"><input id="refLink" readonly value=""></div><button class="btn secondary" id="copyRef">نسخ رابط الدعوة</button><div class="glowline"></div><div class="stats" id="refLevels"></div><p class="note" id="refTotal"></p></div></section>
+<section class="screen" id="history"><h1 class="page-title">سجل العمليات 📜</h1><p class="page-desc">طلبات السحب وحالاتها.</p><div class="list" id="historyList"></div></section>
+<section class="screen" id="profile"><h1 class="page-title">حسابي ⚙️</h1><p class="page-desc">بيانات حساب Telegram وحالة المنصة.</p><div class="card"><div class="row"><b>معرّف تيليجرام</b><span id="profileId" class="muted small"></span></div><div class="glowline"></div><div class="row"><b>اسم الحساب</b><span id="profileName" class="muted small"></span></div><div class="glowline"></div><div class="row"><b>تاريخ الانضمام</b><span id="joinedAt" class="muted small"></span></div><div class="glowline"></div><div class="row"><b>حالة الحساب</b><span id="accountStatus" class="badge">نشط</span></div><div class="glowline"></div><div class="field"><label>لغة التطبيق</label><select id="languageSelect"><option value="ar">العربية</option><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="ru">Русский</option><option value="tr">Türkçe</option><option value="pt">Português</option></select></div><button class="btn secondary" id="saveLanguage">حفظ اللغة</button><div style="height:8px"></div><button class="btn secondary" id="refresh">↻ تحديث البيانات</button></div><div class="card" style="margin-top:12px"><b>فريق Fortress</b><p class="note">تقدر تقدم للانضمام لفريق الإدارة من غير التواصل مع أي حساب شخصي.</p><button class="btn purple" id="applyAdmin">🛡️ التقديم كأدمن</button></div><div class="card" style="margin-top:12px"><b>مركز المساعدة</b><p class="note">لو واجهتك مشكلة في الرصيد أو السحب، تواصل مع دعم البوت من تيليجرام.</p><button class="btn secondary" id="support">💬 التواصل مع الدعم</button></div></section>
+<section class="screen" id="chats"><h1 class="page-title">مركز المحادثات 💬</h1><p class="page-desc"><span class="live-dot"></span> تحديث تلقائي للرسائل</p><div class="tabs"><button class="tab active" id="publicTab">🌐 الشات العام</button><button class="tab" id="privateTab">🛟 الدعم الخاص</button></div><div id="publicChatPanel"><div id="chatAdminPanel" class="chat-admin-panel" hidden><div class="row"><b>🛡️ إدارة الشات العام</b><button class="btn secondary smallbtn" id="refreshChatAdmin">تحديث</button></div><p class="note">حذف الرسائل للجميع أو كتم/حظر صاحبها من الشات فقط.</p><div class="list" id="chatAdminMessages"></div></div><div class="chat-box" id="publicMessages"></div><div class="chat-compose"><input id="publicInput" maxlength="700" placeholder="اكتب رسالة للمجتمع…"><button class="btn smallbtn" id="publicSend">إرسال</button></div><p class="note">التزم بالاحترام. لا تشارك بياناتك الشخصية أو معلومات محفظتك.</p></div><div id="privateChatPanel" style="display:none"><div class="chat-box" id="supportMessages"></div><div class="chat-compose"><input id="supportInput" maxlength="2500" placeholder="اكتب رسالة لفريق الدعم…"><button class="btn smallbtn" id="supportSend">إرسال</button></div><p class="note">هذه المحادثة خاصة بك ولا يراها المستخدمون الآخرون.</p></div></section>
+<section class="screen" id="adminroom"><h1 class="page-title">شات الإدارة 🛡️</h1><p class="page-desc">مساحة داخلية لفريق العمل. لا يراها المستخدمون.</p><div class="chat-box" id="adminRoomMessages"></div><div class="chat-compose"><input id="adminRoomInput" maxlength="1500" placeholder="رسالة لفريق الإدارة…"><button class="btn smallbtn" id="adminRoomSend">إرسال</button></div></section>
+<section class="screen" id="leaderboard"><h1 class="page-title">🏆 أفضل 100 مستخدم</h1><p class="page-desc">ترتيب أصحاب أعلى الأرباح. المعروض اسم الحساب والصورة والأرباح فقط.</p><div class="card"><div class="eyebrow">TOP EARNERS · PAGINATED</div><div class="list" id="leaderRows" style="margin-top:12px"></div><div class="pager"><button class="btn secondary smallbtn" id="leaderPrev">السابق</button><span class="small muted" id="leaderPage">1 / 5</span><button class="btn secondary smallbtn" id="leaderNext">التالي</button></div></div></section>
+<section class="screen" id="admin"><div class="eyebrow">FORTRESS CONTROL CENTER</div><h1 class="page-title">لوحة الإدارة 👑</h1><p class="page-desc">إدارة المنصة ومراجعة العمليات — صلاحيات محمية من السيرفر.</p><div class="admin-grid" id="adminStats"></div><div class="section-head"><h3>إجراءات النظام</h3></div><div class="actions"><button class="action" id="toggleMaintenance"><span class="ico">🛠️</span><b>وضع الصيانة</b><small>تشغيل / إيقاف</small></button><button class="action" id="createTask"><span class="ico">➕</span><b>إضافة مهمة</b><small>مهمة جديدة</small></button><button class="action" id="usersSearch"><span class="ico">👥</span><b>إدارة المستخدمين</b><small>بحث وحسابات</small></button><button class="action" id="refreshAdmin"><span class="ico">🔄</span><b>تحديث اللوحة</b><small>بيانات مباشرة</small></button><button class="action" id="setBlock"><span class="ico">🎯</span><b>إعدادات الإعلانات</b><small>إدارة مواضع الإعلانات</small></button><button class="action" id="setRates"><span class="ico">📊</span><b>نسب الإحالة</b><small>تعديل المستويات</small></button><button class="action" id="broadcast"><span class="ico">📣</span><b>إذاعة عامة</b><small>إرسال للمستخدمين</small></button></div><div class="section-head"><h3>طلبات الانضمام لفريق الإدارة</h3><button class="btn secondary smallbtn" id="refreshApplications">تحديث</button></div><div class="list" id="adminApplications"><div class="empty">اضغط تحديث لعرض الطلبات.</div></div><div class="section-head"><h3>مظهر المنصة والإعلانات</h3></div><div class="card"><p class="note">إعدادات الإعلانات مستقلة، ويمكن تغيير معرفاتها دون تعديل ملفات المشروع.</p><div class="field"><label>Banner Block ID</label><input id="adBannerBlock" inputmode="numeric" placeholder="معرف إعلان البانر"></div><div class="field"><label>Task Block ID</label><input id="adTaskBlock" inputmode="numeric" placeholder="معرف المهام الإعلانية"></div><div class="field"><label>Rewarded Video Block ID</label><input id="adRewardedBlock" inputmode="numeric" placeholder="معرف الفيديو بمكافأة"></div><div class="field"><label>Interstitial Block ID</label><input id="adInterstitialBlock" inputmode="numeric" placeholder="معرف الإعلان البيني"></div><button class="btn" id="saveAdBlocks">حفظ إعدادات الإعلانات</button><div class="glowline"></div><div class="field"><label>خلفية مخصصة للمنصة (PNG / JPG / WEBP / GIF حتى 2MB)</label><input id="backgroundUpload" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></div><button class="btn secondary" id="saveBackground">تطبيق الخلفية</button><button class="btn danger" id="clearBackground" style="margin-top:8px">إزالة الخلفية المخصصة</button></div><div class="section-head"><h3>النسخ الاحتياطي والاسترجاع</h3></div><div class="card"><p class="note">نسخ تلقائي كل 6 ساعات مع الاحتفاظ بآخر 14 نسخة على الخادم. الاسترجاع متاح للمالك الرئيسي فقط ويحفظ نسخة أمان قبل الاستبدال.</p><div class="admin-tools"><button class="btn secondary" id="downloadBackup">⬇️ تنزيل نسخة احتياطية</button><button class="btn danger" id="restoreBackup">↩️ استرجاع نسخة JSON</button></div><input id="restoreFile" type="file" accept="application/json,.json" hidden></div><div class="section-head"><h3>طلبات السحب المعلقة</h3><span class="badge warn" id="withdrawCount">0</span></div><div class="list" id="adminWithdrawals"></div><div class="section-head"><h3>إثباتات المهام</h3><span class="badge warn" id="taskProofCount">0</span></div><div class="list" id="adminTasks"></div><div class="section-head"><h3>سجل مراجعة المهام</h3></div><div class="list" id="taskHistoryRows"></div><div class="section-head"><h3>سجل السحوبات السابقة</h3></div><div class="list" id="withdrawHistoryRows"></div><div class="section-head"><h3>إدارة المهام المنشورة</h3></div><div class="list" id="managedTasks"></div><div class="section-head"><h3>بحث المستخدمين</h3></div><div class="field"><input id="userQuery" placeholder="ابحث بالاسم أو Telegram ID" /></div><button class="btn secondary" id="searchUserBtn">بحث</button><div class="list" id="userResults" style="margin-top:10px"></div><div class="section-head"><h3>البحث الشامل في المنصة</h3></div><p class="note">ابحث برقم السحب أو معرف الشكوى أو Telegram ID أو TXID أو مرجع الحركة المالية.</p><div class="field"><input id="globalSearchQuery" placeholder="رقم السحب / الشكوى / المستخدم / TXID"></div><button class="btn secondary" id="globalSearchBtn">بحث شامل</button><div class="list" id="globalSearchResults" style="margin-top:10px"></div><div class="section-head"><h3>إدارة فريق الإدارة والصلاحيات المحددة</h3></div><div class="card"><div class="field"><label>Telegram ID للأدمن</label><input id="newAdminId" inputmode="numeric" placeholder="123456789"></div><div class="field"><label>الصلاحيات</label><select id="newAdminPerms" multiple size="6"><option value="dashboard">لوحة التحكم</option><option value="withdrawals">السحوبات</option><option value="tasks">المهام</option><option value="users">المستخدمون</option><option value="security">الحماية والسجلات</option><option value="ledger">السجل المالي</option><option value="broadcast">الإذاعة</option><option value="settings">الإعدادات</option><option value="chats">الشات</option></select></div><button class="btn" id="addAdminBtn">إضافة أدمن بالصلاحيات</button><div class="list" id="adminList" style="margin-top:10px"></div></div><div class="section-head"><h3>مراقبة النشاط</h3></div><div class="tabs" id="activityFilters"><button class="tab active" data-status="all">الكل</button><button class="tab" data-status="active">نشط</button><button class="tab" data-status="low">قليل النشاط</button><button class="tab" data-status="inactive">غير نشط</button><button class="tab" data-status="frozen">مجمد</button><button class="tab" data-status="banned">محظور</button></div><div class="list" id="activityUsers"></div><div class="pager"><button class="btn secondary smallbtn" id="activityPrev">السابق</button><span class="small muted" id="activityPage">1</span><button class="btn secondary smallbtn" id="activityNext">التالي</button></div><div class="section-head"><h3>السجل المالي وسلامة السجلات</h3></div><div class="list" id="ledgerRows"></div><div class="section-head"><h3>سجل إجراءات الأدمن</h3></div><div class="list" id="auditRows"></div><div class="section-head"><h3>رادار الحماية</h3></div><div class="list" id="securityLogs"></div></section>
+</main>
+<div class="bottom"><nav class="nav" id="nav"><button class="active" data-go="home"><span>⌂</span>الرئيسية</button><button data-go="wallet"><span>◈</span>المحفظة</button><button data-go="tasks"><span>✧</span>المهام</button><button data-go="referrals"><span>♧</span>الإحالات</button><button data-go="leaderboard"><span>🏆</span>الأوائل</button><button data-go="profile"><span>☻</span>حسابي</button></nav></div>
+<div class="toast" id="toast"></div><div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><b id="modalTitle">تفاصيل</b><button class="close" id="closeModal">×</button></div><div id="modalBody"></div></div></div>
+<script>
+(()=>{
+const tg=window.Telegram?.WebApp;const $=id=>document.getElementById(id);const initData=tg?.initData||'';let me=null,videoController=null,interstitialController=null,adConfig=null,adminData=null,screenMoves=0;
+if(!tg||!initData){document.body.innerHTML='<div style="padding:40px;text-align:center;color:white;font-family:system-ui">افتح التطبيق من زر البوت داخل Telegram حتى نقدر نتحقق من حسابك بأمان.</div>';return;}
+tg.ready();tg.expand();tg.setHeaderColor?.('#080d1c');tg.setBackgroundColor?.('#080d1c');
+const fmt=n=>Number(n||0).toFixed(4);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const UI_LOCALES={
+'en':{'الرئيسية':'Home','المحفظة':'Wallet','المهام':'Tasks','الإحالات':'Referrals','الأوائل':'Leaderboard','حسابي':'Profile','مركز المحادثات 💬':'Messages 💬','الشات العام':'Public chat','الدعم الخاص':'Private support','إرسال':'Send','حذف الرسالة':'Delete message','كتم':'Mute','إلغاء الكتم':'Unmute','حظر من الشات':'Ban from chat','رفع حظر الشات':'Unban from chat','إدارة الشات العام':'Public chat moderation','تحديث':'Refresh','لغة التطبيق':'App language','حفظ اللغة':'Save language','تحديث البيانات':'Refresh data','بحث':'Search','إضافة رصيد':'Add balance','خصم رصيد':'Deduct balance','تجميد':'Freeze','فك التجميد':'Unfreeze','حظر':'Ban','رفع الحظر':'Unban','طلبات السحب المعلقة':'Pending withdrawals','إثباتات المهام':'Task proofs','سجل السحوبات السابقة':'Withdrawal history','إدارة المستخدمين':'User management','إدارة فريق الإدارة والصلاحيات المحددة':'Admins & permissions','مراقبة النشاط':'Activity monitor','السجل المالي وسلامة السجلات':'Financial ledger & integrity','سجل إجراءات الأدمن':'Admin audit log','رادار الحماية':'Security monitor','لا توجد رسائل بعد. ابدأ المحادثة الآن.':'No messages yet. Start the conversation.','اكتب رسالة للمجتمع…':'Write to the community…','اكتب رسالة لفريق الدعم…':'Message support…'},
+'es':{'الرئيسية':'Inicio','المحفظة':'Billetera','المهام':'Tareas','الإحالات':'Referidos','الأوائل':'Clasificación','حسابي':'Perfil','مركز المحادثات 💬':'Mensajes 💬','الشات العام':'Chat público','الدعم الخاص':'Soporte privado','إرسال':'Enviar','حذف الرسالة':'Eliminar mensaje','كتم':'Silenciar','إلغاء الكتم':'Quitar silencio','حظر من الشات':'Bloquear en chat','رفع حظر الشات':'Desbloquear chat','إدارة الشات العام':'Moderación del chat','تحديث':'Actualizar','لغة التطبيق':'Idioma de la app','حفظ اللغة':'Guardar idioma','تحديث البيانات':'Actualizar datos','بحث':'Buscar','إضافة رصيد':'Añadir saldo','خصم رصيد':'Restar saldo','تجميد':'Congelar','فك التجميد':'Descongelar','حظر':'Bloquear','رفع الحظر':'Desbloquear','طلبات السحب المعلقة':'Retiros pendientes','إثباتات المهام':'Pruebas de tareas','سجل السحوبات السابقة':'Historial de retiros','إدارة المستخدمين':'Gestión de usuarios','إدارة فريق الإدارة والصلاحيات المحددة':'Administradores y permisos','مراقبة النشاط':'Actividad','السجل المالي وسلامة السجلات':'Libro financiero e integridad','سجل إجراءات الأدمن':'Registro de administración','رادار الحماية':'Monitor de seguridad','لا توجد رسائل بعد. ابدأ المحادثة الآن.':'Aún no hay mensajes. Inicia la conversación.','اكتب رسالة للمجتمع…':'Escribe a la comunidad…','اكتب رسالة لفريق الدعم…':'Escribe al soporte…'},
+'fr':{'الرئيسية':'Accueil','المحفظة':'Portefeuille','المهام':'Tâches','الإحالات':'Parrainages','الأوائل':'Classement','حسابي':'Profil','مركز المحادثات 💬':'Messages 💬','الشات العام':'Chat public','الدعم الخاص':'Support privé','إرسال':'Envoyer','حذف الرسالة':'Supprimer le message','كتم':'Mettre en sourdine','إلغاء الكتم':'Réactiver','حظر من الشات':'Bannir du chat','رفع حظر الشات':'Débannir du chat','إدارة الشات العام':'Modération du chat','تحديث':'Actualiser','لغة التطبيق':'Langue de l’application','حفظ اللغة':'Enregistrer la langue','تحديث البيانات':'Actualiser les données','بحث':'Rechercher','إضافة رصيد':'Ajouter un solde','خصم رصيد':'Déduire le solde','تجميد':'Geler','فك التجميد':'Dégeler','حظر':'Bannir','رفع الحظر':'Débannir','طلبات السحب المعلقة':'Retraits en attente','إثباتات المهام':'Preuves des tâches','سجل السحوبات السابقة':'Historique des retraits','إدارة المستخدمين':'Gestion des utilisateurs','إدارة فريق الإدارة والصلاحيات المحددة':'Admins et permissions','مراقبة النشاط':'Suivi d’activité','السجل المالي وسلامة السجلات':'Registre financier et intégrité','سجل إجراءات الأدمن':'Journal admin','رادار الحماية':'Surveillance sécurité','لا توجد رسائل بعد. ابدأ المحادثة الآن.':'Aucun message. Commencez la conversation.','اكتب رسالة للمجتمع…':'Écrire à la communauté…','اكتب رسالة لفريق الدعم…':'Écrire au support…'},
+'de':{'الرئيسية':'Startseite','المحفظة':'Wallet','المهام':'Aufgaben','الإحالات':'Empfehlungen','الأوائل':'Bestenliste','حسابي':'Profil','مركز المحادثات 💬':'Nachrichten 💬','الشات العام':'Öffentlicher Chat','الدعم الخاص':'Privater Support','إرسال':'Senden','حذف الرسالة':'Nachricht löschen','كتم':'Stummschalten','إلغاء الكتم':'Stummschaltung aufheben','حظر من الشات':'Im Chat sperren','رفع حظر الشات':'Chatsperre aufheben','إدارة الشات العام':'Chat-Moderation','تحديث':'Aktualisieren','لغة التطبيق':'App-Sprache','حفظ اللغة':'Sprache speichern','تحديث البيانات':'Daten aktualisieren','بحث':'Suchen','إضافة رصيد':'Guthaben hinzufügen','خصم رصيد':'Guthaben abziehen','تجميد':'Einfrieren','فك التجميد':'Auftauen','حظر':'Sperren','رفع الحظر':'Entsperren','طلبات السحب المعلقة':'Ausstehende Auszahlungen','إثباتات المهام':'Aufgabennachweise','سجل السحوبات السابقة':'Auszahlungsverlauf','إدارة المستخدمين':'Benutzerverwaltung','إدارة فريق الإدارة والصلاحيات المحددة':'Admins und Rechte','مراقبة النشاط':'Aktivitätsmonitor','السجل المالي وسلامة السجلات':'Finanzbuch und Integrität','سجل إجراءات الأدمن':'Admin-Protokoll','رادار الحماية':'Sicherheitsmonitor','لا توجد رسائل بعد. ابدأ المحادثة الآن.':'Noch keine Nachrichten. Starte das Gespräch.','اكتب رسالة للمجتمع…':'Schreibe an die Community…','اكتب رسالة لفريق الدعم…':'Schreibe an den Support…'},
+'ru':{'الرئيسية':'Главная','المحفظة':'Кошелёк','المهام':'Задания','الإحالات':'Рефералы','الأوائل':'Рейтинг','حسابي':'Профиль','مركز المحادثات 💬':'Сообщения 💬','الشات العام':'Общий чат','الدعم الخاص':'Личная поддержка','إرسال':'Отправить','حذف الرسالة':'Удалить сообщение','كتم':'Заглушить','إلغاء الكتم':'Снять заглушение','حظر من الشات':'Заблокировать в чате','رفع حظر الشات':'Снять блокировку чата','إدارة الشات العام':'Модерация чата','تحديث':'Обновить','لغة التطبيق':'Язык приложения','حفظ اللغة':'Сохранить язык','تحديث البيانات':'Обновить данные','بحث':'Поиск','إضافة رصيد':'Добавить баланс','خصم رصيد':'Списать баланс','تجميد':'Заморозить','فك التجميد':'Разморозить','حظر':'Заблокировать','رفع الحظر':'Разблокировать','طلبات السحب المعلقة':'Ожидающие выплаты','إثباتات المهام':'Подтверждения заданий','سجل السحوبات السابقة':'История выплат','إدارة المستخدمين':'Пользователи','إدارة فريق الإدارة والصلاحيات المحددة':'Администраторы и права','مراقبة النشاط':'Активность','السجل المالي وسلامة السجلات':'Финансовый реестр','سجل إجراءات الأدمن':'Журнал администратора','رادار الحماية':'Монитор безопасности','لا توجد رسائل بعد. ابدأ المحادثة الآن.':'Сообщений пока нет. Начните общение.','اكتب رسالة للمجتمع…':'Напишите в сообщество…','اكتب رسالة لفريق الدعم…':'Напишите в поддержку…'},
+'tr':{'الرئيسية':'Ana Sayfa','المحفظة':'Cüzdan','المهام':'Görevler','الإحالات':'Referanslar','الأوائل':'Sıralama','حسابي':'Profil','مركز المحادثات 💬':'Mesajlar 💬','الشات العام':'Genel sohbet','الدعم الخاص':'Özel destek','إرسال':'Gönder','حذف الرسالة':'Mesajı sil','كتم':'Sustur','إلغاء الكتم':'Susturmayı kaldır','حظر من الشات':'Sohbetten yasakla','رفع حظر الشات':'Sohbet yasağını kaldır','إدارة الشات العام':'Sohbet moderasyonu','تحديث':'Yenile','لغة التطبيق':'Uygulama dili','حفظ اللغة':'Dili kaydet','تحديث البيانات':'Verileri yenile','بحث':'Ara','إضافة رصيد':'Bakiye ekle','خصم رصيد':'Bakiye düş','تجميد':'Dondur','فك التجميد':'Dondurmayı kaldır','حظر':'Yasakla','رفع الحظر':'Yasağı kaldır','طلبات السحب المعلقة':'Bekleyen çekimler','إثباتات المهام':'Görev kanıtları','سجل السحوبات السابقة':'Çekim geçmişi','إدارة المستخدمين':'Kullanıcı yönetimi','إدارة فريق الإدارة والصلاحيات المحددة':'Yöneticiler ve izinler','مراقبة النشاط':'Etkinlik izleme','السجل المالي وسلامة السجلات':'Finansal kayıt ve bütünlük','سجل إجراءات الأدمن':'Yönetici işlem kaydı','رادار الحماية':'Güvenlik izleme','لا توجد رسائل بعد. ابدأ المحادثة الآن.':'Henüz mesaj yok. Sohbeti başlatın.','اكتب رسالة للمجتمع…':'Topluluğa yazın…','اكتب رسالة لفريق الدعم…':'Desteğe yazın…'},
+'pt':{'الرئيسية':'Início','المحفظة':'Carteira','المهام':'Tarefas','الإحالات':'Indicações','الأوائل':'Classificação','حسابي':'Perfil','مركز المحادثات 💬':'Mensagens 💬','الشات العام':'Chat público','الدعم الخاص':'Suporte privado','إرسال':'Enviar','حذف الرسالة':'Excluir mensagem','كتم':'Silenciar','إلغاء الكتم':'Remover silêncio','حظر من الشات':'Banir do chat','رفع حظر الشات':'Desbanir do chat','إدارة الشات العام':'Moderação do chat','تحديث':'Atualizar','لغة التطبيق':'Idioma do app','حفظ اللغة':'Salvar idioma','تحديث البيانات':'Atualizar dados','بحث':'Pesquisar','إضافة رصيد':'Adicionar saldo','خصم رصيد':'Deduzir saldo','تجميد':'Congelar','فك التجميد':'Descongelar','حظر':'Banir','رفع الحظر':'Desbanir','طلبات السحب المعلقة':'Saques pendentes','إثباتات المهام':'Comprovantes de tarefas','سجل السحوبات السابقة':'Histórico de saques','إدارة المستخدمين':'Gestão de usuários','إدارة فريق الإدارة والصلاحيات المحددة':'Administradores e permissões','مراقبة النشاط':'Monitor de atividade','السجل المالي وسلامة السجلات':'Livro financeiro e integridade','سجل إجراءات الأدمن':'Auditoria administrativa','رادار الحماية':'Monitor de segurança','لا توجد رسائل بعد. ابدأ المحادثة الآن.':'Ainda não há mensagens. Comece a conversa.','اكتب رسالة للمجتمع…':'Escreva para a comunidade…','اكتب رسالة لفريق الدعم…':'Escreva para o suporte…'}
+};
+const EXTRA_UI_TEXT={
+'إجمالي رصيدك المتاح':['Available balance','Saldo disponible','Solde disponible','Verfügbares Guthaben','Доступный баланс','Kullanılabilir bakiye','Saldo disponível'],
+'أهلاً':['Welcome','Hola','Bienvenue','Willkommen','Добро пожаловать','Hoş geldiniz','Bem-vindo'],
+'مركز الإعلانات':['Ad Center','Centro de anuncios','Centre publicitaire','Anzeigenzentrum','Рекламный центр','Reklam Merkezi','Central de anúncios'],
+'مهام إعلانية ومكافآت':['Ad tasks & rewards','Tareas y recompensas','Tâches et récompenses','Werbeaufgaben & Prämien','Задания и награды','Görevler ve ödüller','Tarefas e recompensas'],
+'فيديو مكافأة':['Rewarded video','Vídeo recompensado','Vidéo récompensée','Belohnungsvideo','Видео за награду','Ödüllü video','Vídeo premiado'],
+'شاهد واكسب USDT':['Watch and earn USDT','Mira y gana USDT','Regardez et gagnez des USDT','Ansehen und USDT verdienen','Смотрите и зарабатывайте USDT','İzle ve USDT kazan','Assista e ganhe USDT'],
+'نفّذ وارسل الإثبات':['Complete and submit proof','Completa y envía la prueba','Effectuez et envoyez la preuve','Erledigen und Nachweis senden','Выполните и отправьте подтверждение','Tamamla ve kanıt gönder','Conclua e envie a prova'],
+'طلب سحب':['Withdrawal request','Solicitud de retiro','Demande de retrait','Auszahlungsanfrage','Запрос на вывод','Çekim talebi','Solicitação de saque'],
+'اسحب أرباحك':['Withdraw your earnings','Retira tus ganancias','Retirez vos gains','Zahle deine Einnahmen aus','Выведите свой доход','Kazancını çek','Retire seus ganhos'],
+'ترتيب الأرباح':['Earnings ranking','Clasificación de ganancias','Classement des gains','Gewinnrangliste','Рейтинг доходов','Kazanç sıralaması','Classificação de ganhos'],
+'الشات المباشر':['Live chat','Chat en vivo','Chat en direct','Live-Chat','Живой чат','Canlı sohbet','Chat ao vivo'],
+'تواصل مع المجتمع والدعم':['Connect with the community and support','Habla con la comunidad y soporte','Échangez avec la communauté et le support','Kommuniziere mit Community und Support','Общайтесь с сообществом и поддержкой','Topluluk ve destekle iletişim kur','Fale com a comunidade e o suporte'],
+'ملخص الحساب':['Account overview','Resumen de cuenta','Aperçu du compte','Kontoübersicht','Обзор аккаунта','Hesap özeti','Resumo da conta'],
+'حساب نشط':['Active account','Cuenta activa','Compte actif','Aktives Konto','Активный аккаунт','Aktif hesap','Conta ativa'],
+'أرباح الإحالات':['Referral earnings','Ganancias por referidos','Gains de parrainage','Empfehlungserträge','Доход от рефералов','Referans kazancı','Ganhos por indicação'],
+'إجمالي المسحوبات':['Total withdrawn','Total retirado','Total retiré','Insgesamt ausgezahlt','Всего выведено','Toplam çekilen','Total sacado'],
+'الإعلانات المكتملة':['Completed ads','Anuncios completados','Publicités terminées','Abgeschlossene Anzeigen','Просмотрено рекламы','Tamamlanan reklamlar','Anúncios concluídos'],
+'أعضاء فريقك':['Your team members','Miembros de tu equipo','Membres de votre équipe','Deine Teammitglieder','Участники вашей команды','Ekip üyelerin','Membros da sua equipe'],
+'آخر العمليات':['Recent activity','Actividad reciente','Activité récente','Letzte Aktivitäten','Последние операции','Son işlemler','Atividade recente'],
+'عرض السجل ←':['View history ←','Ver historial ←','Voir l’historique ←','Verlauf anzeigen ←','История операций ←','Geçmişi gör ←','Ver histórico ←'],
+'كل تفاصيل أموالك في مكان واحد.':['All your funds in one place.','Todos tus fondos en un solo lugar.','Tous vos fonds au même endroit.','Alle deine Guthaben an einem Ort.','Все ваши средства в одном месте.','Tüm bakiyen tek yerde.','Todos os seus fundos em um só lugar.'],
+'الرصيد المتاح':['Available balance','Saldo disponible','Solde disponible','Verfügbares Guthaben','Доступный баланс','Kullanılabilir bakiye','Saldo disponível'],
+'قيد السحب':['Pending withdrawal','Retiro pendiente','Retrait en attente','Ausstehende Auszahlung','Ожидает вывода','Çekim bekliyor','Saque pendente'],
+'الرصيد المجمد':['Frozen balance','Saldo congelado','Solde gelé','Eingefrorenes Guthaben','Замороженный баланс','Dondurulmuş bakiye','Saldo congelado'],
+'عنوان USDT TRC20':['USDT TRC20 address','Dirección USDT TRC20','Adresse USDT TRC20','USDT-TRC20-Adresse','Адрес USDT TRC20','USDT TRC20 adresi','Endereço USDT TRC20'],
+'غير مربوط':['Not linked','No vinculada','Non associé','Nicht verknüpft','Не привязан','Bağlı değil','Não vinculado'],
+'لم يتم إضافة محفظة بعد':['No wallet added yet','Aún no se agregó una billetera','Aucun portefeuille ajouté','Noch keine Wallet hinzugefügt','Кошелёк ещё не добавлен','Henüz cüzdan eklenmedi','Nenhuma carteira adicionada'],
+'⚙️ إضافة / تعديل المحفظة':['⚙️ Add / edit wallet','⚙️ Añadir / editar billetera','⚙️ Ajouter / modifier le portefeuille','⚙️ Wallet hinzufügen / bearbeiten','⚙️ Добавить / изменить кошелёк','⚙️ Cüzdan ekle / düzenle','⚙️ Adicionar / editar carteira'],
+'💸 طلب سحب الأرباح':['💸 Request withdrawal','💸 Solicitar retiro','💸 Demander un retrait','💸 Auszahlung beantragen','💸 Запросить вывод','💸 Para çekme talebi','💸 Solicitar saque'],
+'احصل على فرص إعلانية ومكافآت متاحة.':['Find available ad opportunities and rewards.','Encuentra anuncios y recompensas disponibles.','Découvrez les annonces et récompenses disponibles.','Finde verfügbare Anzeigen und Prämien.','Найдите доступные объявления и награды.','Mevcut reklam ve ödülleri keşfedin.','Encontre anúncios e recompensas disponíveis.'],
+'🔎 البحث عن إعلان':['🔎 Find an ad','🔎 Buscar anuncio','🔎 Rechercher une publicité','🔎 Anzeige suchen','🔎 Найти рекламу','🔎 Reklam bul','🔎 Buscar anúncio'],
+'شاهد الفيديو بالكامل وانتظر تأكيد المشاهدة.':['Watch the full video and wait for confirmation.','Mira el video completo y espera la confirmación.','Regardez la vidéo entière et attendez la confirmation.','Sieh das ganze Video an und warte auf die Bestätigung.','Посмотрите видео полностью и дождитесь подтверждения.','Videoyu tamamen izleyin ve onayı bekleyin.','Assista ao vídeo completo e aguarde a confirmação.'],
+'▶ مشاهدة الفيديو':['▶ Watch video','▶ Ver vídeo','▶ Regarder la vidéo','▶ Video ansehen','▶ Смотреть видео','▶ Video izle','▶ Assistir vídeo'],
+'المهام والمكافآت 🧩':['Tasks & rewards 🧩','Tareas y recompensas 🧩','Tâches et récompenses 🧩','Aufgaben & Prämien 🧩','Задания и награды 🧩','Görevler ve ödüller 🧩','Tarefas e recompensas 🧩'],
+'نفّذ المطلوب وأرسل إثباتك للمراجعة.':['Complete the task and submit proof for review.','Completa la tarea y envía la prueba para revisión.','Effectuez la tâche et envoyez une preuve pour vérification.','Erledige die Aufgabe und sende einen Nachweis zur Prüfung.','Выполните задание и отправьте подтверждение на проверку.','Görevi tamamlayıp inceleme için kanıt gönderin.','Conclua a tarefa e envie a prova para análise.'],
+'طلبات السحب تُراجع يدويًا من الإدارة.':['Withdrawals are manually reviewed by admins.','Los retiros son revisados manualmente por los administradores.','Les retraits sont vérifiés manuellement par les administrateurs.','Auszahlungen werden manuell von Admins geprüft.','Запросы на вывод проверяются администрацией вручную.','Çekimler yöneticiler tarafından manuel incelenir.','Os saques são analisados manualmente pelos administradores.'],
+'مبلغ السحب (USDT)':['Withdrawal amount (USDT)','Importe del retiro (USDT)','Montant du retrait (USDT)','Auszahlungsbetrag (USDT)','Сумма вывода (USDT)','Çekim tutarı (USDT)','Valor do saque (USDT)'],
+'إرسال طلب السحب':['Submit withdrawal request','Enviar solicitud de retiro','Envoyer la demande de retrait','Auszahlungsanfrage senden','Отправить запрос на вывод','Çekim talebini gönder','Enviar solicitação de saque'],
+'شارك رابطك واكسب من نشاط فريقك حتى 5 مستويات.':['Share your link and earn from your team activity across up to 5 levels.','Comparte tu enlace y gana con la actividad de tu equipo hasta 5 niveles.','Partagez votre lien et gagnez grâce à votre équipe sur 5 niveaux.','Teile deinen Link und verdiene an deinem Team über bis zu 5 Ebenen.','Делитесь ссылкой и зарабатывайте на активности команды до 5 уровней.','Bağlantını paylaş ve 5 seviyeye kadar ekip etkinliğinden kazan.','Compartilhe seu link e ganhe com a atividade da equipe em até 5 níveis.'],
+'نسخ رابط الدعوة':['Copy referral link','Copiar enlace de referido','Copier le lien de parrainage','Empfehlungslink kopieren','Скопировать реферальную ссылку','Davet bağlantısını kopyala','Copiar link de indicação'],
+'طلبات السحب وحالاتها.':['Withdrawals and their statuses.','Retiros y sus estados.','Retraits et leurs statuts.','Auszahlungen und ihr Status.','Выводы и их статусы.','Çekimler ve durumları.','Saques e seus status.'],
+'بيانات حساب Telegram وحالة المنصة.':['Telegram account details and platform status.','Datos de Telegram y estado de la plataforma.','Données Telegram et état de la plateforme.','Telegram-Kontodaten und Plattformstatus.','Данные Telegram и статус платформы.','Telegram hesabı ve platform durumu.','Dados do Telegram e status da plataforma.'],
+'اسم الحساب':['Account name','Nombre de cuenta','Nom du compte','Kontoname','Имя аккаунта','Hesap adı','Nome da conta'],
+'تاريخ الانضمام':['Joined on','Fecha de registro','Date d’inscription','Beitrittsdatum','Дата регистрации','Katılım tarihi','Data de entrada'],
+'حالة الحساب':['Account status','Estado de la cuenta','État du compte','Kontostatus','Статус аккаунта','Hesap durumu','Status da conta'],
+'مركز المساعدة':['Help center','Centro de ayuda','Centre d’aide','Hilfezentrum','Центр помощи','Yardım merkezi','Central de ajuda'],
+'مركز المحادثات 💬':['Messages center 💬','Centro de mensajes 💬','Centre de messages 💬','Nachrichtenzentrale 💬','Центр сообщений 💬','Mesaj merkezi 💬','Central de mensagens 💬'],
+'تحديث تلقائي للرسائل':['Messages refresh automatically','Los mensajes se actualizan automáticamente','Actualisation automatique des messages','Nachrichten werden automatisch aktualisiert','Сообщения обновляются автоматически','Mesajlar otomatik yenilenir','As mensagens são atualizadas automaticamente'],
+'التزم بالاحترام. لا تشارك بياناتك الشخصية أو معلومات محفظتك.':['Be respectful. Do not share personal data or wallet information.','Sé respetuoso. No compartas datos personales ni información de tu billetera.','Respectez les autres. Ne partagez pas vos données personnelles ou de portefeuille.','Sei respektvoll. Teile keine persönlichen Daten oder Wallet-Informationen.','Соблюдайте уважение. Не публикуйте личные данные или данные кошелька.','Saygılı olun. Kişisel veya cüzdan bilgilerinizi paylaşmayın.','Seja respeitoso. Não compartilhe dados pessoais ou informações da carteira.'],
+'هذه المحادثة خاصة بك ولا يراها المستخدمون الآخرون.':['This conversation is private and cannot be seen by other users.','Esta conversación es privada y otros usuarios no pueden verla.','Cette conversation est privée et invisible aux autres utilisateurs.','Dieses Gespräch ist privat und für andere Nutzer nicht sichtbar.','Этот разговор приватный и не виден другим пользователям.','Bu konuşma özeldir ve diğer kullanıcılar göremez.','Esta conversa é privada e não pode ser vista por outros usuários.'],
+'🏆 أفضل 100 مستخدم':['🏆 Top 100 users','🏆 100 mejores usuarios','🏆 Top 100 utilisateurs','🏆 Top 100 Nutzer','🏆 Топ-100 пользователей','🏆 En iyi 100 kullanıcı','🏆 100 melhores usuários'],
+'ترتيب أصحاب أعلى الأرباح. المعروض اسم الحساب والصورة والأرباح فقط.':['Ranking of top earners. Only account name, photo and earnings are shown.','Clasificación de mayores ganancias. Solo se muestran nombre, foto e ingresos.','Classement des meilleurs gains. Seuls le nom, la photo et les gains sont affichés.','Rangliste der Top-Verdiener. Angezeigt werden nur Name, Foto und Einnahmen.','Рейтинг лучших по доходам. Показываются только имя, фото и доход.','En çok kazananların sıralaması. Yalnızca ad, fotoğraf ve kazanç gösterilir.','Classificação dos maiores ganhos. Apenas nome, foto e ganhos são exibidos.'],
+'إدارة المنصة ومراجعة العمليات — صلاحيات محمية من السيرفر.':['Platform management and transaction review — permissions enforced server-side.','Gestión de la plataforma y revisión de operaciones: permisos protegidos por el servidor.','Gestion de la plateforme et vérification des opérations — permissions contrôlées côté serveur.','Plattformverwaltung und Transaktionsprüfung — Berechtigungen serverseitig geschützt.','Управление платформой и проверка операций — права контролируются сервером.','Platform yönetimi ve işlem inceleme — izinler sunucu tarafında korunur.','Gestão da plataforma e revisão de operações — permissões protegidas no servidor.'],
+'طلبات السحب المعلقة':['Pending withdrawals','Retiros pendientes','Retraits en attente','Ausstehende Auszahlungen','Ожидающие выплаты','Bekleyen çekimler','Saques pendentes'],
+'إثباتات المهام':['Task proofs','Pruebas de tareas','Preuves des tâches','Aufgabennachweise','Подтверждения заданий','Görev kanıtları','Comprovantes de tarefas'],
+'سجل مراجعة المهام':['Task review history','Historial de revisión de tareas','Historique de vérification des tâches','Aufgaben-Prüfverlauf','История проверки заданий','Görev inceleme geçmişi','Histórico de análise de tarefas'],
+'سجل السحوبات السابقة':['Withdrawal history','Historial de retiros','Historique des retraits','Auszahlungsverlauf','История выплат','Çekim geçmişi','Histórico de saques'],
+'إدارة المهام المنشورة':['Manage published tasks','Gestionar tareas publicadas','Gérer les tâches publiées','Veröffentlichte Aufgaben verwalten','Управление опубликованными заданиями','Yayınlanan görevleri yönet','Gerenciar tarefas publicadas'],
+'بحث المستخدمين':['Search users','Buscar usuarios','Rechercher des utilisateurs','Benutzer suchen','Поиск пользователей','Kullanıcı ara','Pesquisar usuários'],
+'إدارة فريق الإدارة والصلاحيات المحددة':['Admin and permissions management','Administradores y permisos','Gestion des admins et permissions','Admin- und Rechteverwaltung','Управление администраторами и правами','Yönetici ve izin yönetimi','Gestão de administradores e permissões'],
+'مراقبة النشاط':['Activity monitor','Monitor de actividad','Suivi d’activité','Aktivitätsmonitor','Монитор активности','Etkinlik izleme','Monitor de atividade'],
+'السجل المالي وسلامة السجلات':['Financial ledger and integrity','Libro financiero e integridad','Registre financier et intégrité','Finanzbuch und Integrität','Финансовый реестр и целостность','Finansal kayıt ve bütünlük','Livro financeiro e integridade'],
+'سجل إجراءات الأدمن':['Admin audit log','Registro de auditoría admin','Journal d’audit admin','Admin-Auditprotokoll','Журнал действий администратора','Yönetici denetim kaydı','Registro de auditoria administrativa'],
+'رادار الحماية':['Security monitor','Monitor de seguridad','Surveillance de sécurité','Sicherheitsmonitor','Монитор безопасности','Güvenlik izleme','Monitor de segurança']
+};
+const uiLanguageOrder=['en','es','fr','de','ru','tr','pt'];
+for(const [arabic,translations] of Object.entries(EXTRA_UI_TEXT)) uiLanguageOrder.forEach((code,index)=>{UI_LOCALES[code][arabic]=translations[index];});
+const originalTextNodes=new WeakMap();
+function applyUiLanguage(code){activeUiLanguage=code||'ar';const dict=UI_LOCALES[code]||{};document.documentElement.lang=code||'ar';document.documentElement.dir=code==='ar'?'rtl':'ltr';const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode()){if(!originalTextNodes.has(n))originalTextNodes.set(n,n.nodeValue);const original=originalTextNodes.get(n),trim=original.trim();if(dict[trim])n.nodeValue=original.replace(trim,dict[trim]);else n.nodeValue=original;}document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(el=>{if(!el.dataset.originalPlaceholder)el.dataset.originalPlaceholder=el.placeholder;el.placeholder=dict[el.dataset.originalPlaceholder]||el.dataset.originalPlaceholder;});}
+let activeUiLanguage='ar';
+const uiTranslationObserver=new MutationObserver(records=>{for(const record of records){if(record.type==='childList'){for(const node of record.addedNodes){if(node.nodeType===Node.TEXT_NODE)translateUiTextNode(node);else if(node.nodeType===Node.ELEMENT_NODE){const walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);let child;while(child=walker.nextNode())translateUiTextNode(child);}}}else if(record.type==='characterData')translateUiTextNode(record.target);}});
+function translateUiTextNode(node){const code=activeUiLanguage,dict=UI_LOCALES[code]||{};if(!originalTextNodes.has(node))originalTextNodes.set(node,node.nodeValue);const original=originalTextNodes.get(node),trim=original.trim();const translated=dict[trim];if(translated){const next=original.replace(trim,translated);if(node.nodeValue!==next)node.nodeValue=next;}}
+uiTranslationObserver.observe(document.body,{childList:true,subtree:true,characterData:true});
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),3000)}
+async function api(path,opts={}){const res=await fetch(path,{...opts,headers:{'Content-Type':'application/json','X-Telegram-Init-Data':initData,...(opts.headers||{})},cache:'no-store'});let data={};try{data=await res.json()}catch{}if(!res.ok||data.ok===false)throw new Error(data.message||`خطأ ${res.status}`);return data}
+function go(id){screenMoves++;if(screenMoves%4===0)showInterstitial();document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));if(id==='admin')loadAdmin();if(id==='adminroom')loadAdminRoom();if(id==='leaderboard')loadLeaderboard(1);if(id==='video')setupVideo();if(id==='tasks')renderTasks();if(id==='history')renderHistory();if(id==='referrals')renderRefs();window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{let id=b.dataset.go;if(id==='video'||id==='ads'||id==='withdraw'){}go(id)}));
+function showModal(title,html){$('modalTitle').textContent=title;$('modalBody').innerHTML=html;$('modal').classList.add('show')}$('closeModal').onclick=()=>$('modal').classList.remove('show');$('modal').addEventListener('click',e=>{if(e.target===$('modal'))$('modal').classList.remove('show')});
+function render(){if(!me)return;$('firstName').textContent=me.name||'بك';$('avatar').textContent=(me.name||'R').trim().charAt(0);$('balance').innerHTML=`${fmt(me.balance)} <span>USDT</span>`;$('locked').textContent=fmt(me.lockedBalance);$('frozen').textContent=fmt(me.frozenBalance);$('refEarn').textContent=fmt(me.referralEarnings);$('totalWithdrawn').textContent=fmt(me.totalWithdrawn);$('adsCount').textContent=me.adsCompleted||0;$('teamCount').textContent=me.totalTeam||0;
+$('wBalance').textContent=fmt(me.balance);$('wLocked').textContent=fmt(me.lockedBalance);$('wFrozen').textContent=fmt(me.frozenBalance);$('wPaid').textContent=fmt(me.totalWithdrawn);$('walletAddress').textContent=me.wallet||'لم يتم إضافة محفظة بعد';$('walletBadge').textContent=me.wallet?'مربوط':'غير مربوط';$('walletBadge').className='badge'+(me.wallet?'':' warn');$('withdrawBalance').textContent=fmt(me.balance)+' USDT';$('minWithdraw').textContent=fmt(me.minWithdraw)+' USDT';$('withdrawWalletNote').textContent=me.wallet?'المحفظة: '+me.wallet:'يجب إضافة محفظة TRC20 قبل السحب.';$('languageSelect').value=me.language||'ar';$('profileId').textContent=me.id;$('profileName').textContent=me.name;$('joinedAt').textContent=me.joinedAt?new Date(me.joinedAt).toLocaleDateString('ar-EG'):'—';$('accountStatus').textContent=me.isBanned?'محظور':me.isFrozen?'مجمّد':'نشط';$('accountStatus').className='badge'+(me.isBanned||me.isFrozen?' red':'');$('refLink').value=me.referralLink||'';
+const recent=me.history.slice(0,3);$('recentHome').innerHTML=recent.length?recent.map(historyRow).join(''):'<div class="empty">لا توجد عمليات مسجلة بعد.</div>';}
+function historyRow(x){const status=x.status==='paid'?'تم الدفع':x.status==='rejected'?'مرفوض':'قيد المراجعة';const cls=x.status==='paid'?'':'warn';return `<div class="list-item"><div><b>سحب #${esc(x.id)}</b><small>${esc(status)} · ${x.time?new Date(x.time).toLocaleDateString('ar-EG'):''}</small></div><div class="amount">${fmt(x.amount)} USDT</div></div>`}
+function renderHistory(){$('historyList').innerHTML=me.history.length?me.history.map(historyRow).join(''):'<div class="empty">لا توجد عمليات سحب حتى الآن.</div>'}
+function renderRefs(){const rates=me.referralRates||{A:10,B:5,C:3,D:2,E:1};const levels=['A','B','C','D','E'];$('refLevels').innerHTML=levels.map((l,i)=>`<div class="stat"><small>المستوى ${i+1} · ${rates[l]}%</small><strong>${(me.referralLevels||{})[l]||0}</strong></div>`).join('');$('refTotal').textContent='إجمالي أرباح الإحالات: '+fmt(me.referralEarnings)+' USDT · إجمالي الفريق: '+(me.totalTeam||0)+' عضو';}
+function renderTasks(){const tasks=me.tasks||[];$('taskList').innerHTML=tasks.length?tasks.map(t=>`<div class="card"><div class="row"><b>${esc(t.title)}</b><span class="badge">+${fmt(t.reward)} USDT</span></div><p class="note">${esc(t.description||'نفذ المهمة وأرسل الإثبات.')}</p><div class="row"><button class="btn secondary smallbtn" onclick="window.openTask('${esc(t.id)}')">إرسال الإثبات</button><a class="btn smallbtn" style="width:auto;text-decoration:none" href="${esc(t.link)}" target="_blank" rel="noopener">فتح المهمة ↗</a></div></div>`).join(''):'<div class="empty">لا توجد مهام متاحة حالياً.</div>'}
+window.openTask=id=>{const t=me.tasks.find(x=>x.id===id);if(!t)return;showModal('إرسال إثبات المهمة',`<p class="note">${esc(t.title)} · المكافأة ${fmt(t.reward)} USDT</p><div class="field"><label>اكتب إثبات التنفيذ أو رابط الإثبات</label><textarea id="proofText" placeholder="اكتب تفاصيل تنفيذ المهمة..."></textarea></div><button class="btn" id="sendProof">إرسال للمراجعة</button>`);$('sendProof').onclick=async()=>{try{const proof=$('proofText').value.trim();await api('/api/miniapp/task-proof',{method:'POST',body:JSON.stringify({taskId:id,proof})});toast('تم إرسال الإثبات للمراجعة');$('modal').classList.remove('show');await loadMe()}catch(e){toast(e.message)}}};
+async function loadMe(){try{const d=await api('/api/miniapp/me');me=d.user;render();applyUiLanguage(me.language||'ar');if(!me.owner){$('downloadBackup').hidden=true;$('restoreBackup').hidden=true;}if(me.admin&&!document.querySelector('#nav [data-go="admin"]')){let b=document.createElement('button');b.dataset.go='admin';b.innerHTML='<span>♛</span>الإدارة';$('nav').insertBefore(b,$('nav').lastElementChild);$('nav').style.gridTemplateColumns='repeat(7,1fr)';b.addEventListener('click',()=>go('admin'));let c=document.createElement('button');c.dataset.go='adminroom';c.innerHTML='<span>💬</span>شات الإدارة';$('nav').insertBefore(c,$('nav').lastElementChild);c.addEventListener('click',()=>go('adminroom'));$('nav').style.gridTemplateColumns='repeat(8,1fr)';}}catch(e){toast(e.message)}}
+
+$('applyAdmin').onclick=()=>{showModal('التقديم لفريق الإدارة',`<p class="note">اختر تخصصاً واحداً فقط، وسيتم التواصل معك من خلال البوت.</p><div class="field"><label>التخصص المطلوب</label><select id="applyRole"><option>مسؤول الأمن السيبراني</option><option>مسؤول إدارة المستخدمين</option><option>مسؤول دعم العملاء</option><option>مسؤول إدارة المهام والتشغيل</option></select></div><div class="field"><label>خبرتك السابقة</label><textarea id="applyExperience" maxlength="1200" placeholder="اكتب خبرتك ومهاراتك..."></textarea></div><div class="field"><label>لماذا تريد الانضمام؟</label><textarea id="applyReason" maxlength="1200"></textarea></div><div class="field"><label>ساعات التفرغ يومياً</label><input id="applyHours" maxlength="80" placeholder="مثال: 3 ساعات"></div><button class="btn" id="sendApplication">إرسال طلب التقديم</button>`);$('sendApplication').onclick=async()=>{try{const d=await api('/api/miniapp/admin-application',{method:'POST',body:JSON.stringify({role:$('applyRole').value,experience:$('applyExperience').value,reason:$('applyReason').value,hours:$('applyHours').value})});toast(d.message);$('modal').classList.remove('show')}catch(e){toast(e.message)}}};
+async function loadAdminApplications(){try{if(!me?.owner)return;const d=await api('/api/miniapp/admin/applications');$('adminApplications').innerHTML=d.applications.length?d.applications.map(a=>`<div class="card"><b>${esc(a.name)} · ${esc(a.role)}</b><p class="note">اسم المستخدم: ${a.username?'@'+esc(a.username):'غير متوفر'}<br>ID: ${esc(a.userId)}<br>الخبرة: ${esc(a.experience)}<br>السبب: ${esc(a.reason)}<br>التفرغ: ${esc(a.hours)}</p><div class="row"><button class="btn danger smallbtn" onclick="window.reviewApplication('${esc(a.id)}','reject')">رفض</button><button class="btn smallbtn" onclick="window.reviewApplication('${esc(a.id)}','accept')">قبول</button></div></div>`).join(''):'<div class="empty">لا توجد طلبات معلقة.</div>'}catch(e){toast(e.message)}}
+window.reviewApplication=async(id,action)=>{if(!confirm(action==='accept'?'قبول المتقدم ومنحه صلاحية تخصصه؟':'رفض طلب التقديم؟'))return;try{const d=await api('/api/miniapp/admin/application/'+encodeURIComponent(id),{method:'POST',body:JSON.stringify({action})});toast(d.message);await loadAdminApplications();await loadMe()}catch(e){toast(e.message)}};
+$('refreshApplications').onclick=loadAdminApplications;
+async function loadAdminRoom(){try{const d=await api('/api/miniapp/admin-room');$('adminRoomMessages').innerHTML=d.messages.map(m=>`<div class="chat-msg ${String(m.userId)===String(me.id)?'mine':''}"><b>${esc(m.name)} · ${esc(m.role||'أدمن')}</b><div>${esc(m.text)}</div><small>${new Date(m.time).toLocaleString('ar-EG')}</small></div>`).join('')||'<div class="empty">لا توجد رسائل بعد.</div>';$('adminRoomMessages').scrollTop=$('adminRoomMessages').scrollHeight}catch(e){toast(e.message)}}
+$('adminRoomSend').onclick=async()=>{try{const text=$('adminRoomInput').value.trim();if(!text)return;await api('/api/miniapp/admin-room',{method:'POST',body:JSON.stringify({text})});$('adminRoomInput').value='';await loadAdminRoom()}catch(e){toast(e.message)}};
+$('adminRoomInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('adminRoomSend').click()});
+
+$('editWallet').onclick=()=>{showModal('إعداد محفظة TRC20',`<p class="note">أدخل عنوان USDT على شبكة TRON (TRC20)، يبدأ بحرف T.</p><div class="field"><label>عنوان المحفظة</label><input id="walletInput" value="${esc(me.wallet)}" placeholder="T..."></div><button class="btn" id="saveWallet">حفظ المحفظة</button>`);$('saveWallet').onclick=async()=>{try{await api('/api/miniapp/wallet',{method:'POST',body:JSON.stringify({wallet:$('walletInput').value})});toast('تم حفظ المحفظة');$('modal').classList.remove('show');await loadMe()}catch(e){toast(e.message)}}};
+$('submitWithdraw').onclick=async()=>{try{const amount=Number($('withdrawAmount').value);const d=await api('/api/miniapp/withdraw',{method:'POST',body:JSON.stringify({amount})});toast(d.message);$('withdrawAmount').value='';await loadMe()}catch(e){toast(e.message)}};
+$('copyRef').onclick=async()=>{try{await navigator.clipboard.writeText(me.referralLink);toast('تم نسخ رابط الدعوة')}catch{tg.showPopup?.({message:me.referralLink})}};
+async function loadAdConfiguration(){try{adConfig=await fetch('/api/miniapp-config',{cache:'no-store'}).then(r=>r.json());if(adConfig.background){document.body.style.backgroundImage=`linear-gradient(#080d1caa,#080d1caa),url("${adConfig.background}")`;document.body.style.backgroundSize='cover';document.body.style.backgroundAttachment='fixed';}const taskBlock=adConfig.adBlocks?.task;if(taskBlock&&window.customElements){const host=$('taskAdContainer');host.innerHTML='';const widget=document.createElement('adsun-task');widget.setAttribute('data-block-id',String(taskBlock));widget.setAttribute('data-debug','false');const reward=document.createElement('span');reward.slot='reward';reward.textContent='مكافأة بعد إتمام المهمة';widget.appendChild(reward);widget.addEventListener('reward',()=>{$('adResult').innerHTML='<div class="empty">تم استلام إشارة إكمال المهمة. انتظر تأكيد الخادم قبل احتساب الرصيد.</div>';});widget.addEventListener('onBannerNotFound',()=>widget.remove());host.appendChild(widget);}if(adConfig.adBlocks?.interstitial&&window.Adsun?.init){interstitialController=window.Adsun.init({blockId:String(adConfig.adBlocks.interstitial),debug:false});}}catch{}}
+async function showInterstitial(){if(!interstitialController)return;try{await interstitialController.show()}catch{}}
+$('loadAd').onclick=async()=>{const box=$('adResult');box.innerHTML='<div class="empty">جارٍ البحث عن إعلان...</div>';try{const d=await api('/api/miniapp/ad',{method:'POST',body:'{}'});const a=d.ad;box.innerHTML=`${a.image?`<img class="ad-image" src="${esc(a.image)}" alt="إعلان">`:''}<div class="list-item"><div><b>إعلان متاح</b><small>${esc(a.text)}</small></div></div><div style="display:grid;gap:8px;margin-top:10px">${a.clickUrl?`<a class="btn secondary" href="${esc(a.clickUrl)}" target="_blank" rel="noopener">${esc(a.buttonName)} ↗</a>`:''}${a.rewardUrl?`<a class="btn" href="${esc(a.rewardUrl)}" target="_blank" rel="noopener">${esc(a.rewardName)} 🎁</a>`:''}</div>`}catch(e){box.innerHTML=`<div class="empty">${esc(e.message)}</div>`}};
+async function setupVideo(){if(videoController||!$('watchVideo'))return;try{const d=adConfig||await fetch('/api/miniapp-config',{cache:'no-store'}).then(r=>r.json());adConfig=d;if(!d.enabled)throw Error(d.message||'الفيديوهات غير مفعلة');if(!window.Adsun?.init)throw Error('تعذر تجهيز مشغل الفيديو حالياً.');videoController=window.Adsun.init({blockId:String(d.blockId),debug:false});$('videoReward').textContent='+'+Number(d.reward).toFixed(4)+' '+(d.currency||'USDT');$('watchVideo').disabled=false;$('videoStatus').textContent='جاهز لمشاهدة الفيديو.'}catch(e){$('videoStatus').textContent=e.message}}
+$('watchVideo').onclick=async()=>{if(!videoController)return;$('watchVideo').disabled=true;$('videoStatus').textContent='جارٍ تحميل الفيديو...';try{const r=await videoController.show();$('videoStatus').textContent=r?.done?'اكتملت المشاهدة. في انتظار تأكيد المشاهدة على السيرفر.':'لم يتم تأكيد مشاهدة مكتملة.'}catch(e){$('videoStatus').textContent=e?.description||'لا يوجد إعلان متاح حالياً.'}finally{$('watchVideo').disabled=false}};
+$('refresh').onclick=loadMe;$('support').onclick=()=>openSupportChat();
+let chatMode='public';
+function chatRender(box,items,mine){box.innerHTML=items.length?items.map(m=>`<div class="chat-msg ${String(m.userId||'')===String(me.id)?'mine':''}"><b>${esc(m.name|| (m.from==='support'?'فريق الدعم':'مستخدم'))}</b><div>${esc(m.text)}</div><small>${m.time?new Date(m.time).toLocaleString('ar-EG'):''}</small></div>`).join(''):'<div class="empty">لا توجد رسائل بعد. ابدأ المحادثة الآن.</div>';box.scrollTop=box.scrollHeight}
+async function loadPublicChat(){try{const d=await api('/api/miniapp/public-chat');chatRender($('publicMessages'),d.messages||[]);if(me&&me.admin){$('chatAdminPanel').hidden=false;await loadChatAdmin()}}catch(e){}}
+async function loadChatAdmin(){if(!me||!me.admin)return;try{const d=await api('/api/miniapp/admin/public-chat');$('chatAdminMessages').innerHTML=d.messages.length?d.messages.map(m=>`<div class="list-item" style="display:block"><div class="row"><b>${esc(m.name)} · ${esc(m.userId)}</b><span class="badge ${m.chatBanned?'red':m.muted?'warn':''}">${m.chatBanned?'محظور من الشات':m.muted?'مكتوم':'نشط'}</span></div><p class="note" style="white-space:pre-wrap">${esc(m.text)}</p><div class="chat-admin-tools"><button class="btn danger smallbtn" onclick="window.chatModerate('delete','${esc(m.id)}','${esc(m.userId)}')">حذف الرسالة</button><button class="btn secondary smallbtn" onclick="window.chatModerate('${m.muted?'unmute':'mute'}','','${esc(m.userId)}')">${m.muted?'إلغاء الكتم':'كتم'}</button><button class="btn secondary smallbtn" onclick="window.chatModerate('${m.chatBanned?'unban':'ban'}','','${esc(m.userId)}')">${m.chatBanned?'رفع حظر الشات':'حظر من الشات'}</button></div></div>`).join(''):'<div class="empty">لا توجد رسائل لإدارتها.</div>'}catch(e){toast(e.message)}}
+window.chatModerate=async(action,messageId,userId)=>{const promptText=action==='delete'?'حذف الرسالة نهائياً للجميع؟':action==='mute'?'كتم المستخدم من الشات العام؟':action==='ban'?'حظر المستخدم من الشات العام فقط؟':'تأكيد الإجراء؟';if(!confirm(promptText))return;try{const d=await api('/api/miniapp/admin/public-chat/action',{method:'POST',body:JSON.stringify({action,messageId,userId})});toast(d.message);await loadPublicChat()}catch(e){toast(e.message)}};
+$('refreshChatAdmin').onclick=loadChatAdmin;
+async function loadSupportChat(){try{const d=await api('/api/miniapp/support/thread');const t=d.ticket;const msgs=t?[...(t.messages||[]),...(t.replies||[]).filter(r=>!(t.messages||[]).some(m=>m.from==='support'&&m.time===r.time)).map(r=>({from:'support',text:r.text,time:r.time}))]:[];chatRender($('supportMessages'),msgs.map(m=>({...m,name:m.from==='support'?'فريق الدعم':(me.name||'أنت'),userId:m.from==='user'?me.id:''})));}catch(e){}}
+$('publicTab').onclick=()=>{chatMode='public';$('publicTab').classList.add('active');$('privateTab').classList.remove('active');$('publicChatPanel').style.display='';$('privateChatPanel').style.display='none';loadPublicChat()};
+$('privateTab').onclick=()=>{chatMode='private';$('privateTab').classList.add('active');$('publicTab').classList.remove('active');$('privateChatPanel').style.display='';$('publicChatPanel').style.display='none';loadSupportChat()};
+function openSupportChat(){go('chats');$('privateTab').click();}
+
+$('publicSend').onclick=async()=>{const text=$('publicInput').value.trim();if(!text)return;try{await api('/api/miniapp/public-chat',{method:'POST',body:JSON.stringify({text})});$('publicInput').value='';await loadPublicChat()}catch(e){toast(e.message)}};
+$('supportSend').onclick=async()=>{const text=$('supportInput').value.trim();if(!text)return;try{await api('/api/miniapp/support/message',{method:'POST',body:JSON.stringify({text})});$('supportInput').value='';await loadSupportChat();toast('تم إرسال رسالتك للدعم')}catch(e){toast(e.message)}};
+$('publicInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('publicSend').click()});$('supportInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('supportSend').click()});
+async function loadWithdrawTicker(){try{const d=await api('/api/miniapp/withdraw-feed');const items=d.items||[];$('withdrawTicker').innerHTML=(items.length?items.map(x=>`<span>🟢 تم سحب <b>${fmt(x.amount)} USDT</b> بواسطة <b>${esc(x.name)}</b></span>`):['<span>✨ مرحباً بك في Rewards0 — تابع آخر عمليات السحب هنا</span>']).join('<span>✦</span>');}catch(e){}}
+setInterval(()=>{if($('chats').classList.contains('active')){if(chatMode==='public')loadPublicChat();else loadSupportChat()}},3500);setInterval(loadWithdrawTicker,12000);loadWithdrawTicker();
+let leaderboardPage=1,activityPage=1,activityStatus='all';
+async function loadLeaderboard(page=1){try{const d=await api('/api/miniapp/leaderboard?page='+page+'&limit=20');leaderboardPage=d.page;$('leaderRows').innerHTML=d.items.length?d.items.map(u=>`<div class="list-item"><div class="leader-row"><span class="rank-no">#${u.rank}</span><img class="rank-avatar" src="${esc(u.avatar)}" onerror="this.style.display='none'" alt=""><div class="leader-meta"><b>${esc(u.name)}</b><small>الأرباح المسجلة</small></div></div><b class="amount">${fmt(u.earnings)} USDT</b></div>`).join(''):'<div class="empty">لا توجد بيانات بعد.</div>';$('leaderPage').textContent=d.page+' / '+d.pages;$('leaderPrev').disabled=d.page<=1;$('leaderNext').disabled=d.page>=d.pages}catch(e){toast(e.message)}}
+$('leaderPrev').onclick=()=>loadLeaderboard(Math.max(1,leaderboardPage-1));$('leaderNext').onclick=()=>loadLeaderboard(leaderboardPage+1);
+$('saveLanguage').onclick=async()=>{try{const code=$('languageSelect').value;const d=await api('/api/miniapp/language',{method:'POST',body:JSON.stringify({language:code})});applyUiLanguage(code);toast(d.message+' — تم حفظ اللغة لحسابك.');await loadMe()}catch(e){toast(e.message)}};
+async function loadActivity(page=1){try{const d=await api('/api/miniapp/admin/users-page?page='+page+'&limit=20&status='+activityStatus);activityPage=d.page;$('activityUsers').innerHTML=d.users.map(u=>`<div class="list-item"><div><b>${esc(u.name)}</b><small>${esc(u.id)} · آخر ظهور: ${u.lastActive?new Date(u.lastActive).toLocaleString(): 'غير معروف'} · رصيد ${fmt(u.balance)}</small></div><span class="badge ${u.activity==='inactive'?'red':u.activity==='low'?'warn':''}">${u.isBanned?'محظور':u.isFrozen?'مجمد':u.activity==='active'?'نشط':u.activity==='low'?'قليل النشاط':'غير نشط'}</span></div>`).join('')||'<div class="empty">لا توجد حسابات في هذا التصنيف.</div>';$('activityPage').textContent=d.page+' / '+d.pages;$('activityPrev').disabled=d.page<=1;$('activityNext').disabled=d.page>=d.pages}catch(e){toast(e.message)}}
+$('activityFilters').onclick=e=>{const b=e.target.closest('[data-status]');if(!b)return;activityStatus=b.dataset.status;document.querySelectorAll('#activityFilters .tab').forEach(x=>x.classList.toggle('active',x===b));loadActivity(1)};$('activityPrev').onclick=()=>loadActivity(Math.max(1,activityPage-1));$('activityNext').onclick=()=>loadActivity(activityPage+1);
+$('addAdminBtn').onclick=async()=>{const id=$('newAdminId').value.trim(),permissions=[...$('newAdminPerms').selectedOptions].map(x=>x.value);if(!id||!permissions.length)return toast('أدخل ID واختر صلاحية واحدة على الأقل');try{const d=await adminAction('admin-add',id,permissions);toast(d.message);$('newAdminId').value='';await loadAdmin()}catch(e){toast(e.message)}};
+window.removeAdmin=async id=>{if(!confirm('حذف هذا الأدمن؟'))return;try{const d=await adminAction('admin-remove',id);toast(d.message);await loadAdmin()}catch(e){toast(e.message)}};
+async function adminAction(action,id='',value=''){return api('/api/miniapp/admin/action',{method:'POST',body:JSON.stringify({action,id,value})})}
+$('downloadBackup').onclick=async()=>{try{const r=await fetch('/api/miniapp/admin/backup',{headers:{'x-telegram-init-data':initData}});if(!r.ok){const e=await r.json().catch(()=>({}));throw Error(e.message||'تعذر تنزيل النسخة')}const blob=await r.blob(),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Rewards0-backup.json';a.click();URL.revokeObjectURL(url);toast('تم تجهيز النسخة الاحتياطية')}catch(e){toast(e.message)}};
+$('restoreBackup').onclick=()=>$('restoreFile').click();
+$('restoreFile').onchange=async()=>{const file=$('restoreFile').files?.[0];if(!file)return;if(file.size>18*1024*1024){toast('حجم النسخة أكبر من الحد المسموح');return}if(!confirm('تحذير: سيتم استبدال قاعدة البيانات الحالية. سيتم حفظ نسخة أمان تلقائياً قبل الاسترجاع. هل تريد المتابعة؟'))return;try{const database=JSON.parse(await file.text());const d=await api('/api/miniapp/admin/restore',{method:'POST',body:JSON.stringify({database})});toast(d.message);await loadMe();await loadAdmin()}catch(e){toast(e.message)}finally{$('restoreFile').value=''}};
+async function loadAdmin(){if(!me?.admin)return;try{if(me.owner)await loadAdminApplications();const d=await api('/api/miniapp/admin');adminData=d;const s=d.stats;$('adminStats').innerHTML=[['المستخدمون',s.users],['النشطون',s.active],['قليل النشاط',s.lowActivity],['غير نشط',s.inactive],['معلق سحب',s.pendingWithdrawals],['إثباتات معلقة',s.pendingTasks],['إجمالي المدفوع',fmt(s.totalPaid)+' USDT'],['عمولات الإحالة',fmt(s.referralPaid)+' USDT'],['حسابات مجمدة',s.frozen],['إنذارات أمنية',s.blockedAttacks]].map(x=>`<div class="admin-stat"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join('');$('withdrawCount').textContent=s.pendingWithdrawals;$('taskProofCount').textContent=s.pendingTasks;$('toggleMaintenance').querySelector('small').textContent=s.maintenanceMode?'الصيانة مفعلة':'النظام يعمل';
+$('adminWithdrawals').innerHTML=d.withdrawals.length?d.withdrawals.map(r=>`<div class="card"><div class="row"><b>طلب #${esc(r.id)}</b><span class="badge warn">${fmt(r.amount)} USDT</span></div><p class="note">${esc(r.userName)} · ${esc(r.userId)}<br>المحفظة: <span style="direction:ltr;display:inline-block">${esc(r.wallet)}</span></p><div class="row"><button class="btn danger smallbtn" onclick="window.adminReject('${esc(r.id)}')">رفض</button><button class="btn smallbtn" onclick="window.adminApprove('${esc(r.id)}')">اعتماد الدفع</button></div></div>`).join(''):'<div class="empty">لا توجد طلبات سحب معلقة.</div>';
+$('adminTasks').innerHTML=d.tasks.length?d.tasks.map(t=>`<div class="card"><div class="row"><b>${esc(t.taskTitle)}</b><span class="badge">+${fmt(t.reward)}</span></div><p class="note">${esc(t.userName)} · ${esc(t.userId)}<br>${esc(t.proofContent)}</p><div class="row"><button class="btn danger smallbtn" onclick="window.taskDecision('${esc(t.id)}','task-reject')">رفض</button><button class="btn smallbtn" onclick="window.taskDecision('${esc(t.id)}','task-approve')">قبول وإضافة</button></div></div>`).join(''):'<div class="empty">لا توجد إثباتات معلقة.</div>';
+$('taskHistoryRows').innerHTML=(d.taskHistory||[]).slice(0,15).map(t=>`<div class="list-item"><div><b>${esc(t.taskTitle)} · ${esc(t.userName)}</b><small>${esc(t.userId)} · ${esc(t.reviewedAt||t.time||'')}</small></div><span class="badge ${t.status==='approved'?'':'red'}">${t.status==='approved'?'مقبولة':'مرفوضة'}</span></div>`).join('')||'<div class="empty">لا يوجد سجل مراجعة بعد.</div>';
+$('withdrawHistoryRows').innerHTML=(d.withdrawalHistory||[]).slice(0,15).map(w=>`<div class="list-item"><div><b>${esc(w.userName||w.userId)} · ${fmt(w.amount)} USDT</b><small>${esc(w.id)} · ${esc(w.paidAt||w.reviewedAt||w.time||'')}</small></div><span class="badge ${w.status==='paid'?'':'red'}">${w.status==='paid'?'مدفوع':'مرفوض'}</span></div>`).join('')||'<div class="empty">لا يوجد سجل سحوبات بعد.</div>';
+$('securityLogs').innerHTML=d.alerts.length?d.alerts.slice(0,8).map(a=>`<div class="list-item"><div><b>${esc(a.eventType)}</b><small>${esc(a.userName)} · ${esc(a.userId)} · ${esc(a.time)}</small></div><span class="badge red">تنبيه</span></div>`).join(''):'<div class="empty">لا توجد إنذارات مسجلة.</div>';
+$('managedTasks').innerHTML=d.managedTasks.length?d.managedTasks.map(t=>`<div class="list-item"><div><b>${esc(t.title)}</b><small>${fmt(t.reward)} USDT · ${esc(t.id)}</small></div><button class="btn danger smallbtn" onclick="window.deleteTask('${esc(t.id)}')">حذف</button></div>`).join(''):'<div class="empty">لا توجد مهام منشورة.</div>';
+$('adminList').innerHTML=(d.admins||[]).map(a=>`<div class="list-item"><div><b>${esc(a.id)}</b><small>${a.role==='owner'?'المالك الرئيسي':'أدمن'} · ${(a.permissions||[]).join(', ')}</small></div>${a.role==='owner'?'':`<button class="btn danger smallbtn" onclick="window.removeAdmin('${esc(a.id)}')">حذف</button>`}</div>`).join('');
+$('ledgerRows').innerHTML=(d.ledger||[]).slice(0,12).map(x=>`<div class="list-item"><div><b>${esc(x.type)}</b><small>${esc(x.userId)} · ${esc(x.time)} · ${esc(x.reference||'')}</small></div><b class="amount">${Number(x.amount)>=0?'+':''}${fmt(x.amount)} USDT</b></div>`).join('')||'<div class="empty">لا توجد حركات مالية.</div>';
+$('auditRows').innerHTML=(d.audit||[]).slice(0,8).map(x=>`<div class="list-item"><div><b>${esc(x.action)}</b><small>أدمن ${esc(x.actorId)} · هدف ${esc(x.targetId)} · ${esc(x.time)}</small></div><span class="badge">موثق</span></div>`).join('')||'<div class="empty">لا توجد إجراءات مسجلة.</div>';loadActivity(1);
+}catch(e){toast(e.message)}}
+window.adminReject=async id=>{if(!confirm('تأكيد رفض طلب السحب وإرجاع الرصيد؟'))return;try{const d=await adminAction('withdraw-reject',id);toast(d.message);await loadAdmin();await loadMe()}catch(e){toast(e.message)}};
+window.adminApprove=async id=>{showModal('اعتماد الدفع',`<p class="note">لا تعتمد السحب إلا بعد إرسال المبلغ فعلياً والتحقق من المعاملة على شبكة TRON.</p><div class="field"><label>TXID — 64 خانة Hex</label><input id="txidInput" placeholder="Transaction ID"></div><button class="btn" id="confirmTx">تأكيد الدفع وتسجيل TXID</button>`);$('confirmTx').onclick=async()=>{try{const d=await adminAction('withdraw-approve',id,$('txidInput').value);toast(d.message);$('modal').classList.remove('show');await loadAdmin();await loadMe()}catch(e){toast(e.message)}}};
+window.taskDecision=async(id,action)=>{if(!confirm(action==='task-approve'?'قبول المهمة وإضافة المكافأة؟':'رفض الإثبات؟'))return;try{const d=await adminAction(action,id);toast(d.message);await loadAdmin();await loadMe()}catch(e){toast(e.message)}};
+$('setBlock').onclick=async()=>{try{const d=await api('/api/miniapp/admin/settings');$('adBannerBlock').value=d.adBlocks.banner||'';$('adTaskBlock').value=d.adBlocks.task||'';$('adRewardedBlock').value=d.adBlocks.rewarded||'';$('adInterstitialBlock').value=d.adBlocks.interstitial||'';}catch(e){toast(e.message)}};
+$('saveAdBlocks').onclick=async()=>{try{const value={banner:$('adBannerBlock').value.trim(),task:$('adTaskBlock').value.trim(),rewarded:$('adRewardedBlock').value.trim(),interstitial:$('adInterstitialBlock').value.trim()};const d=await adminAction('save-ad-settings','',value);toast(d.message||'تم حفظ إعدادات الإعلانات');}catch(e){toast(e.message)}};
+$('saveBackground').onclick=async()=>{try{const f=$('backgroundUpload').files?.[0];if(!f){toast('اختر صورة أولاً');return;}if(f.size>2*1024*1024){toast('الحد الأقصى 2MB');return;}const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(f)});const d=await adminAction('save-background','',data);document.body.style.backgroundImage=`linear-gradient(#080d1caa,#080d1caa),url("${data}")`;document.body.style.backgroundSize='cover';document.body.style.backgroundAttachment='fixed';toast(d.message||'تم تحديث الخلفية');}catch(e){toast(e.message)}};
+$('clearBackground').onclick=async()=>{try{const d=await adminAction('save-background','','');document.body.style.backgroundImage='';toast(d.message||'تمت إزالة الخلفية');}catch(e){toast(e.message)}};
+$('globalSearchBtn').onclick=globalSearch;$('globalSearchQuery').addEventListener('keydown',e=>{if(e.key==='Enter')globalSearch()});
+async function globalSearch(){try{const q=$('globalSearchQuery').value.trim();if(!q){toast('اكتب رقم أو معرف للبحث');return;}const d=await api('/api/miniapp/admin/search?q='+encodeURIComponent(q));$('globalSearchResults').innerHTML=d.results.length?d.results.map(r=>`<div class="list-item"><div><b>${esc(r.title)}</b><small>${esc(r.detail)}</small></div><span class="badge">${r.type==='withdrawal'?'سحب':r.type==='complaint'?'شكوى':r.type==='user'?'مستخدم':'حركة مالية'}</span></div>`).join(''):'<div class="empty">لا توجد نتائج مطابقة.</div>';}catch(e){toast(e.message)}}
+
+$('setRates').onclick=()=>{const r=me.referralRates||{A:10,B:5,C:3,D:2,E:1};showModal('نسب عمولات الإحالة',`<div class="stats">${['A','B','C','D','E'].map(k=>`<div class="field"><label>المستوى ${k} %</label><input id="rate${k}" type="number" min="0" max="100" value="${r[k]}"></div>`).join('')}</div><button class="btn" id="saveRates">حفظ النسب</button>`);$('saveRates').onclick=async()=>{try{const value=Object.fromEntries(['A','B','C','D','E'].map(k=>[k,Number($('rate'+k).value)]));const d=await adminAction('set-rates','',value);toast(d.message);$('modal').classList.remove('show');await loadMe();await loadAdmin()}catch(e){toast(e.message)}}};
+$('broadcast').onclick=()=>{showModal('إذاعة رسالة للمستخدمين',`<div class="field"><label>نص الرسالة</label><textarea id="broadcastText" maxlength="3000"></textarea></div><button class="btn danger" id="sendBroadcast">إرسال للجميع</button>`);$('sendBroadcast').onclick=async()=>{if(!confirm('هل تريد إرسال هذه الرسالة لكل المستخدمين؟'))return;try{const d=await adminAction('broadcast','',$('broadcastText').value);toast(d.message);$('modal').classList.remove('show')}catch(e){toast(e.message)}}};
+window.deleteTask=async id=>{if(!confirm('حذف هذه المهمة من المهام المتاحة؟'))return;try{const d=await adminAction('task-delete',id);toast(d.message);await loadAdmin();await loadMe()}catch(e){toast(e.message)}};
+$('refreshAdmin').onclick=loadAdmin;$('toggleMaintenance').onclick=async()=>{try{const d=await adminAction('maintenance-toggle');toast(d.message);await loadAdmin()}catch(e){toast(e.message)}};
+$('createTask').onclick=()=>{showModal('إضافة مهمة جديدة',`<div class="field"><label>عنوان المهمة</label><input id="newTaskTitle"></div><div class="field"><label>المكافأة USDT</label><input id="newTaskReward" type="number" step="0.0001"></div><div class="field"><label>رابط المهمة</label><input id="newTaskLink" placeholder="https://..."></div><div class="field"><label>الوصف</label><textarea id="newTaskDesc"></textarea></div><button class="btn" id="saveTask">إضافة المهمة</button>`);$('saveTask').onclick=async()=>{try{const d=await adminAction('task-create','',{title:$('newTaskTitle').value,reward:$('newTaskReward').value,link:$('newTaskLink').value,description:$('newTaskDesc').value});toast(d.message);$('modal').classList.remove('show');await loadAdmin();await loadMe()}catch(e){toast(e.message)}}};
+$('usersSearch').onclick=()=>$('userQuery').focus();$('searchUserBtn').onclick=searchUsers;$('userQuery').addEventListener('keydown',e=>{if(e.key==='Enter')searchUsers()});async function searchUsers(){try{const d=await api('/api/miniapp/admin/users?q='+encodeURIComponent($('userQuery').value));$('userResults').innerHTML=d.users.length?d.users.map(u=>`<div class="card"><div class="row"><b>${esc(u.name||'مستخدم')}</b><span class="badge ${u.isBanned?'red':u.isFrozen?'warn':''}">${u.isBanned?'محظور':u.isFrozen?'مجمد':'نشط'}</span></div><p class="note">ID: ${esc(u.id)} · الرصيد: ${fmt(u.balance)} · قيد السحب: ${fmt(u.lockedBalance)} · مجمد: ${fmt(u.frozenBalance)} · Risk: ${u.riskScore}</p><div class="row"><button class="btn secondary smallbtn" onclick="window.userAdmin('${esc(u.id)}','${u.isFrozen?'user-unfreeze':'user-freeze'}')">${u.isFrozen?'فك التجميد':'تجميد'}</button><button class="btn danger smallbtn" onclick="window.userAdmin('${esc(u.id)}','${u.isBanned?'user-unban':'user-ban'}')">${u.isBanned?'رفع الحظر':'حظر'}</button></div><div class="row" style="margin-top:8px"><button class="btn secondary smallbtn" onclick="window.userBalance('${esc(u.id)}','user-add-balance')">إضافة رصيد</button><button class="btn secondary smallbtn" onclick="window.userBalance('${esc(u.id)}','user-sub-balance')">خصم رصيد</button></div></div>`).join(''):'<div class="empty">لا توجد نتائج.</div>'}catch(e){toast(e.message)}}
+window.userAdmin=async(id,action)=>{if(!confirm('تأكيد تنفيذ الإجراء على المستخدم؟'))return;try{const d=await adminAction(action,id);toast(d.message);await searchUsers();await loadAdmin()}catch(e){toast(e.message)}};
+window.userBalance=(id,action)=>{showModal(action==='user-add-balance'?'إضافة رصيد':'خصم رصيد',`<div class="field"><label>المبلغ USDT</label><input id="balanceChange" type="number" min="0.0001" step="0.0001"></div><button class="btn" id="applyBalance">تنفيذ</button>`);$('applyBalance').onclick=async()=>{try{const d=await adminAction(action,id,$('balanceChange').value);toast(d.message);$('modal').classList.remove('show');await searchUsers();await loadAdmin()}catch(e){toast(e.message)}}};
+async function boot(){await loadMe();await loadAdConfiguration();const params=new URLSearchParams(window.location.search);if(params.get('open')==='support')openSupportChat();}
+boot();
+})();
+</script></body></html>
